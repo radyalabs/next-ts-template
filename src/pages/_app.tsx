@@ -1,18 +1,15 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
-import {LayoutProvider} from '@/contexts/LayoutContext/LayoutContext';
-import Header from '@/components/layout/Header/Header';
-import Sidebar from '@/components/layout/Sidebar/Sidebar';
-import Content from '@/components/layout/Content/Content';
+import type { AppProps } from 'next/app';
 
-export default function App({ Component, pageProps }: AppProps) {
-  return(
-      <LayoutProvider>
-        <Header />
-        <Sidebar />
-        <Content>
-          <Component {...pageProps} />
-        </Content>
-      </LayoutProvider>
-  )
-}
+import { LayoutProvider } from '@/contexts/LayoutContext/LayoutContext';
+
+import '@/styles/globals.css';
+
+const App = ({
+  Component,
+  pageProps,
+}: AppProps) => (
+  <LayoutProvider>
+    <Component {...pageProps} />
+  </LayoutProvider>
+);
+export default App;
