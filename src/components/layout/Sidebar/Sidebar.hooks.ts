@@ -1,5 +1,6 @@
+import { useRouter } from 'next/router';
+
 import { useLayoutContext } from '@/contexts/LayoutContext/LayoutContext';
-import {useRouter} from 'next/router';
 
 const useSidebar = () => {
   const { isCollapsed } = useLayoutContext();
@@ -7,7 +8,10 @@ const useSidebar = () => {
 
   const isActive = (path: string): boolean => location.pathname === path;
 
-  return { isCollapsed, isActive };
+  return {
+    isCollapsed,
+    isActive,
+  };
 };
 
 export default useSidebar;
