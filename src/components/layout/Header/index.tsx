@@ -2,10 +2,13 @@ import React from 'react';
 
 import NavChevron from '@/components/icons/NavChevron/NavChevron';
 
-import useHeader from './Header.hooks';
+import useHeader from './index.hooks';
 
 const Header = () => {
-  const { isCollapsed, toggleCollapsed } = useHeader();
+  const {
+    isCollapsed,
+    toggleCollapsed,
+  } = useHeader();
   return (
     <nav className="bg-primary-500 py-2 px-4 shadow fixed w-full z-10">
       <div

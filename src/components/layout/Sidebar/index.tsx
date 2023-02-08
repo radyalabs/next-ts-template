@@ -6,7 +6,7 @@ import mark from '@/assets/brand_mark_primary.png';
 import logo from '@/assets/brand_primary.png';
 import { ArrowRounded, Book, Bookmark } from '@/components/icons';
 
-import useSidebar from './Sidebar.hooks';
+import useSidebar from './index.hooks';
 
 const Sidebar = () => {
   const {

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { useLayoutContext } from '@/contexts/LayoutContext/LayoutContext';
+import { useLayoutContext } from '@/contexts/LayoutContext';
 
 const useSidebar = () => {
   const { isCollapsed } = useLayoutContext();

@@ -1,6 +1,6 @@
 import type { AppProps } from 'next/app';
 
-import { LayoutProvider } from '@/contexts/LayoutContext/LayoutContext';
+import { LayoutProvider } from '@/contexts/LayoutContext';
 
 import '@/styles/globals.css';
 

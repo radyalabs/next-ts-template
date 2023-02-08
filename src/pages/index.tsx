@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-import Layout from '@/components/layout/Layout/Layout';
+import Layout from '@/components/layout/Layout';
 import PokemonList from '@/routes/PokemonList';
 
 const Home = () => (

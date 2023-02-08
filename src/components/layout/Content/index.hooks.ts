@@ -1,4 +1,4 @@
-import { useLayoutContext } from '@/contexts/LayoutContext/LayoutContext';
+import { useLayoutContext } from '@/contexts/LayoutContext';
 
 const useContent = () => {
   const { isCollapsed } = useLayoutContext();

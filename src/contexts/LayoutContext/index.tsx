@@ -2,7 +2,7 @@ import React, {
   createContext, useCallback, useContext, useMemo, useState,
 } from 'react';
 
-import type { LayoutContextTypes, LayoutProviderProps } from './LayoutContext.types';
+import type { LayoutContextTypes, LayoutProviderProps } from './index.types';
 
 const LayoutContext = createContext<LayoutContextTypes | undefined>(undefined);
 
@@ -14,7 +14,10 @@ const LayoutProvider = ({ children }: LayoutProviderProps) => {
   }, [isCollapsed]);
 
   const sidebarProviderValue = useMemo(() => (
-    { isCollapsed, toggleCollapsed }
+    {
+      isCollapsed,
+      toggleCollapsed,
+    }
   ), [isCollapsed, toggleCollapsed]);
 
   return (
