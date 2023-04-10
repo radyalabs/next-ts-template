@@ -27,21 +27,6 @@ const defaultFetcherFn = async <T>(params: FetcherProps<T>): Promise<T> => {
     }
     return dataRes;
   });
-  // try {
-  //   const dataRes = await axios<T>({
-  //     headers,
-  //     url,
-  //     data,
-  //     method,
-  //     baseURL: BASE_API_URL,
-  //   });
-  //   if (typeof normalizer === 'function') {
-  //     return normalizer(dataRes as T);
-  //   }
-  //   return dataRes as T;
-  // } catch (error) {
-  //   throw new Error('Terjadi kesalahan server.');
-  // }
 };
 
 export default defaultFetcherFn;
