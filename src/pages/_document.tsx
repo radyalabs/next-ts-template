@@ -4,7 +4,9 @@ import {
 
 const Document = () => (
   <Html lang="en">
-    <Head />
+    <Head>
+      <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    </Head>
     <body>
       <Main />
       <NextScript />

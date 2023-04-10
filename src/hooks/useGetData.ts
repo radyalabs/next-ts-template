@@ -1,16 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
 
 import defaultFetcherFn from '@/helpers/fetcher';
-import type { QueryOptions } from '@/types/queries';
+import type { FetchQueryExtras } from '@/types/queries';
 import { noop } from '@/utils';
 
 const useGetData = <T>(
-  key: string | string[],
+  key: string[],
   url: string,
-  params?: Record<string, unknown>,
-  normalizer?: (data: T) => T,
-  options?: QueryOptions<T>,
+  extras?: FetchQueryExtras<T>,
 ) => {
+  const {
+    options,
+    params,
+    normalizer,
+  } = extras || {};
   const {
     enabled = true,
     retry = true,
@@ -24,7 +27,7 @@ const useGetData = <T>(
     isLoading,
     refetch,
   } = useQuery<T, Error>(
-    [key],
+    key,
     () => defaultFetcherFn<T>({
       headers: {
         Accept: 'application/json',
@@ -33,6 +36,7 @@ const useGetData = <T>(
       method: 'get',
       normalizer,
       url,
+      params,
     }),
     {
       enabled,

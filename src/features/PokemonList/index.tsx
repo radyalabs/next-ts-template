@@ -6,7 +6,7 @@ const PokemonList = () => {
     results = [],
   } = data || {};
   return (
-    <p>{results[0].name}</p>
+    <p>{results[0]?.name}</p>
   );
 };
 
