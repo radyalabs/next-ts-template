@@ -25,6 +25,7 @@ const Sidebar = () => {
               src={!isCollapsed ? logo : mark}
               alt="Brand Logo"
               className="min-h-[5rem] h-5 w-auto object-contain"
+              priority
             />
           </Link>
         </div>

@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
 import Layout from '@/components/layout/Layout';
-import PokemonList from '@/routes/PokemonList';
+import PokemonList from '@/features/PokemonList';
 
 const Home = () => (
   <>
