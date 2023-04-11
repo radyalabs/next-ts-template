@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
 import { APP_TITLE } from '@/constants/config';
-import Login from '@/routes/Login';
+import Login from '@/features/Login';
 
 const LoginPage = () => (
   <>
