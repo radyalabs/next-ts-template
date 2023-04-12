@@ -46,6 +46,7 @@ interface TextFieldProps {
   /**
    * Optional change handler
    */
+  label: string;
   onChange?: ChangeEventHandler;
   onBlur?: FocusEventHandler;
   onFocus?: FocusEventHandler;
