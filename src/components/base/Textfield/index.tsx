@@ -10,6 +10,7 @@ const TextField = ({
   disabled = false,
   error = false,
   id,
+  label,
   password = false,
   placeholder = 'Enter text here',
   prependObject,
@@ -32,7 +33,7 @@ const TextField = ({
   if (disabled) styleTextField.push(styles.disabled);
   return (
     <div>
-      <label htmlFor={id} className="font-semibold mb-2 inline-block text-gray-500">Email</label>
+      {!!label && <label htmlFor={id} className="font-semibold mb-1 inline-block text-gray-500">{label}</label>}
       <InputUnstyled
         className="border border-gray-300 rounded-xl w-fit px-2"
         slotProps={{ input: { className: styleTextField.join(' '), id } }}
