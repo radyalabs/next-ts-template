@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { MouseEventHandler, ReactNode } from 'react';
 
 interface ButtonProps {
   /**
@@ -37,7 +37,7 @@ interface ButtonProps {
   /**
    * Optional click handler
    */
-  onClick?: () => void;
+  onClick?: MouseEventHandler;
 }
 
 export default ButtonProps;

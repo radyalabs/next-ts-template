@@ -1,0 +1,23 @@
+.textfield {
+  @apply text-gray-900 text-sm p-2;
+  &:focus-visible {
+    outline: 0;
+  }
+
+  &.borderSuccess {
+    @apply border-success-500;
+  }
+
+  &.borderError {
+    @apply border-danger-500;
+  }
+
+  &.rounded {
+    @apply rounded-full;
+  }
+
+  &.disabled {
+    @apply bg-gray-100 cursor-not-allowed;
+  }
+
+}
