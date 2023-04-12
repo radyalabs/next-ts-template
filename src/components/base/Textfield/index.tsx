@@ -6,6 +6,7 @@ import styles from './index.module.scss';
 
 const TextField = ({
   appendObject,
+  block = false,
   className,
   disabled = false,
   error = false,
@@ -23,20 +24,28 @@ const TextField = ({
   onClick,
   onFocus,
 }: TextFieldProps) => {
-  const styleTextField = [styles.textfield];
+  const textFieldStyle = [styles.textfield];
+  const containerStyle = [styles.container];
 
-  if (className) styleTextField.push(className);
-  if (prependObject) styleTextField.push(styles.paddingSearch);
-  if (error) styleTextField.push(styles.borderError);
-  if (success) styleTextField.push(styles.borderSuccess);
-  if (rounded) styleTextField.push(styles.rounded);
-  if (disabled) styleTextField.push(styles.disabled);
+  if (className) textFieldStyle.push(className);
+  if (prependObject) textFieldStyle.push(styles.paddingSearch);
+  if (error) containerStyle.push(styles.borderError);
+  if (success) containerStyle.push(styles.borderSuccess);
+  if (rounded) containerStyle.push(styles.rounded);
+  if (disabled) {
+    textFieldStyle.push(styles.disabled);
+    containerStyle.push(styles.disabled);
+  }
+  if (block) {
+    textFieldStyle.push(styles.block);
+    containerStyle.push(styles.block);
+  }
   return (
-    <div>
-      {!!label && <label htmlFor={id} className="font-semibold mb-1 inline-block text-gray-500">{label}</label>}
+    <div className="block">
+      {!!label && <label htmlFor={id} className="font-semibold mb-1 block text-gray-500">{label}</label>}
       <InputUnstyled
-        className="border border-gray-300 rounded-xl w-fit px-2"
-        slotProps={{ input: { className: styleTextField.join(' '), id } }}
+        className={containerStyle.join(' ')}
+        slotProps={{ input: { className: textFieldStyle.join(' '), id } }}
         placeholder={placeholder}
         type={password ? 'password' : 'text'}
         value={value}
@@ -48,6 +57,7 @@ const TextField = ({
         onClick={onClick}
         onChange={onChange}
         onFocus={onFocus}
+        disabled={disabled}
       />
     </div>
   );
