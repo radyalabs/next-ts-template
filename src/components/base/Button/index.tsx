@@ -13,6 +13,7 @@ const Button = (props: ButtonProps) => {
     loading = false,
     rounded = false,
     size = 'medium',
+    type = 'button',
     color = 'default',
     variant = 'default',
     onClick,
@@ -37,15 +38,13 @@ const Button = (props: ButtonProps) => {
   if (disabled) styleButton.push(styles.disabled);
   return (
     <ButtonUnstyled
-      className={`inline-flex items-center justify-around ${styleButton.join(' ')}`}
+      className={`inline-flex items-center justify-center gap-3 ${styleButton.join(' ')}`}
       disabled={disabled}
       onClick={onClick}
+      type={type}
     >
       {loading && (
-        <>
-          <Spinner width="16px" height="16px" />
-          &nbsp;
-        </>
+        <Spinner width="16px" height="16px" />
       ) }
       {children}
     </ButtonUnstyled>

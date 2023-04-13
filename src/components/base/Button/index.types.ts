@@ -38,6 +38,7 @@ interface ButtonProps {
    * Optional click handler
    */
   onClick?: MouseEventHandler;
+  type?: 'submit' | 'button';
 }
 
 export default ButtonProps;

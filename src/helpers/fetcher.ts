@@ -1,9 +1,14 @@
 import axios from 'axios';
+import { getCookie } from 'cookies-next';
 
-import BASE_API_URL from '@/constants/apiURL';
+import { BASE_API_URL } from '@/constants/apiURL';
+import { APP_TOKEN_KEY } from '@/constants/config';
 import type { FetcherProps } from '@/types/fetcherProps';
 
 const defaultFetcherFn = async <T>(options: FetcherProps<T>): Promise<T> => {
+  const token = getCookie(APP_TOKEN_KEY);
+  const instance = axios.create();
+
   const {
     url,
     data,
@@ -15,7 +20,14 @@ const defaultFetcherFn = async <T>(options: FetcherProps<T>): Promise<T> => {
     method = 'get',
     params,
   } = options || {};
-  return axios<T>({
+
+  if (token) {
+    instance.defaults.headers.common = {
+      Authorization: `Bearer ${token}`,
+    };
+  }
+
+  return instance<T>({
     baseURL: BASE_API_URL,
     data,
     headers,

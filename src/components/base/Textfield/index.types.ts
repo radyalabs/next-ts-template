@@ -54,6 +54,8 @@ interface TextFieldProps {
   onClick?: MouseEventHandler;
   required?: boolean;
   password?: boolean;
+  name?: string;
+  message?: string;
 }
 
 export default TextFieldProps;

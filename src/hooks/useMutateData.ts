@@ -6,7 +6,6 @@ import type { MutateQueryExtras } from '@/types/queries';
 const useMutateData = <T = void>(
   key: string[],
   url: string,
-  body: Record<string, unknown>,
   method = 'post',
   extras?: MutateQueryExtras<T>,
 ) => {
@@ -20,9 +19,9 @@ const useMutateData = <T = void>(
     mutate,
     data,
     isLoading,
-  } = useMutation<T, Error>(
+  } = useMutation<T, Error, Record<string, unknown>>(
     key,
-    () => defaultFetcherFn<T>({
+    (body) => defaultFetcherFn<T>({
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -44,4 +43,20 @@ const useMutateData = <T = void>(
   };
 };
 
-export default useMutateData;
+export const usePostData = <T = void>(
+  key: string[],
+  url: string,
+  extras?: MutateQueryExtras<T>,
+) => useMutateData(key, url, 'post', extras);
+
+export const usePutData = <T = void>(
+  key: string[],
+  url: string,
+  extras?: MutateQueryExtras<T>,
+) => useMutateData(key, url, 'put', extras);
+
+export const useDeleteData = <T = void>(
+  key: string[],
+  url: string,
+  extras?: MutateQueryExtras<T>,
+) => useMutateData(key, url, 'delete', extras);

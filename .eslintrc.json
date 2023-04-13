@@ -24,10 +24,13 @@
           "error",
           {
             "groups": [
-              // Packages `react` related packages come first.
+              // Packages `react` adn `next` related packages come first.
               [
-                "^react",
-                "^next",
+                "^react$",
+                "^next"
+              ],
+              // External packages.
+              [
                 "^@?\\w"
               ],
               // Internal packages.
