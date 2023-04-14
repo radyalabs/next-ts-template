@@ -1,8 +1,7 @@
-.textfield {
-  @apply text-gray-900 text-sm p-2;
-  &:focus-visible {
-    outline: 0;
-  }
+
+
+.container {
+  @apply border border-gray-300 rounded-xl px-2 w-fit;
 
   &.borderSuccess {
     @apply border-success-500;
@@ -17,7 +16,26 @@
   }
 
   &.disabled {
-    @apply bg-gray-100 cursor-not-allowed;
+    @apply bg-gray-100 pointer-events-none cursor-not-allowed ;
+  }
+
+  &.block {
+    @apply w-full;
+  }
+}
+
+.textfield {
+  @apply text-gray-900 text-sm p-2;
+  &:focus-visible {
+    outline: 0;
+  }
+
+  &.disabled {
+    @apply bg-gray-100;
+  }
+
+  &.block {
+    @apply w-full;
   }
 
 }

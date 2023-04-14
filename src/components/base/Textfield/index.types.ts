@@ -46,13 +46,16 @@ interface TextFieldProps {
   /**
    * Optional change handler
    */
-  label: string;
+  block?: boolean;
+  label?: string;
   onChange?: ChangeEventHandler;
   onBlur?: FocusEventHandler;
   onFocus?: FocusEventHandler;
   onClick?: MouseEventHandler;
   required?: boolean;
   password?: boolean;
+  name?: string;
+  message?: string;
 }
 
 export default TextFieldProps;

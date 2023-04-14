@@ -1,7 +1,9 @@
 import type { AppProps } from 'next/app';
+
 import { Inter } from '@next/font/google';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+import { AuthProvider } from '@/contexts/AuthContext';
 import { LayoutProvider } from '@/contexts/LayoutContext';
 
 import '@/styles/globals.css';
@@ -15,11 +17,13 @@ const App = ({
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
-      <main className={inter.className}>
-        <LayoutProvider>
-          <Component {...pageProps} />
-        </LayoutProvider>
-      </main>
+      <AuthProvider>
+        <main className={inter.className}>
+          <LayoutProvider>
+            <Component {...pageProps} />
+          </LayoutProvider>
+        </main>
+      </AuthProvider>
     </QueryClientProvider>
   );
 };
