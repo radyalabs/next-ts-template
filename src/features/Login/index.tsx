@@ -5,6 +5,7 @@ import logo from '@/assets/brand_light_secondary.png';
 import illustration from '@/assets/login_illustration.svg';
 import Button from '@/components/base/Button';
 import TextField from '@/components/base/Textfield';
+import Typography from '@/components/base/Typography';
 import { APP_DESCRIPTION, APP_TITLE } from '@/constants/config';
 import useLogin from '@/features/Login/index.hooks';
 
@@ -25,18 +26,45 @@ const Login = () => {
           className="bg-primary-500 w-1/2 rounded-xl flex flex-col justify-between m-6 min-h-[600px] p-6"
         >
           <div>
-            <h1 className="text-4xl text-white text-center font-bold">{APP_TITLE}</h1>
-            <p className="text-lg text-white text-center">{APP_DESCRIPTION}</p>
+            <Typography
+              variant="h3"
+              as="h1"
+              align="center"
+              className="text-white font-bold"
+            >
+              {APP_TITLE}
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              as="h2"
+              align="center"
+              className="text-white"
+            >
+              {APP_DESCRIPTION}
+            </Typography>
           </div>
-          <div className="bg-slate-500/20 p-8 rounded-xl">
+          <div className="bg-neutral-100/10 p-8 rounded-xl mx-auto">
             <Image src={illustration} alt="" width={300} className="mx-auto" />
           </div>
           <Image src={logo} alt="" width={250} className="mx-auto" />
         </div>
         <div className="flex flex-col justify-between items-center w-1/2 rounded-xl m-6 p-6">
           <div className="w-full">
-            <h1 className="text-4xl text-center font-bold">Sign In</h1>
-            <p className="text-center">Welcome back!</p>
+            <Typography
+              variant="h3"
+              as="h1"
+              align="center"
+              className="font-bold"
+            >
+              Sign In
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              as="h2"
+              align="center"
+            >
+              Welcome back!
+            </Typography>
             <form className="w-full my-16" onSubmit={handleSubmit(onSubmit)}>
               <TextField
                 label="Username"

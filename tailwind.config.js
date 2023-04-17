@@ -8,6 +8,10 @@ module.exports = {
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/utils/**/*.{js,ts,jsx,tsx}',
   ],
+  corePlugins: {
+    preflight: false,
+  },
+  important: '#__next',
   theme: {
     fontFamily: {
       sans: [],
