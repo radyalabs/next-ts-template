@@ -7,7 +7,8 @@ import Button from '@/components/base/Button';
 import TextField from '@/components/base/Textfield';
 import Typography from '@/components/base/Typography';
 import { APP_DESCRIPTION, APP_TITLE } from '@/constants/config';
-import useLogin from '@/features/Login/index.hooks';
+
+import useLogin from './index.hooks';
 
 const Login = () => {
   const {
@@ -44,7 +45,7 @@ const Login = () => {
             </Typography>
           </div>
           <div className="bg-neutral-100/10 p-8 rounded-xl mx-auto">
-            <Image src={illustration} alt="" width={300} className="mx-auto" />
+            <Image src={illustration} alt="" width={300} className="mx-auto" priority />
           </div>
           <Image src={logo} alt="" width={250} className="mx-auto" />
         </div>

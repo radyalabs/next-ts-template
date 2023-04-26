@@ -1,6 +1,7 @@
 import type { ElementType, ReactNode } from 'react';
 
-export interface TypographyProps {/**
+export interface TypographyProps {
+  /**
    * Set the text-align on the component.
    * @default 'inherit'
    */

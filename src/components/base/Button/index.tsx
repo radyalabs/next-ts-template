@@ -1,4 +1,4 @@
-import { ButtonUnstyled } from '@mui/base';
+import MUIButton from '@mui/material/Button';
 
 import type ButtonProps from '@/components/base/Button/index.types';
 import { Spinner } from '@/components/icons';
@@ -37,7 +37,7 @@ const Button = (props: ButtonProps) => {
   if (rounded) styleButton.push(styles.rounded);
   if (disabled) styleButton.push(styles.disabled);
   return (
-    <ButtonUnstyled
+    <MUIButton
       className={`inline-flex items-center justify-center gap-3 ${styleButton.join(' ')}`}
       disabled={disabled}
       onClick={onClick}
@@ -47,7 +47,18 @@ const Button = (props: ButtonProps) => {
         <Spinner width="16px" height="16px" />
       ) }
       {children}
-    </ButtonUnstyled>
+    </MUIButton>
+    // <ButtonUnstyled
+    //   className={`inline-flex items-center justify-center gap-3 ${styleButton.join(' ')}`}
+    //   disabled={disabled}
+    //   onClick={onClick}
+    //   type={type}
+    // >
+    //   {loading && (
+    //     <Spinner width="16px" height="16px" />
+    //   ) }
+    //   {children}
+    // </ButtonUnstyled>
   );
 };
 

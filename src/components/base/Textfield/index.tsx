@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 
-import { InputUnstyled } from '@mui/base';
+import { TextField as MUITextField } from '@mui/material';
 import type { ForwardedRef } from 'react';
 
 import type TextFieldProps from './index.types';
@@ -24,6 +24,7 @@ const TextField = forwardRef(
       prependObject,
       required = false,
       rounded,
+      size = 'medium',
       success = false,
       value,
       onBlur,
@@ -51,28 +52,27 @@ const TextField = forwardRef(
       <div className="block mb-4">
         {!!label
           && <label htmlFor={id} className="font-semibold mb-1 block text-gray-500">{label}</label>}
-        <InputUnstyled
+        <MUITextField
           className={containerStyle.join(' ')}
-          slotProps={{
-            input: {
-              className: textFieldStyle.join(' '),
-              id,
-              ref: forwardedRef,
-              name,
-            },
-          }}
           placeholder={placeholder}
           type={password ? 'password' : 'text'}
           value={value}
           error={error}
           required={required}
-          startAdornment={prependObject}
-          endAdornment={appendObject}
+          InputProps={{
+            className: textFieldStyle.join(' '),
+            startAdornment: prependObject,
+            endAdornment: appendObject,
+          }}
+          margin="dense"
+          size={size}
           onBlur={onBlur}
           onClick={onClick}
           onChange={onChange}
           onFocus={onFocus}
           disabled={disabled}
+          ref={forwardedRef}
+          name={name}
         />
         <p className={`text-xs ml-2 mt-1 ${error ? 'text-danger-500' : ''}`}>{message}</p>
       </div>

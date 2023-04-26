@@ -1,0 +1,7 @@
+.container {
+  @apply rounded-xl;
+  &.error {
+    @apply bg-danger-600;
+  }
+
+}

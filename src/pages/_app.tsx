@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { AuthProvider } from '@/contexts/AuthContext';
 import { LayoutProvider } from '@/contexts/LayoutContext';
+import { ToasterProvider } from '@/contexts/ToasterContext';
 
 import '@/styles/globals.css';
 
@@ -46,9 +47,11 @@ const App = ({
         <main className={inter.className}>
           <StyledEngineProvider injectFirst>
             <ThemeProvider theme={theme}>
-              <LayoutProvider>
-                <Component {...pageProps} />
-              </LayoutProvider>
+              <ToasterProvider>
+                <LayoutProvider>
+                  <Component {...pageProps} />
+                </LayoutProvider>
+              </ToasterProvider>
             </ThemeProvider>
           </StyledEngineProvider>
         </main>
