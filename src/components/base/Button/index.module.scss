@@ -23,6 +23,10 @@
     @apply border border-solid;
   }
 
+  &.variantText {
+    @apply border-none p-1 bg-transparent hover:bg-transparent;
+  }
+
   &.variantOutline {
     @apply border border-solid;
 

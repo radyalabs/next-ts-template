@@ -4,6 +4,7 @@ import type { AppProps } from 'next/app';
 import { createTheme, StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import { Inter } from '@next/font/google';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { AuthProvider } from '@/contexts/AuthContext';
 import { LayoutProvider } from '@/contexts/LayoutContext';
@@ -43,6 +44,7 @@ const App = ({
   });
   return (
     <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
       <AuthProvider>
         <main className={inter.className}>
           <StyledEngineProvider injectFirst>

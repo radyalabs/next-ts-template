@@ -29,6 +29,7 @@ const Button = (props: ButtonProps) => {
   if (variant === 'default') styleButton.push(styles.variantDefault);
   if (variant === 'outline') styleButton.push(styles.variantOutline);
   if (variant === 'dashed') styleButton.push(styles.variantDashed);
+  if (variant === 'text') styleButton.push(styles.variantText);
 
   if (size === 'small') styleButton.push(styles.sizeSmall);
   if (size === 'medium') styleButton.push(styles.sizeMedium);
@@ -48,17 +49,6 @@ const Button = (props: ButtonProps) => {
       ) }
       {children}
     </MUIButton>
-    // <ButtonUnstyled
-    //   className={`inline-flex items-center justify-center gap-3 ${styleButton.join(' ')}`}
-    //   disabled={disabled}
-    //   onClick={onClick}
-    //   type={type}
-    // >
-    //   {loading && (
-    //     <Spinner width="16px" height="16px" />
-    //   ) }
-    //   {children}
-    // </ButtonUnstyled>
   );
 };
 

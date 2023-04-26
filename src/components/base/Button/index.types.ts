@@ -17,7 +17,7 @@ interface ButtonProps {
    /**
    * Button Variants
    */
-  variant?: 'default' | 'outline' | 'dashed';
+  variant?: 'default' | 'outline' | 'dashed' | 'text';
   /**
    * How large should the button be?
    */
