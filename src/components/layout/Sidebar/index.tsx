@@ -35,8 +35,8 @@ const Sidebar = () => {
               <Link
                 href={menu.path}
                 className={`flex ${isCollapsed && 'justify-center'} items-center p-2 text-base 
-                font-normal rounded-lg hover:bg-gray-200 gap-2 visited:text-neutral-700 no-underline
-                ${isActive(menu.path) && 'bg-gray-200 shadow-inner'}`}
+                font-normal rounded-lg hover:bg-gray-200 gap-2 visited:text-neutral-700 
+                no-underline ${isActive(menu.path) && 'bg-gray-200 shadow-inner'}`}
               >
                 {menu.icon}
                 <span>
