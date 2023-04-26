@@ -9,14 +9,17 @@ import * as z from 'zod';
 import { ENDPOINT } from '@/constants/apiURL';
 import { APP_TOKEN_KEY } from '@/constants/config';
 import type { BaseResponse } from '@/constants/response';
-import type { LoginResponse } from '@/features/Login/index.types';
+import { useToasterContext } from '@/contexts/ToasterContext';
 import { usePostData } from '@/hooks/useMutateData';
+
+import type { LoginResponse } from './index.types';
 
 const useLogin = () => {
   const router = useRouter();
+  const toaster = useToasterContext();
 
   const schema = z.object({
-    userId: z.string(),
+    userId: z.string().min(1),
     password: z.string().min(6),
   });
 
@@ -39,17 +42,23 @@ const useLogin = () => {
     {
       options: {
         onSuccess: (data) => {
-          const { payload } = data || {};
-          const {
-            token, expirationSeconds,
-          } = payload;
-          setCookie(APP_TOKEN_KEY, token, {
-            maxAge: expirationSeconds,
-            sameSite: true,
-          });
-          axios.defaults.headers.common = {
-            Authorization: `Bearer ${token}`,
-          };
+          if (data.isSuccess) {
+            const { payload } = data || {};
+            const {
+              token, expirationSeconds,
+            } = payload;
+            setCookie(APP_TOKEN_KEY, token, {
+              maxAge: expirationSeconds,
+              sameSite: true,
+            });
+            axios.defaults.headers.common = {
+              Authorization: `Bearer ${token}`,
+            };
+            toaster.show({ message: 'Login berhasil' });
+            router.push('/');
+            return;
+          }
+          toaster.show({ message: 'error ah', error: true });
         },
       },
     },
@@ -57,7 +66,6 @@ const useLogin = () => {
 
   const onSubmit = (data: LoginSchema) => {
     mutateSubmit(data);
-    return router.push('/');
   };
 
   return {

@@ -4,13 +4,13 @@ import Link from 'next/link';
 
 import mark from '@/assets/brand_mark_primary.png';
 import logo from '@/assets/brand_primary.png';
-import { ArrowRounded, Book, Bookmark } from '@/components/icons';
 
 import useSidebar from './index.hooks';
 
 const Sidebar = () => {
   const {
     isCollapsed,
+    menus,
     isActive,
   } = useSidebar();
   return (
@@ -29,31 +29,22 @@ const Sidebar = () => {
             />
           </Link>
         </div>
-        <ul className="space-y-2 text-gray-600">
-          <li>
-            <Link
-              href="/"
-              className={`flex items-center p-2 text-base font-normal rounded-lg hover:bg-gray-200 ${isActive('/') && 'bg-gray-100'}`}
-            >
-              <span className="ml-3">{isCollapsed ? <Book /> : 'List'}</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/compare"
-              className="flex items-center p-2 text-base font-normal rounded-lg hover:bg-gray-200"
-            >
-              <span className="ml-3">{isCollapsed ? <ArrowRounded /> : 'Compare'}</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/bookmark"
-              className="flex items-center p-2 text-base font-normal rounded-lg hover:bg-gray-200"
-            >
-              <span className="ml-3">{isCollapsed ? <Bookmark /> : 'Bookmark'}</span>
-            </Link>
-          </li>
+        <ul className="space-y-2 text-gray-600 list-none p-0">
+          {menus.map((menu) => (
+            <li key={menu.path}>
+              <Link
+                href={menu.path}
+                className={`flex ${isCollapsed && 'justify-center'} items-center p-2 text-base 
+                font-normal rounded-lg hover:bg-gray-200 gap-2 visited:text-neutral-700 
+                no-underline ${isActive(menu.path) && 'bg-gray-200 shadow-inner'}`}
+              >
+                {menu.icon}
+                <span>
+                  {!isCollapsed ? menu.name : ''}
+                </span>
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
     </aside>

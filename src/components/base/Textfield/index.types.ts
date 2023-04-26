@@ -56,6 +56,7 @@ interface TextFieldProps {
   password?: boolean;
   name?: string;
   message?: string;
+  size?: 'small' | 'medium';
 }
 
 export default TextFieldProps;

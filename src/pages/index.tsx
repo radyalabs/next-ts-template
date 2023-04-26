@@ -1,7 +1,8 @@
 import Head from 'next/head';
 
+import List from 'src/views/List';
+
 import Layout from '@/components/layout/Layout';
-import PokemonList from '@/features/PokemonList';
 
 const Home = () => (
   <>
@@ -12,7 +13,7 @@ const Home = () => (
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <Layout>
-      <PokemonList />
+      <List />
     </Layout>
   </>
 );
