@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 import mark from '@/assets/brand_mark_primary.png';
 import logo from '@/assets/brand_primary.png';
+import Tooltip from '@/components/base/Tooltip';
 
 import useSidebar from './index.hooks';
 
@@ -31,19 +32,21 @@ const Sidebar = () => {
         </div>
         <ul className="space-y-2 text-gray-600 list-none p-0">
           {menus.map((menu) => (
-            <li key={menu.path}>
-              <Link
-                href={menu.path}
-                className={`flex ${isCollapsed && 'justify-center'} items-center p-2 text-base 
+            <Tooltip key={menu.path} title={isCollapsed ? menu.name : ''} placement="right">
+              <li>
+                <Link
+                  href={menu.path}
+                  className={`flex ${isCollapsed && 'justify-center'} items-center p-2 text-base 
                 font-normal rounded-lg hover:bg-gray-200 gap-2 visited:text-neutral-700 
                 no-underline ${isActive(menu.path) && 'bg-gray-200 shadow-inner'}`}
-              >
-                {menu.icon}
-                <span>
-                  {!isCollapsed ? menu.name : ''}
-                </span>
-              </Link>
-            </li>
+                >
+                  {menu.icon}
+                  <span>
+                    {!isCollapsed ? menu.name : ''}
+                  </span>
+                </Link>
+              </li>
+            </Tooltip>
           ))}
         </ul>
       </div>
