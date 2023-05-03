@@ -53,8 +53,9 @@ const TextField = forwardRef(
     }
     return (
       <>
-        {!!label
-          && <label htmlFor={id} className="font-semibold mb-1 block text-gray-500">{label}</label>}
+        {!!label && (
+          <label htmlFor={id} className="font-semibold mb-1 block text-gray-500">{label}</label>
+        )}
         <MUITextField
           className={`${containerStyle.join(' ')}`}
           placeholder={placeholder}

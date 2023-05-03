@@ -15,3 +15,20 @@ export interface Vehicle {
 }
 
 export type VehicleListResponse = BaseResponse<PaginationData<Vehicle>>;
+
+export interface VehicleQueryParams {
+  [key: string]: unknown;
+  search: string;
+  orderBy: string;
+  orderType: string;
+  filterVehicleId: string;
+  filterBranchId: string;
+  filterPoliceNo: string;
+  filterVehicleType: string;
+  filterDescription: string;
+  filterCreatedId: string;
+  filterDateCreated: string;
+  page: number;
+  rows: number;
+  index: number;
+}

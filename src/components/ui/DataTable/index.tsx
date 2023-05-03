@@ -4,13 +4,12 @@ import {
   Table, TableBody, TableCell, TableHead, TableRow, TableSortLabel,
 } from '@mui/material';
 import type { ChangeEvent } from 'react';
+import useDataTable from 'src/components/ui/DataTable/index.hooks';
+import type { TableProps } from 'src/components/ui/DataTable/index.types';
 
 import Button from '@/components/base/Button';
 import TextField from '@/components/base/Textfield';
 import { noop } from '@/utils/index';
-
-import useDataTable from './index.hooks';
-import type { TableProps } from './index.types';
 
 const DataTable = (props: TableProps) => {
   const {
@@ -28,7 +27,7 @@ const DataTable = (props: TableProps) => {
   } = useDataTable(props);
   return (
     <div className="rounded-xl shadow-inner border-solid border border-neutral-300">
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table sx={{ minWidth: 650 }} aria-label="simple table" className="table-fixed w-full">
         <TableHead>
           <TableRow className="bg-neutral-300">
             {columns.map((column) => (
@@ -36,6 +35,7 @@ const DataTable = (props: TableProps) => {
                 className="first:rounded-tl-xl last:rounded-tr-xl"
                 sortDirection="asc"
                 key={column.dataKey}
+                classes={{ root: 'break-words' }}
               >
                 <TableSortLabel
                   active={false}
@@ -57,7 +57,10 @@ const DataTable = (props: TableProps) => {
                 <TableCell
                   component="th"
                   scope="row"
-                  key={`${row[column.dataKey]}-${row[dataRowKey]}`}
+                  key={`${column.dataKey}-${row[column.dataKey]}-${row[dataRowKey]}`}
+                  className="break-words"
+                  width={150}
+
                 >
                   {String(row[column.dataKey])}
                 </TableCell>
@@ -67,7 +70,7 @@ const DataTable = (props: TableProps) => {
         </TableBody>
       </Table>
       {showPagination && (
-        <div className="flex flex-row justify-end items-center p-4 [&>*]:mx-1">
+        <div className="flex flex-row justify-end items-center p-4 [&>*]:mx-1 border-0 border-t border-solid border-neutral-300">
           <Button
             className="p-1 min-w-0 w-8"
             disabled={Number(page) === 1 || !page}

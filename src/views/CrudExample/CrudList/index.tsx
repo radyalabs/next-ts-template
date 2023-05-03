@@ -1,4 +1,4 @@
-import Table from 'src/components/base/DataTable';
+import Table from 'src/components/ui/DataTable';
 
 import useCrudList from '@/views/CrudExample/CrudList/index.hooks';
 
@@ -7,6 +7,9 @@ const CrudList = () => {
     data,
     isLoading,
     tableColumns,
+    page,
+    onPageChange,
+    onQuickPageChange,
   } = useCrudList();
   return (
     <>
@@ -17,6 +20,9 @@ const CrudList = () => {
           columns={tableColumns}
           dataRowKey="vehicleId"
           showPagination
+          page={page}
+          onPageChange={onPageChange}
+          onQuickPageChange={onQuickPageChange}
         />
       )}
     </>

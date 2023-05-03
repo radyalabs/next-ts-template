@@ -1,6 +1,6 @@
 import type { KeyboardEvent } from 'react';
 
-import type { TableProps } from '@/components/base/DataTable/index.types';
+import type { TableProps } from '@/components/ui/DataTable/index.types';
 import noop from '@/utils/noop';
 
 const useDataTable = (props: TableProps) => {
