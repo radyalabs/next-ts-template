@@ -1,9 +1,13 @@
 import Typography from '@/components/base/Typography';
+import { useLayoutContext } from '@/contexts/LayoutContext';
 
-const Layout = () => (
-  <div className="fixed inset-x-0 bottom-0 mb-5">
-    <Typography className="text-center">Copyright &#169; 2023 Radya Digital</Typography>
-  </div>
-);
+const Layout = () => {
+  const { isCollapsed } = useLayoutContext();
+  return (
+    <div className={`relative inset-x-0 bottom-0 mb-5 ${!isCollapsed ? 'ml-64' : 'ml-24'}`}>
+      <Typography className="text-center">{`Copyright \u00A9 ${new Date().getFullYear()} Digital`}</Typography>
+    </div>
+  );
+};
 
 export default Layout;

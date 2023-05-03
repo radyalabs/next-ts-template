@@ -16,26 +16,29 @@ const TextField = forwardRef(
       disabled = false,
       error = false,
       id,
+      innerClassName,
       label,
       message,
       name,
-      password = false,
       placeholder = 'Enter text here',
       prependObject,
       required = false,
       rounded,
       size = 'medium',
       success = false,
+      type = 'text',
       value,
       onBlur,
       onChange,
       onClick,
       onFocus,
+      onKeyUp,
     } = props || {};
     const textFieldStyle = [styles.textfield];
     const containerStyle = [styles.container];
 
-    if (className) textFieldStyle.push(className);
+    if (className) containerStyle.push(className);
+    if (innerClassName) textFieldStyle.push(innerClassName);
     if (prependObject) textFieldStyle.push(styles.paddingSearch);
     if (error) containerStyle.push(styles.borderError);
     if (success) containerStyle.push(styles.borderSuccess);
@@ -49,13 +52,13 @@ const TextField = forwardRef(
       containerStyle.push(styles.block);
     }
     return (
-      <div className="block mb-4">
+      <>
         {!!label
           && <label htmlFor={id} className="font-semibold mb-1 block text-gray-500">{label}</label>}
         <MUITextField
-          className={containerStyle.join(' ')}
+          className={`${containerStyle.join(' ')}`}
           placeholder={placeholder}
-          type={password ? 'password' : 'text'}
+          type={type}
           value={value}
           error={error}
           required={required}
@@ -73,9 +76,10 @@ const TextField = forwardRef(
           disabled={disabled}
           ref={forwardedRef}
           name={name}
+          onKeyUp={onKeyUp}
         />
         <p className={`text-xs ml-2 mt-1 ${error ? 'text-danger-500' : ''}`}>{message}</p>
-      </div>
+      </>
     );
   },
 );

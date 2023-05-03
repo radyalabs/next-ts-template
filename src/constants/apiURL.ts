@@ -3,4 +3,7 @@ export const ENDPOINT = {
   AUTH: {
     LOGIN: 'auth/login',
   },
+  MASTER: {
+    VEHICLE: 'master-data/inventory/vehicle/list',
+  },
 };

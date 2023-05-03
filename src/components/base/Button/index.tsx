@@ -39,7 +39,7 @@ const Button = (props: ButtonProps) => {
   if (disabled) styleButton.push(styles.disabled);
   return (
     <MUIButton
-      className={`inline-flex items-center justify-center gap-3 ${styleButton.join(' ')}`}
+      className={`inline-flex items-center justify-center gap-3 w-fit ${styleButton.join(' ')}`}
       disabled={disabled}
       onClick={onClick}
       type={type}

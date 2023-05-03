@@ -79,7 +79,7 @@ const Login = () => {
                 message={errors.password && errors.password.message}
                 error={!!errors.password}
                 {...register('password')}
-                password
+                type="password"
                 block
               />
             </form>
