@@ -3,13 +3,11 @@ import React from 'react';
 import {
   Table, TableBody, TableCell, TableHead, TableRow, TableSortLabel,
 } from '@mui/material';
-import type { ChangeEvent } from 'react';
 import useDataTable from 'src/components/ui/DataTable/index.hooks';
 import type { TableProps } from 'src/components/ui/DataTable/index.types';
 
 import Button from '@/components/base/Button';
 import TextField from '@/components/base/Textfield';
-import { noop } from '@/utils/index';
 
 const DataTable = (props: TableProps) => {
   const {
@@ -19,10 +17,11 @@ const DataTable = (props: TableProps) => {
     page = 1,
     pageSize = 10,
     showPagination = false,
-    onPageChange = noop,
-    onQuickPageChange = noop,
   } = props;
   const {
+    displayPage,
+    handleChangePage,
+    onQuickPageChange,
     onSubmitPage,
   } = useDataTable(props);
   return (
@@ -37,12 +36,15 @@ const DataTable = (props: TableProps) => {
                 key={column.dataKey}
                 classes={{ root: 'break-words' }}
               >
-                <TableSortLabel
-                  active={false}
-                  direction="asc"
-                >
-                  {column.name}
-                </TableSortLabel>
+                {column.sortable ? (
+                  <TableSortLabel
+                    active={false}
+                    direction="asc"
+
+                  >
+                    {column.name}
+                  </TableSortLabel>
+                ) : column.name}
               </TableCell>
             ))}
           </TableRow>
@@ -60,7 +62,6 @@ const DataTable = (props: TableProps) => {
                   key={`${column.dataKey}-${row[column.dataKey]}-${row[dataRowKey]}`}
                   className="break-words"
                   width={150}
-
                 >
                   {String(row[column.dataKey])}
                 </TableCell>
@@ -74,7 +75,7 @@ const DataTable = (props: TableProps) => {
           <Button
             className="p-1 min-w-0 w-8"
             disabled={Number(page) === 1 || !page}
-            onClick={() => onPageChange(Number(page) - 1)}
+            onClick={() => handleChangePage(Number(page) - 1)}
             variant="outline"
           >
             &lt;
@@ -82,17 +83,15 @@ const DataTable = (props: TableProps) => {
           <TextField
             type="number"
             placeholder="Page"
-            value={String(page || '')}
+            value={String(displayPage || '')}
             size="small"
             className="m-0 w-14"
             onKeyUp={onSubmitPage}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => onQuickPageChange(
-              Number(e.target.value || 0),
-            )}
+            onChange={onQuickPageChange}
           />
           <Button
             className="p-1 min-w-0 w-8"
-            onClick={() => onPageChange(Number(page) + 1)}
+            onClick={() => handleChangePage(Number(page) + 1)}
             disabled={data.length < pageSize}
             variant="outline"
           >

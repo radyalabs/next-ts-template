@@ -1,35 +1,29 @@
 import { useState } from 'react';
 
 import { ENDPOINT } from '@/constants/apiURL';
-import createColumnData from '@/helpers/createColumnData';
+import { createColumnData } from '@/helpers';
 import useGetData from '@/hooks/useGetData';
 import type { TableColumn } from '@/types/tables';
-import createQueryParams from '@/utils/createQueryParams';
-import { INIT_QUERY_PARAMS } from '@/views/CrudExample/CrudList/index.constants';
-import vehicleListNormalizer from '@/views/CrudExample/CrudList/index.normalizer';
+import { createQueryParams } from '@/utils';
 
+import { INIT_QUERY_PARAMS } from './index.constants';
+import vehicleListNormalizer from './index.normalizer';
 import type { VehicleListResponse, VehicleQueryParams } from './index.types';
 
 const useCrudList = () => {
   const tableColumns: TableColumn[] = [
-    createColumnData('Kode Kendaraan', 'vehicleId', 'string'),
-    createColumnData('Depo', 'branch', 'string'),
-    createColumnData('Jenis Kendaraan', 'vehicleType', 'string'),
-    createColumnData('Deskripsi', 'description', 'string'),
-    createColumnData('No. Polisi', 'policeNo', 'string'),
-    createColumnData('Dibuat Oleh', 'createdById', 'string'),
-    createColumnData('Tgl Dibuat', 'createdDt', 'string'),
+    createColumnData('Kode Kendaraan', 'vehicleId', 'string', true),
+    createColumnData('Depo', 'branch', 'string', true),
+    createColumnData('Jenis Kendaraan', 'vehicleType', 'string', true),
+    createColumnData('Deskripsi', 'description', 'string', false),
+    createColumnData('No. Polisi', 'policeNo', 'string', true),
+    createColumnData('Dibuat Oleh', 'createdById', 'string', true),
+    createColumnData('Tgl Dibuat', 'createdDt', 'string', true),
   ];
 
   const [queryParams, setQueryParams] = useState<VehicleQueryParams>(INIT_QUERY_PARAMS);
-  const [page, setPage] = useState(1);
   const onPageChange = (val: number) => {
     setQueryParams((prevState) => ({ ...prevState, page: val }));
-    setPage(val);
-  };
-
-  const onQuickPageChange = (val: number) => {
-    setPage(val);
   };
 
   const { data, isLoading } = useGetData<VehicleListResponse>(
@@ -42,7 +36,7 @@ const useCrudList = () => {
   );
 
   return {
-    data, isLoading, tableColumns, page, queryParams, onPageChange, onQuickPageChange,
+    data, isLoading, tableColumns, queryParams, onPageChange,
   };
 };
 

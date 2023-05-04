@@ -1,5 +1,5 @@
-import Table from 'src/components/ui/DataTable';
-
+import Typography from '@/components/base/Typography';
+import Table from '@/components/ui/DataTable';
 import useCrudList from '@/views/CrudExample/CrudList/index.hooks';
 
 const CrudList = () => {
@@ -7,22 +7,27 @@ const CrudList = () => {
     data,
     isLoading,
     tableColumns,
-    page,
+    queryParams,
     onPageChange,
-    onQuickPageChange,
   } = useCrudList();
   return (
     <>
-      <div>Crud Example</div>
+      <Typography
+        variant="h5"
+        as="h1"
+        className="font-bold"
+        gutterBottom
+      >
+        Vehicle List
+      </Typography>
       {(!isLoading && data) && (
         <Table
           data={data.payload.data || []}
           columns={tableColumns}
           dataRowKey="vehicleId"
           showPagination
-          page={page}
+          page={queryParams.page}
           onPageChange={onPageChange}
-          onQuickPageChange={onQuickPageChange}
         />
       )}
     </>

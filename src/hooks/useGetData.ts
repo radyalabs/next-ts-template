@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 
-import defaultFetcherFn from '@/helpers/fetcher';
+import { defaultFetcherFn } from '@/helpers';
 import type { FetchQueryExtras } from '@/types/queries';
-import { noop } from '@/utils/index';
+import { noop } from '@/utils';
 
 const useGetData = <T>(
   key: string[],

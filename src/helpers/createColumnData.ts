@@ -5,6 +5,7 @@ const createColumnData = (
   name: string,
   dataKey: string,
   dataType: 'string' | 'number' | 'date' | 'currency',
+  sortable: boolean,
   filterKey?: string,
   filterType?: 'text' | 'dropdown' | 'date' | null,
   filterPlaceholder?: string,
@@ -18,6 +19,7 @@ const createColumnData = (
   filterType,
   filterPlaceholder,
   filterOption,
+  sortable,
   width,
 });
 

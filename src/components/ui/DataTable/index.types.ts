@@ -8,7 +8,6 @@ export interface TableProps {
   pageSize?: number;
   showPagination?: boolean;
   onPageChange?: (page: number) => void;
-  onQuickPageChange?: (page: number) => void;
   onPageSizeChange?: (page: number) => void;
   onFilterChange?: (filter: Record<string, string>) => void;
 }

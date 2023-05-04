@@ -1,8 +1,8 @@
-import createParams from '@/utils/createParams';
-import noop from '@/utils/noop';
-import slugToTitle from '@/utils/slugToTitle';
-import toTitleCase from '@/utils/toTitleCase';
+import createQueryParams from './createQueryParams';
+import noop from './noop';
+import slugToTitle from './slugToTitle';
+import toTitleCase from './toTitleCase';
 
 export {
-  createParams, noop, slugToTitle, toTitleCase,
+  createQueryParams, noop, slugToTitle, toTitleCase,
 };
