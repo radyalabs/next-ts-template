@@ -15,8 +15,8 @@ const useSidebar = () => {
       icon: <Book />,
     },
     {
-      path: '/compare',
-      name: 'Compare',
+      path: '/crud-example',
+      name: 'CRUD Example',
       icon: <ArrowRounded />,
     },
     {

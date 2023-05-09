@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import defaultFetcherFn from '@/helpers/fetcher';
+import { defaultFetcherFn } from '@/helpers';
 import type { MutateQueryExtras } from '@/types/queries';
 
 const useMutateData = <T = void>(

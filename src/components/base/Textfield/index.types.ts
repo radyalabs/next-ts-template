@@ -1,5 +1,10 @@
 import type {
-  ChangeEventHandler, FocusEventHandler, MouseEventHandler, ReactNode,
+  ChangeEventHandler,
+  FocusEventHandler,
+  InputHTMLAttributes,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  ReactNode,
 } from 'react';
 
 interface TextFieldProps {
@@ -15,6 +20,10 @@ interface TextFieldProps {
    * Custom Classname
    */
   className?: string;
+  /**
+   * Custom Classname
+   */
+  innerClassName?: string;
   /**
    * placeholder
    */
@@ -52,8 +61,9 @@ interface TextFieldProps {
   onBlur?: FocusEventHandler;
   onFocus?: FocusEventHandler;
   onClick?: MouseEventHandler;
+  onKeyUp?: KeyboardEventHandler;
   required?: boolean;
-  password?: boolean;
+  type?: InputHTMLAttributes<unknown>['type'];
   name?: string;
   message?: string;
   size?: 'small' | 'medium';

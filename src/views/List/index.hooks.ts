@@ -1,5 +1,5 @@
-import type { BaseResponse } from '@/constants/response';
 import useGetData from '@/hooks/useGetData';
+import type { BaseResponse } from '@/types/responses';
 
 import type { Profile } from './index.types';
 

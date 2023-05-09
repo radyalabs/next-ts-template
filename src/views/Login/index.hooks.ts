@@ -8,9 +8,9 @@ import * as z from 'zod';
 
 import { ENDPOINT } from '@/constants/apiURL';
 import { APP_TOKEN_KEY } from '@/constants/config';
-import type { BaseResponse } from '@/constants/response';
 import { useToasterContext } from '@/contexts/ToasterContext';
 import { usePostData } from '@/hooks/useMutateData';
+import type { BaseResponse } from '@/types/responses';
 
 import type { LoginResponse } from './index.types';
 

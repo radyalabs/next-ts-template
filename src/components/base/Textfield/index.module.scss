@@ -1,7 +1,7 @@
 
 
 .container {
-  @apply border border-gray-300 w-fit;
+  @apply border w-fit border-neutral-300 h-fit;
 
   &.borderSuccess {
     @apply border-success-500;

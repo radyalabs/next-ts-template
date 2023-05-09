@@ -21,7 +21,7 @@ const Login = () => {
   return (
     <section className="text-gray-600 body-font font-sans pt-24 px-24 relative">
       <div
-        className="container mb-24 flex drop-shadow-xl min-h-full min-w-full bg-white rounded-xl"
+        className="container mb-24 flex drop-shadow-xl min-h-full bg-white rounded-xl max-w-6xl mx-auto"
       >
         <div
           className="bg-primary-500 w-1/2 rounded-xl flex flex-col justify-between m-6 min-h-[600px] p-6"
@@ -79,7 +79,7 @@ const Login = () => {
                 message={errors.password && errors.password.message}
                 error={!!errors.password}
                 {...register('password')}
-                password
+                type="password"
                 block
               />
             </form>

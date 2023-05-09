@@ -20,12 +20,12 @@
       "@/components/*": ["./src/components/*"],
       "@/constants/*": ["./src/constants/*"],
       "@/contexts/*": ["./src/contexts/*"],
-      "@/helpers/*": ["./src/helpers/*"],
+      "@/helpers": ["./src/helpers/index.ts"],
       "@/hooks/*": ["./src/hooks/*"],
       "@/pages/*": ["./src/pages/*"],
       "@/styles/*": ["./src/styles/*"],
       "@/types/*": ["./src/types/*"],
-      "@/utils/*": ["./src/utils/*"],
+      "@/utils": ["./src/utils/index.ts"],
       "@/views/*": ["./src/views/*"]
     }
   },
