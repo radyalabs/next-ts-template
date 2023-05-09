@@ -9,6 +9,7 @@ const CrudList = () => {
     tableColumns,
     queryParams,
     onPageChange,
+    onSortChange,
   } = useCrudList();
   return (
     <>
@@ -20,16 +21,16 @@ const CrudList = () => {
       >
         Vehicle List
       </Typography>
-      {(!isLoading && data) && (
-        <Table
-          data={data.payload.data || []}
-          columns={tableColumns}
-          dataRowKey="vehicleId"
-          showPagination
-          page={queryParams.page}
-          onPageChange={onPageChange}
-        />
-      )}
+      <Table
+        data={data?.payload.data || []}
+        columns={tableColumns}
+        dataRowKey="vehicleId"
+        loading={isLoading}
+        showPagination
+        page={queryParams.page}
+        onPageChange={onPageChange}
+        onSortChange={onSortChange}
+      />
     </>
   );
 };

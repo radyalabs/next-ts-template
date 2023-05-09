@@ -8,19 +8,23 @@ import type { TableProps } from 'src/components/ui/DataTable/index.types';
 
 import Button from '@/components/base/Button';
 import TextField from '@/components/base/Textfield';
+import { Spinner } from '@/components/icons';
 
 const DataTable = (props: TableProps) => {
   const {
     columns,
     data,
     dataRowKey,
+    loading = false,
     page = 1,
     pageSize = 10,
     showPagination = false,
   } = props;
   const {
     displayPage,
+    sortState,
     handleChangePage,
+    handleSort,
     onQuickPageChange,
     onSubmitPage,
   } = useDataTable(props);
@@ -35,12 +39,13 @@ const DataTable = (props: TableProps) => {
                 sortDirection="asc"
                 key={column.dataKey}
                 classes={{ root: 'break-words' }}
+                width={column.width}
               >
-                {column.sortable ? (
+                {(column.sortable && column.sortKey) && Object.keys(sortState).length ? (
                   <TableSortLabel
-                    active={false}
-                    direction="asc"
-
+                    active={sortState[column.sortKey].active}
+                    direction={sortState[column.sortKey].direction}
+                    onClick={() => handleSort(column.sortKey || '')}
                   >
                     {column.name}
                   </TableSortLabel>
@@ -61,7 +66,6 @@ const DataTable = (props: TableProps) => {
                   scope="row"
                   key={`${column.dataKey}-${row[column.dataKey]}-${row[dataRowKey]}`}
                   className="break-words"
-                  width={150}
                 >
                   {String(row[column.dataKey])}
                 </TableCell>
@@ -70,6 +74,11 @@ const DataTable = (props: TableProps) => {
           ))}
         </TableBody>
       </Table>
+      {loading && (
+        <div className="flex justify-center items-center w-full min-h-[500px]">
+          <Spinner width={80} height={80} />
+        </div>
+      )}
       {showPagination && (
         <div className="flex flex-row justify-end items-center p-4 [&>*]:mx-1 border-0 border-t border-solid border-neutral-300">
           <Button

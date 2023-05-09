@@ -12,7 +12,10 @@ import { ToasterProvider } from '@/contexts/ToasterContext';
 
 import '@/styles/globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 const App = ({
   Component,
