@@ -2,14 +2,28 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+First, install pnpm:
+```bash
+# using corepack (Node.js ver. > 16.13)
+corepack enable
+# then
+corepack prepare pnpm@8 --activate
+
+
+# or using npm
+npm install -g pnpm
+```
+
+Before starting development, install all dependency::
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+pnpm install
+```
+
+To start the project, you can run:
+
+```bash
+pnpm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -31,8 +45,73 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Project Directories
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```
+.
+├── .husky/
+├── docker/
+│   ├── development/
+│   │   ├── docker-compose.yml
+│   │   └── Dockerfile
+│   ├── production/
+│   │   ├── docker-compose.yml
+│   │   └── Dockerfile
+│   └── staging/
+│       ├── docker-compose.yml
+│       └── Dockerfile
+├── node_modules
+├── public
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   ├── base/
+│   │   ├── icons/
+│   │   ├── layout/
+│   │   └── ui/
+│   ├── constants/
+│   ├── contexts/
+│   ├── helpers/
+│   │   └── index.ts
+│   ├── hooks/
+│   ├── pages/
+│   ├── styles/
+│   ├── types/
+│   ├── utils/
+│   │   └── index.ts
+│   └── views/
+│       ├── CrudExample/
+│       │   └── CrudList/
+│       │       ├── index.constants.ts
+│       │       ├── index.hooks.ts
+│       │       ├── index.normalizer.ts
+│       │       ├── index.tsx
+│       │       └── index.types.ts
+│       ├── List/
+│       │   ├── index.hooks.ts
+│       │   ├── index.tsx
+│       │   └── index.types.ts
+│       └── Login/
+│           ├── index.hooks.ts
+│           ├── index.tsx
+│           └── index.types.ts
+├── .commitlintrc.json
+├── .dockerignore
+├── .env.development
+├── .env.local
+├── .env.production
+├── .env.staging
+├── .eslintignore
+├── .eslintrc.json
+├── .gitignore
+├── DOCUMENTATION.md
+├── Makefile
+├── next.config.js
+├── next-env.d.ts
+├── package.json
+├── pnpm-lock.yaml
+├── postcss.config.cjs
+├── README.md
+├── tailwind.config.cjs
+└── tsconfig.json
+```
