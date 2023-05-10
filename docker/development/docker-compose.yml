@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  next-ts-template-dev:
+    build:
+      context: ../../
+      dockerfile: docker/development/Dockerfile
+    image: next-ts-template-dev
+    ports:
+      - '3000:3000'
