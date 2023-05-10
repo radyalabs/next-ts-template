@@ -31,6 +31,11 @@ const useDataTable = (props: TableProps) => {
     setSortState(initState);
   }, [columns]);
 
+  // useEffect for syncing displayPage and page
+  useEffect(() => {
+    setDisplayPage(page);
+  }, [page]);
+
   const onQuickPageChange = (e: ChangeEvent<HTMLInputElement>) => {
     setDisplayPage(Number(e.target.value));
   };

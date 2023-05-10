@@ -15,21 +15,27 @@ const useCrudList = () => {
   const router = useRouter();
   const tableColumns: TableColumn[] = TABLE_COLUMNS;
   const [queryParams, setQueryParams] = useState<VehicleQueryParams>(INIT_QUERY_PARAMS);
+  const initQuery = router.query;
 
+  useEffect(() => {
+    setQueryParams((prevState) => ({ ...prevState, ...initQuery }));
+  }, [initQuery]);
+  const updateQueryParams = (queryObject: Record<string, unknown>) => {
+    setQueryParams((prevState) => {
+      const newState: VehicleQueryParams = { ...prevState, ...queryObject };
+      updateURLQuery(router, newState);
+      return newState;
+    });
+  };
   const onPageChange = (val: number) => {
-    setQueryParams((prevState) => ({ ...prevState, page: val }));
+    updateQueryParams({ page: val });
   };
 
   const onSortChange = (params: SortParam) => {
     const { key, direction } = params;
-    setQueryParams((prevState) => ({ ...prevState, orderBy: key, orderType: direction }));
-    updateURLQuery(router, queryParams);
+    onPageChange(1);
+    updateQueryParams({ orderBy: key, orderType: direction });
   };
-
-  // useEffect for watching query params change
-  useEffect(() => {
-    updateURLQuery(router, queryParams);
-  }, [router, queryParams]);
 
   const { data, isLoading } = useGetData<VehicleListResponse>(
     ['vehicleList', createQueryParams(queryParams)],
