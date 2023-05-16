@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 import { Menu, MenuOpen } from '@mui/icons-material';
 
@@ -13,21 +14,24 @@ const Header = () => {
     toggleCollapsed,
   } = useHeader();
   return (
-    <nav className="bg-primary-500 py-2 px-4 shadow fixed w-full z-10">
+    <nav className={`bg-primary-500 py-2 px-4 shadow fixed w-full z-10 ${!isCollapsed ? 'pl-64' : 'pl-24'}`}>
       <div
-        className={`container flex flex-wrap items-center [&>*]:mr-5 ${!isCollapsed ? 'ml-64' : 'ml-24'} transition-width transition-slowest ease text-white`}
+        className="container flex flex-wrap items-center [&>*]:mr-5 transition-width transition-slowest ease [&>*]:text-white"
       >
-        <Button variant="text" className="text-white" onClick={toggleCollapsed} type="button">
+        <Button variant="text" onClick={toggleCollapsed} type="button">
           {!isCollapsed ? <MenuOpen fontSize="large" /> : <Menu fontSize="large" />}
         </Button>
         <Typography
           variant="h5"
           as="span"
-          align="center"
-          className="font-bold"
+          align="left"
+          className="font-bold grow"
         >
           Radya Digital CMS
         </Typography>
+        <Link href="/logout">
+          <Button variant="text" className="text-white">Logout</Button>
+        </Link>
       </div>
     </nav>
   );
