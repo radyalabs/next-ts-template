@@ -22,7 +22,7 @@ const CrudList = () => {
         Vehicle List
       </Typography>
       <Table
-        data={data?.payload.data || []}
+        data={(data && data.payload.data) || []}
         columns={tableColumns}
         dataRowKey="vehicleId"
         loading={isLoading}

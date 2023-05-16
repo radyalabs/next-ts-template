@@ -16,6 +16,7 @@ const useGetData = <T>(
   } = extras || {};
   const {
     enabled = true,
+    initialData = undefined,
     retry = true,
     onSuccess = noop,
     onError = noop,
@@ -40,6 +41,7 @@ const useGetData = <T>(
     }),
     {
       enabled,
+      initialData,
       onSuccess,
       onError,
       retry,
