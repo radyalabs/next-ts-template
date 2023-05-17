@@ -79,7 +79,7 @@ index.hooks.ts dan type atau interface yg digunakan component tsb ada di Sidebar
 │   │   │   ├── Layout
 │   │   │   │   └── index.tsx
 │   │   │   └── Sidebar
-│   │   │       ├── index.hooks.tsx
+│   │   │       ├── index.hooks.ts
 │   │   │       └── index.tsx
 │   │   └── ui
 │   │       └── DataTable
@@ -355,7 +355,7 @@ const CrudList = () => {
       <Table
         data={data?.payload.data || []}
         columns={tableColumns}
-        dataRowKey="vehicleId"
+        uniqueRowKey="vehicleId"
         loading={isLoading}
         showPagination
         page={queryParams.page}

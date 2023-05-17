@@ -3,22 +3,24 @@ import React from 'react';
 import {
   Table, TableBody, TableCell, TableHead, TableRow, TableSortLabel,
 } from '@mui/material';
-import useDataTable from 'src/components/ui/DataTable/index.hooks';
-import type { TableProps } from 'src/components/ui/DataTable/index.types';
 
 import Button from '@/components/base/Button';
 import TextField from '@/components/base/Textfield';
 import { Spinner } from '@/components/icons';
+import useDataTable from '@/components/ui/DataTable/index.hooks';
+import type { TableProps } from '@/components/ui/DataTable/index.types';
+import DropdownButton from '@/components/ui/DropdownButton';
 
 const DataTable = (props: TableProps) => {
   const {
     columns,
     data,
-    dataRowKey,
     loading = false,
     page = 1,
     pageSize = 10,
+    rowActions = [],
     showPagination = false,
+    uniqueRowKey,
   } = props;
   const {
     displayPage,
@@ -52,24 +54,41 @@ const DataTable = (props: TableProps) => {
                 ) : column.name}
               </TableCell>
             ))}
+            {rowActions.length > 0 && <TableCell />}
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map((row) => (
             <TableRow
-              key={String(row[dataRowKey])}
+              key={String(row[uniqueRowKey])}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               {columns.map((column) => (
                 <TableCell
                   component="th"
                   scope="row"
-                  key={`${column.dataKey}-${row[column.dataKey]}-${row[dataRowKey]}`}
+                  key={`${column.dataKey}-${row[column.dataKey]}-${row[uniqueRowKey]}`}
                   className="break-words"
                 >
                   {String(row[column.dataKey])}
                 </TableCell>
               ))}
+              {rowActions.length > 0 && (
+                <TableCell align="center">
+                  <DropdownButton
+                    buttonType="dots"
+                    className="p-2"
+                    size="small"
+                    menuItems={rowActions.map((el) => ({
+                      label: el.label,
+                      danger: el.danger,
+                      onClick: () => el.onClick(String(row[uniqueRowKey])),
+                    }))}
+                  >
+                    Action
+                  </DropdownButton>
+                </TableCell>
+              )}
             </TableRow>
           ))}
         </TableBody>
@@ -80,7 +99,9 @@ const DataTable = (props: TableProps) => {
         </div>
       )}
       {showPagination && (
-        <div className="flex flex-row justify-end items-center p-4 [&>*]:mx-1 border-0 border-t border-solid border-neutral-300">
+        <div
+          className="flex flex-row justify-end items-center p-4 [&>*]:mx-1 border-0 border-t border-solid border-neutral-300"
+        >
           <Button
             className="p-1 min-w-0 w-8"
             disabled={Number(page) === 1 || !page}

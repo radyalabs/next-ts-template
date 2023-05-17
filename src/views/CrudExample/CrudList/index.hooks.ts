@@ -37,17 +37,39 @@ const useCrudList = () => {
     updateQueryParams({ orderBy: key, orderType: direction });
   };
 
+  const handleDetail = (id: string) => {
+    // TODO: detail handling logic, remove disable eslint
+    // eslint-disable-next-line no-console
+    console.log(id);
+  };
+
+  const handleDelete = (id: string) => {
+    // TODO: delete handling logic, remove disable eslint
+    // eslint-disable-next-line no-console
+    console.log('delete', id);
+  };
+
   const { data, isLoading } = useGetData<VehicleListResponse>(
     ['vehicleList', createQueryParams(queryParams)],
     ENDPOINT.MASTER.VEHICLE,
     {
       params: queryParams,
       normalizer: vehicleListNormalizer,
+      options: {
+        retry: 3,
+      },
     },
   );
 
   return {
-    data, isLoading, tableColumns, queryParams, onPageChange, onSortChange,
+    data,
+    isLoading,
+    tableColumns,
+    queryParams,
+    handleDelete,
+    handleDetail,
+    onPageChange,
+    onSortChange,
   };
 };
 

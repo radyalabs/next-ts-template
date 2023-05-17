@@ -10,6 +10,7 @@ const Button = (props: ButtonProps) => {
     children,
     className,
     disabled = false,
+    endIcon = undefined,
     loading = false,
     rounded = false,
     size = 'medium',
@@ -43,6 +44,7 @@ const Button = (props: ButtonProps) => {
       disabled={disabled}
       onClick={onClick}
       type={type}
+      endIcon={endIcon}
     >
       {loading && (
         <Spinner width="16px" height="16px" />
