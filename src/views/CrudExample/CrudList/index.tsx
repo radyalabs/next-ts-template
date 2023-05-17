@@ -1,8 +1,10 @@
 import { Delete, FindInPage } from '@mui/icons-material';
 
-import Typography from '@/components/base/Typography';
+import Paper from '@/components/base/Paper';
 import Table from '@/components/ui/DataTable';
-import useCrudList from '@/views/CrudExample/CrudList/index.hooks';
+import PageHeader from '@/components/ui/PageHeader';
+
+import useCrudList from './index.hooks';
 
 const CrudList = () => {
   const {
@@ -17,45 +19,40 @@ const CrudList = () => {
   } = useCrudList();
   return (
     <>
-      <Typography
-        variant="h5"
-        as="h1"
-        className="font-bold"
-        gutterBottom
-      >
-        Vehicle List
-      </Typography>
-      <Table
-        data={(data && data.payload.data) || []}
-        columns={tableColumns}
-        uniqueRowKey="vehicleId"
-        loading={isLoading}
-        showPagination
-        page={queryParams.page}
-        onPageChange={onPageChange}
-        onSortChange={onSortChange}
-        rowActions={[
-          {
-            label: (
-              <>
-                <FindInPage />
-                Detail
-              </>
-            ),
-            onClick: (id) => handleDetail(id),
-          },
-          {
-            label: (
-              <>
-                <Delete />
-                Delete
-              </>
-            ),
-            danger: true,
-            onClick: (id) => handleDelete(id),
-          },
-        ]}
-      />
+      <PageHeader title="Vehicle List" crumbs={[{ label: 'Home', href: '/' }, { label: 'CRUD List' }]} />
+      <Paper className="p-4">
+        <Table
+          data={(data && data.payload.data) || []}
+          columns={tableColumns}
+          uniqueRowKey="vehicleId"
+          loading={isLoading}
+          showPagination
+          page={queryParams.page}
+          onPageChange={onPageChange}
+          onSortChange={onSortChange}
+          rowActions={[
+            {
+              label: (
+                <>
+                  <FindInPage />
+                  Detail
+                </>
+              ),
+              onClick: (id) => handleDetail(id),
+            },
+            {
+              label: (
+                <>
+                  <Delete />
+                  Delete
+                </>
+              ),
+              danger: true,
+              onClick: (id) => handleDelete(id),
+            },
+          ]}
+        />
+      </Paper>
     </>
   );
 };

@@ -8,14 +8,10 @@ const Content = (props: ContentProps) => {
   const { isCollapsed } = useContent();
   return (
     <section
-      className={`text-gray-600 body-font font-sans pt-24 relative w-auto
-        ${!isCollapsed ? 'ml-64' : 'ml-24'} px-8 transition-width transition-slowest ease`}
+      className={`text-gray-600 body-font font-sans pt-20 relative w-auto
+        ${!isCollapsed ? 'ml-64' : 'ml-24'} mb-12 px-8 transition-width transition-slowest ease`}
     >
-      <div
-        className="container p-6 bg-white rounded drop-shadow min-h-[640px] w-auto mx-6"
-      >
-        {children}
-      </div>
+      {children}
     </section>
   );
 };
