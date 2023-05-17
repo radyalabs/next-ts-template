@@ -14,11 +14,11 @@ const Header = () => {
     toggleCollapsed,
   } = useHeader();
   return (
-    <nav className={`bg-primary-500 py-2 px-4 shadow fixed w-full z-10 ${!isCollapsed ? 'pl-64' : 'pl-24'}`}>
+    <nav className="bg-primary-500 py-2 px-4 shadow fixed w-full z-10">
       <div
-        className="container flex flex-wrap items-center [&>*]:mr-5 transition-width transition-slowest ease [&>*]:text-white"
+        className="container flex flex-wrap items-center transition-width transition-slowest ease [&>*]:text-white"
       >
-        <Button variant="text" onClick={toggleCollapsed} type="button">
+        <Button variant="text" onClick={toggleCollapsed} type="button" className={!isCollapsed ? 'ml-64' : 'ml-24'}>
           {!isCollapsed ? <MenuOpen fontSize="large" /> : <Menu fontSize="large" />}
         </Button>
         <Typography
