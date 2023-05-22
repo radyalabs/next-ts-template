@@ -9,6 +9,7 @@ export interface DropdownButtonProps extends ButtonProps {
 
 export interface MenuItem {
   label: ReactNode;
+  key?: string;
   danger?: boolean;
   onClick: (data?: string) => void;
 }

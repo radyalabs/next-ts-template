@@ -12,6 +12,11 @@ import type { DropdownButtonProps } from '@/components/ui/DropdownButton/index.t
 
 const DropdownButton = (props: DropdownButtonProps) => {
   const { children, buttonType = 'button', menuItems = [] } = props;
+  const keyedMenuIcon = menuItems.map((el) => {
+    const newVal = el;
+    newVal.key = new Date().getTime().toString();
+    return newVal;
+  });
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -45,8 +50,9 @@ const DropdownButton = (props: DropdownButtonProps) => {
         open={open}
         onClose={handleClose}
       >
-        { menuItems.map((item) => (
+        { keyedMenuIcon.map((item) => (
           <MenuItem
+            key={item.key}
             classes={{ root: `text-sm flex justify-start gap-2 ${item.danger && 'text-danger-500'}` }}
             onClick={() => {
               item.onClick();
