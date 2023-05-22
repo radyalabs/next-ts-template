@@ -7,7 +7,7 @@ const PageHeader = (props: PageHeaderProps) => {
   const { title, crumbs = [] } = props;
 
   return (
-    <div className="mb-6">
+    <div>
       <Typography
         variant="h5"
         as="h1"

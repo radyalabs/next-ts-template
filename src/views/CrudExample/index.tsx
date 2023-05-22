@@ -1,5 +1,8 @@
-import { Delete, FindInPage } from '@mui/icons-material';
+import Link from 'next/link';
 
+import { Add, Delete, FindInPage } from '@mui/icons-material';
+
+import Button from '@/components/base/Button';
 import Paper from '@/components/base/Paper';
 import Table from '@/components/ui/DataTable';
 import PageHeader from '@/components/ui/PageHeader';
@@ -19,7 +22,14 @@ const CrudList = () => {
   } = useCrudList();
   return (
     <>
-      <PageHeader title="Vehicle List" crumbs={[{ label: 'Home', href: '/' }, { label: 'CRUD List' }]} />
+      <div className="flex justify-between items-center mb-6">
+        <PageHeader title="Vehicle List" crumbs={[{ label: 'Home', href: '/' }, { label: 'CRUD List' }]} />
+        <Link href="/crud-example/create">
+          <Button className="h-fit" color="primary" startIcon={<Add />}>
+            Add Vehicle
+          </Button>
+        </Link>
+      </div>
       <Paper className="p-4">
         <Table
           data={(data && data.payload.data) || []}

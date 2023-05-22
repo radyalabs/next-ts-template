@@ -40,6 +40,7 @@ interface ButtonProps {
   onClick?: MouseEventHandler;
   type?: 'submit' | 'button';
   endIcon?: ReactNode;
+  startIcon?: ReactNode;
 }
 
 export default ButtonProps;

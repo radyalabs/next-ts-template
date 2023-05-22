@@ -1,4 +1,4 @@
-import type { Vehicle, VehicleListResponse } from './index.types';
+import type { Vehicle, VehicleListResponse } from 'src/views/CrudExample/index.types';
 
 const vehicleListNormalizer = (data: VehicleListResponse): VehicleListResponse => {
   const {
