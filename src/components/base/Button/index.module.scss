@@ -11,7 +11,7 @@
 
   &.colorPrimary {
     @apply bg-primary-500 hover:bg-primary-700
-    text-white;
+    border-transparent text-white;
   }
 
   &.colorDanger {

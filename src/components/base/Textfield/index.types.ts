@@ -67,6 +67,11 @@ interface TextFieldProps {
   name?: string;
   message?: string;
   size?: 'small' | 'medium';
+  classes?: {
+    label?: string;
+    container?: string;
+    input?: string;
+  }
 }
 
 export default TextFieldProps;

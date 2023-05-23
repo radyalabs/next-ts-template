@@ -12,6 +12,7 @@ const TextField = forwardRef(
     const {
       appendObject,
       block = false,
+      classes,
       className,
       disabled = false,
       error = false,
@@ -34,10 +35,14 @@ const TextField = forwardRef(
       onFocus,
       onKeyUp,
     } = props || {};
+    const {
+      label: labelClass = '',
+      container: containerClass = '',
+      input: inputClass = '',
+    } = classes || {};
     const textFieldStyle = [styles.textfield];
     const containerStyle = [styles.container];
 
-    if (className) containerStyle.push(className);
     if (innerClassName) textFieldStyle.push(innerClassName);
     if (prependObject) textFieldStyle.push(styles.paddingSearch);
     if (error) containerStyle.push(styles.borderError);
@@ -52,19 +57,19 @@ const TextField = forwardRef(
       containerStyle.push(styles.block);
     }
     return (
-      <>
+      <div className={className}>
         {!!label && (
-          <label htmlFor={id} className="font-semibold mb-1 block text-gray-500">{label}</label>
+          <label htmlFor={id} className={`font-semibold mb-1 block text-gray-500 ${labelClass}`}>{label}</label>
         )}
         <MUITextField
-          className={`${containerStyle.join(' ')}`}
+          className={`${containerStyle.join(' ')} ${containerClass}`}
           placeholder={placeholder}
           type={type}
           value={value}
           error={error}
           required={required}
           InputProps={{
-            className: textFieldStyle.join(' '),
+            className: `${textFieldStyle.join(' ')} ${inputClass}`,
             startAdornment: prependObject,
             endAdornment: appendObject,
           }}
@@ -80,7 +85,7 @@ const TextField = forwardRef(
           onKeyUp={onKeyUp}
         />
         <p className={`text-xs ml-2 mt-1 ${error ? 'text-danger-500' : ''}`}>{message}</p>
-      </>
+      </div>
     );
   },
 );

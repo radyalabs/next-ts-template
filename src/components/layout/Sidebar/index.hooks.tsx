@@ -7,11 +7,11 @@ const useSidebar = () => {
   const { isCollapsed } = useLayoutContext();
   const location = useRouter();
 
-  const isActive = (path: string): boolean => location.pathname === path;
+  const isActive = (path: string): boolean => location.pathname.startsWith(path);
   const menus = [
     {
-      path: '/',
-      name: 'List',
+      path: '/dashboard',
+      name: 'Dashboard',
       icon: <Book />,
     },
     {
