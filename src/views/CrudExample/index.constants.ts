@@ -1,6 +1,7 @@
 import { createColumnData } from '@/helpers';
 import type { TableColumn } from '@/types/tables';
-import type { VehicleQueryParams } from '@/views/CrudExample/CrudList/index.types';
+
+import type { VehicleQueryParams } from './index.types';
 
 export const INIT_QUERY_PARAMS: VehicleQueryParams = {
   filterBranchId: '',

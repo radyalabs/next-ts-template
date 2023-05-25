@@ -10,6 +10,7 @@ export interface QueryExtras<T> {
 
 export interface FetchOptions<T> extends QueryOptions<T> {
   enabled?: boolean,
+  initialData?: T | undefined;
 }
 
 export type MutateOptions<T> = QueryOptions<T>;
