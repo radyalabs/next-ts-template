@@ -1,5 +1,6 @@
 import Button from '@/components/base/Button';
 import Paper from '@/components/base/Paper';
+import Textarea from '@/components/base/Textarea';
 import TextField from '@/components/base/Textfield';
 import Typography from '@/components/base/Typography';
 import PageHeader from '@/components/ui/PageHeader';
@@ -23,7 +24,7 @@ const CrudForm = () => (
         <TextField label="No. Polisi" block />
         <TextField label="Jenis Kendaraan" block />
         <TextField label="No. Rangka" block />
-        <TextField className="row-span-2" label="Deskripsi" block />
+        <Textarea className="row-span-2" label="Deskripsi" block />
         <TextField label="No. Mesin" block />
         <TextField label="Tgl Berakhir STNK" block />
       </div>
