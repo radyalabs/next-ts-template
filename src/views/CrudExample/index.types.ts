@@ -34,6 +34,7 @@ export interface VehicleQueryParams {
 }
 
 export interface User {
+  [key: string]: unknown;
   userId: string;
   username: string;
   fullName: string;
