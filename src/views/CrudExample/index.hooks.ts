@@ -6,15 +6,15 @@ import { updateURLQuery } from '@/helpers';
 import useGetData from '@/hooks/useGetData';
 import type { SortParam, TableColumn } from '@/types/tables';
 import { createQueryParams } from '@/utils';
+import userListNormalizer from '@/views/CrudExample/index.normalizer';
 
 import { INIT_QUERY_PARAMS, TABLE_COLUMNS } from './index.constants';
-import vehicleListNormalizer from './index.normalizer';
-import type { VehicleListResponse, VehicleQueryParams } from './index.types';
+import type { UserListResponse, UserQueryParams } from './index.types';
 
 const useCrudList = () => {
   const router = useRouter();
   const tableColumns: TableColumn[] = TABLE_COLUMNS;
-  const [queryParams, setQueryParams] = useState<VehicleQueryParams>(INIT_QUERY_PARAMS);
+  const [queryParams, setQueryParams] = useState<UserQueryParams>(INIT_QUERY_PARAMS);
   const initQuery = router.query;
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const useCrudList = () => {
   }, [initQuery]);
   const updateQueryParams = (queryObject: Record<string, unknown>) => {
     setQueryParams((prevState) => {
-      const newState: VehicleQueryParams = { ...prevState, ...queryObject };
+      const newState: UserQueryParams = { ...prevState, ...queryObject };
       updateURLQuery(router, newState);
       return newState;
     });
@@ -49,12 +49,12 @@ const useCrudList = () => {
     console.log('delete', id);
   };
 
-  const { data, isLoading } = useGetData<VehicleListResponse>(
-    ['vehicleList', createQueryParams(queryParams)],
-    ENDPOINT.MASTER.VEHICLE,
+  const { data, isLoading } = useGetData<UserListResponse>(
+    ['userList', createQueryParams(queryParams)],
+    ENDPOINT.USER_MGMT.USERS,
     {
       params: queryParams,
-      normalizer: vehicleListNormalizer,
+      normalizer: userListNormalizer,
       options: {
         retry: 3,
       },

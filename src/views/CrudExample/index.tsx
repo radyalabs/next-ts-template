@@ -32,7 +32,7 @@ const CrudList = () => {
       </div>
       <Paper className="p-4">
         <Table
-          data={(data && data.payload.data) || []}
+          data={(data && data.items) || []}
           columns={tableColumns}
           uniqueRowKey="vehicleId"
           loading={isLoading}

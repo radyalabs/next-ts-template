@@ -69,9 +69,9 @@ const Login = () => {
             <form className="w-full my-16" onSubmit={handleSubmit(onSubmit)}>
               <TextField
                 label="Username"
-                message={errors.userId && errors.userId.message}
-                error={!!errors.userId}
-                {...register('userId')}
+                message={errors.username && errors.username.message}
+                error={!!errors.username}
+                {...register('username')}
                 block
               />
               <TextField

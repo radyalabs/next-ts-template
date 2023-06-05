@@ -70,7 +70,7 @@ const DataTable = (props: TableProps) => {
                   key={`${column.dataKey}-${row[column.dataKey]}-${row[uniqueRowKey]}`}
                   className="break-words"
                 >
-                  {String(row[column.dataKey])}
+                  {row[column.dataKey] ? String(row[column.dataKey]) : '-'}
                 </TableCell>
               ))}
               {rowActions.length > 0 && (
