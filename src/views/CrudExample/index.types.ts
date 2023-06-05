@@ -1,4 +1,4 @@
-import type { BaseResponse, PaginationData } from '@/types/responses';
+import type { PaginationData } from '@/types/responses';
 
 export interface Vehicle {
   [key: string]: unknown;
@@ -14,7 +14,7 @@ export interface Vehicle {
   updatedById: string;
 }
 
-export type VehicleListResponse = BaseResponse<PaginationData<Vehicle>>;
+export type VehicleListResponse = PaginationData<Vehicle>;
 
 export interface VehicleQueryParams {
   [key: string]: unknown;
@@ -31,4 +31,26 @@ export interface VehicleQueryParams {
   page: number;
   rows: number;
   index: number;
+}
+
+export interface User {
+  [key: string]: unknown;
+  userId: string;
+  username: string;
+  fullName: string;
+  lastPasswordChangeAt: string;
+  createdAt: string;
+  createdByName: string;
+}
+
+export type UserListResponse = PaginationData<User>;
+
+export interface UserQueryParams {
+  [key: string]: unknown;
+  username: string;
+  fullname: string;
+  orderType: string;
+  orderBy: string;
+  page: number;
+  size: number;
 }

@@ -1,49 +1,30 @@
-import type { Vehicle, VehicleListResponse } from 'src/views/CrudExample/index.types';
+import type {
+  User,
+  UserListResponse,
+} from 'src/views/CrudExample/index.types';
 
-const vehicleListNormalizer = (data: VehicleListResponse): VehicleListResponse => {
+const userListNormalizer = (data: UserListResponse): UserListResponse => {
   const {
-    isSuccess,
-    path,
-    payload,
-    message,
-  } = data || {};
-  const {
-    data: vehicleData,
-    hasNext,
-    hasPrev,
+    items,
+    hasNextPage,
     page,
-    rows,
-    totalPages,
-    useInfiniteLoad,
-  } = payload;
+    pageSize,
+  } = data || {};
 
-  const listData = (vehicleData || []).map((el): Vehicle => ({
-    vehicleId: el.vehicleId || '',
-    branchId: el.branchId || '',
-    branch: (el.branchId && el.branch) ? `${el.branchId} - ${el.branch}` : '',
-    policeNo: el.policeNo || '',
-    vehicleTypeId: el.vehicleId || '',
-    vehicleType: (el.vehicleTypeId && el.vehicleType) ? `${el.vehicleTypeId} - ${el.vehicleType}` : '',
-    description: el.description || '',
-    createdById: el.createdById || '',
-    createdDt: el.createdDt || '',
-    updatedById: el.updatedById || '',
+  const listData = (items || []).map((el): User => ({
+    username: el.username || '',
+    fullName: el.fullName || '',
+    createdAt: el.createdAt || '',
+    createdByName: el.createdByName || '',
+    userId: el.userId || '',
+    lastPasswordChangeAt: el.lastPasswordChangeAt || '',
   }));
-
   return {
-    isSuccess: isSuccess || false,
-    path: path || '',
-    payload: {
-      data: listData,
-      hasNext: hasNext || false,
-      hasPrev: hasPrev || false,
-      page: page || 0,
-      rows: rows || 0,
-      totalPages: totalPages || 0,
-      useInfiniteLoad: useInfiniteLoad || false,
-    },
-    message: message || '',
+    items: listData,
+    hasNextPage,
+    page,
+    pageSize,
   };
 };
 
-export default vehicleListNormalizer;
+export default userListNormalizer;

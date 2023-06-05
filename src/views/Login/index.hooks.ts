@@ -7,10 +7,9 @@ import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
 import { ENDPOINT } from '@/constants/apiURL';
-import { APP_TOKEN_KEY } from '@/constants/config';
+import { APP_REFRESH_KEY, APP_TOKEN_KEY } from '@/constants/config';
 import { useToasterContext } from '@/contexts/ToasterContext';
 import { usePostData } from '@/hooks/useMutateData';
-import type { BaseResponse } from '@/types/responses';
 
 import type { LoginResponse } from './index.types';
 
@@ -19,7 +18,7 @@ const useLogin = () => {
   const toaster = useToasterContext();
 
   const schema = z.object({
-    userId: z.string().min(1),
+    username: z.string().min(3),
     password: z.string().min(6),
   });
 
@@ -36,29 +35,31 @@ const useLogin = () => {
   const {
     mutate: mutateSubmit,
     isLoading: isSubmitting,
-  } = usePostData<BaseResponse<LoginResponse>>(
+  } = usePostData<LoginResponse>(
     ['loginPost'],
-    ENDPOINT.AUTH.LOGIN,
+    ENDPOINT.IDENTITY.LOGIN,
     {
       options: {
         onSuccess: (data) => {
-          if (data.isSuccess) {
-            const { payload } = data || {};
-            const {
-              token, expirationSeconds,
-            } = payload;
-            setCookie(APP_TOKEN_KEY, token, {
-              maxAge: expirationSeconds,
-              sameSite: true,
-            });
-            axios.defaults.headers.common = {
-              Authorization: `Bearer ${token}`,
-            };
-            toaster.show({ message: 'Login berhasil' });
-            router.push('/');
-            return;
-          }
-          toaster.show({ message: 'error ah', error: true });
+          const {
+            accessToken, expiry, refreshToken,
+          } = data;
+          setCookie(APP_TOKEN_KEY, accessToken, {
+            maxAge: expiry,
+            sameSite: true,
+          });
+          setCookie(APP_REFRESH_KEY, refreshToken, {
+            maxAge: expiry,
+            sameSite: true,
+          });
+          axios.defaults.headers.common = {
+            Authorization: `Bearer ${accessToken}`,
+          };
+          toaster.show({ message: 'Login berhasil' });
+          router.push('/dashboard');
+        },
+        onError: (error) => {
+          toaster.show({ message: error.message, error: true });
         },
       },
     },

@@ -2,10 +2,9 @@ import useList from './index.hooks';
 
 const List = () => {
   const { data } = useList();
-  const { payload } = data || {};
-  const { wellcomePage, name } = payload || {};
+  const { fullName } = data || {};
   return (
-    <p>{`${wellcomePage} ${name}`}</p>
+    <p>{`welcome, ${fullName}`}</p>
   );
 };
 
