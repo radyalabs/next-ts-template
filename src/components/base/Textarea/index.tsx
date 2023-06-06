@@ -8,7 +8,7 @@ import type TextareaProps from './index.types';
 import styles from './index.module.scss';
 
 const Textarea = forwardRef(
-  (props: TextareaProps, forwardedRef: ForwardedRef<HTMLInputElement>) => {
+  (props: TextareaProps, forwardedRef: ForwardedRef<HTMLTextAreaElement>) => {
     const {
       block = false,
       classes,
@@ -55,7 +55,12 @@ const Textarea = forwardRef(
     return (
       <div className={className}>
         {!!label && (
-          <label htmlFor={id} className={`font-semibold mb-1 block text-gray-500 ${labelClass}`}>{label}</label>
+          <label
+            htmlFor={id}
+            className={`font-semibold mb-1 block text-gray-500 ${labelClass}`}
+          >
+            {label}
+          </label>
         )}
         <div className={`${containerStyle.join(' ')} ${containerClass} mt-3.5`}>
           <TextareaAutosize
@@ -75,7 +80,9 @@ const Textarea = forwardRef(
             maxRows={maxRows}
           />
         </div>
-        <p className={`text-xs ml-2 mt-1 ${error ? 'text-danger-500' : ''}`}>{message}</p>
+        <p className={`text-xs ml-2 mt-1 ${error ? 'text-danger-500' : ''}`}>
+          {message}
+        </p>
       </div>
     );
   },
