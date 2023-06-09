@@ -1,0 +1,40 @@
+.modal {
+  .modalBox {
+    @apply bg-white p-5
+        absolute top-1/2 left-1/2 
+        transform translate-x-[-50%] translate-y-[-50%] 
+        shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)];
+
+    &.modalSizeFit {
+      @apply min-w-fit w-fit;
+    }
+
+    &.modalSizeSmall {
+      @apply w-80;
+    }
+
+    &.modalSizeMedium {
+      @apply w-128;
+    }
+
+    &.modalSizeLarge {
+      @apply w-[800px];
+    }
+
+    .modalHeader {
+      @apply flex mb-5;
+
+      .modalTitle {
+        @apply text-xl;
+      }
+
+      .closeIcon {
+        @apply border-0 bg-transparent cursor-pointer absolute right-5;
+      }
+    }
+
+    .modalFooter {
+      @apply flex mt-8 gap-4;
+    }
+  }
+}
