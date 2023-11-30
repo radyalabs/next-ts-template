@@ -1,7 +1,10 @@
 import { forwardRef } from 'react';
 
-import { TextareaAutosize } from '@mui/material/';
+import FormHelperText from '@mui/material/FormHelperText';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
 import type { ForwardedRef } from 'react';
+
+import Label from '@/components/base/Label';
 
 import type TextareaProps from './index.types';
 
@@ -18,11 +21,12 @@ const Textarea = forwardRef(
       id,
       innerClassName,
       label,
+      labelLayout = 'vertical',
       maxRows = 4,
       message,
       minRows = 4,
       name,
-      placeholder = 'Enter text here',
+      placeholder = '',
       required = false,
       rounded,
       success = false,
@@ -55,12 +59,13 @@ const Textarea = forwardRef(
     return (
       <div className={className}>
         {!!label && (
-          <label
-            htmlFor={id}
-            className={`font-semibold mb-1 block text-gray-500 ${labelClass}`}
-          >
-            {label}
-          </label>
+          <Label
+            id={id}
+            labelLayout={labelLayout}
+            className={labelClass}
+            required={required}
+            value={label}
+          />
         )}
         <div className={`${containerStyle.join(' ')} ${containerClass} mt-3.5`}>
           <TextareaAutosize
@@ -78,11 +83,10 @@ const Textarea = forwardRef(
             onKeyUp={onKeyUp}
             minRows={minRows}
             maxRows={maxRows}
+
           />
         </div>
-        <p className={`text-xs ml-2 mt-1 ${error ? 'text-danger-500' : ''}`}>
-          {message}
-        </p>
+        {message && <FormHelperText error={error}>{message}</FormHelperText>}
       </div>
     );
   },

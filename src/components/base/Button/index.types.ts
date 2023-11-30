@@ -12,12 +12,12 @@ interface ButtonProps {
   /**
    * Button colors
    */
-  color?: 'default' | 'primary' | 'danger';
+  color?: 'default' | 'primary' | 'secondary' | 'danger' | 'success';
   /**
    /**
    * Button Variants
    */
-  variant?: 'default' | 'outline' | 'dashed' | 'text';
+  variant?: ButtonVariant;
   /**
    * How large should the button be?
    */
@@ -42,5 +42,7 @@ interface ButtonProps {
   endIcon?: ReactNode;
   startIcon?: ReactNode;
 }
+
+export type ButtonVariant = 'default' | 'outline' | 'dashed' | 'text';
 
 export default ButtonProps;

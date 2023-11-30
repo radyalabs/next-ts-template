@@ -1,0 +1,21 @@
+{
+  "typescript": true,
+  "removeViewBox": false,
+  "removeDimensions": true,
+  "removeAttrs": {
+    "attrs": "['fill']"
+  },
+  "replaceAttrValues": {
+    "white": "{fill}",
+    "#FFFFFF": "{fill}",
+    "black": "{fill}",
+    "#121212": "{fill}",
+    "#000": "{fill}"
+  },
+  "svgProps": {
+    "fill": "{fill || '#000000'}",
+    "width": "{width}",
+    "height": "{height}",
+    "viewBox": "{viewBox}"
+  }
+}

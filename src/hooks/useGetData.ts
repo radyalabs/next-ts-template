@@ -1,35 +1,25 @@
 import { useQuery } from '@tanstack/react-query';
+import type { AxiosError } from 'axios';
 
 import { defaultFetcherFn } from '@/helpers';
 import type { FetchQueryExtras } from '@/types/queries';
-import { noop } from '@/utils';
+import type { BaseError } from '@/types/responses';
 
-const useGetData = <T>(
+const useGetData = <T, TParam = T>(
   key: string[],
   url: string,
-  extras?: FetchQueryExtras<T>,
+  extras?: FetchQueryExtras<T, TParam>,
 ) => {
+  const { options, params, normalizer } = extras || {};
+  const { enabled = true, initialData = undefined, retry = 3 } = options || {};
   const {
-    options,
-    params,
-    normalizer,
-  } = extras || {};
-  const {
-    enabled = true,
-    initialData = undefined,
-    retry = true,
-    onSuccess = noop,
-    onError = noop,
-  } = options || {};
-  const {
-    data,
-    error,
-    isFetching,
-    isLoading,
-    refetch,
-  } = useQuery<T, Error>(
+    data, error, isError, isFetching, isLoading, refetch,
+  } = useQuery<
+  T,
+  AxiosError<BaseError>
+  >(
     key,
-    () => defaultFetcherFn<T>({
+    () => defaultFetcherFn<T, TParam>({
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
@@ -42,14 +32,14 @@ const useGetData = <T>(
     {
       enabled,
       initialData,
-      onSuccess,
-      onError,
       retry,
     },
   );
+
   return {
     data,
     error,
+    isError,
     isFetching,
     isLoading,
     refetch,

@@ -1,4 +1,12 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npx --no-install commitlint --edit "$1"
+filechanged=$(git diff --cached --numstat ./ | wc -l)
+
+echo "file changed  --> $filechanged"
+if [ $filechanged != "0" ]
+then
+  npx --no-install commitlint --edit "$1"
+else
+  exit 0
+fi

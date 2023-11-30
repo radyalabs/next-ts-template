@@ -7,7 +7,7 @@ import type {
   ReactNode,
 } from 'react';
 
-interface TextFieldProps {
+export interface TextFieldProps {
   /**
    * can be Text or Icon
    */
@@ -35,7 +35,7 @@ interface TextFieldProps {
   /**
    * value of input
    */
-  value?: string;
+  value?: string | number;
   /**
    * Optional input success
    */
@@ -55,13 +55,19 @@ interface TextFieldProps {
   /**
    * Optional change handler
    */
+  autoComplete?: string;
+  autoFocus?: boolean;
   block?: boolean;
+  inlineLabel?: string;
   label?: string;
-  onChange?: ChangeEventHandler;
+  labelLayout?: 'vertical' | 'horizontal';
+  maxLength?: number;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
   onBlur?: FocusEventHandler;
   onFocus?: FocusEventHandler;
   onClick?: MouseEventHandler;
   onKeyUp?: KeyboardEventHandler;
+  onKeyDown?: KeyboardEventHandler;
   required?: boolean;
   type?: InputHTMLAttributes<unknown>['type'];
   name?: string;
@@ -73,5 +79,3 @@ interface TextFieldProps {
     input?: string;
   }
 }
-
-export default TextFieldProps;

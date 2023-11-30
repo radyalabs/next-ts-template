@@ -1,7 +1,5 @@
-
-
 .container {
-  @apply border w-fit border-neutral-300 h-fit;
+  @apply border w-fit border-neutral-300 h-fit rounded-xl;
 
   &.borderSuccess {
     @apply border-success-500;
@@ -16,7 +14,7 @@
   }
 
   &.disabled {
-    @apply bg-gray-100 pointer-events-none cursor-not-allowed ;
+    @apply pointer-events-none cursor-not-allowed;
   }
 
   &.block {
@@ -25,7 +23,7 @@
 }
 
 .textfield {
-  @apply text-gray-900 text-sm rounded-xl;
+  @apply text-gray-900 rounded-md text-base justify-center;
   &:focus-visible {
     outline: 0;
   }
@@ -37,5 +35,4 @@
   &.block {
     @apply w-full;
   }
-
 }

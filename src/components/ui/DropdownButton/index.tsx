@@ -1,20 +1,25 @@
 import { useState } from 'react';
 
-import {
-  KeyboardArrowDown, MoreVert,
-} from '@mui/icons-material';
-import { IconButton, MenuItem } from '@mui/material';
+import Divider from '@mui/material/Divider/';
+import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import type { MouseEvent } from 'react';
 
 import Button from '@/components/base/Button';
+import { IcDropdown, IcMore } from '@/components/icons';
 import type { DropdownButtonProps } from '@/components/ui/DropdownButton/index.types';
 
 const DropdownButton = (props: DropdownButtonProps) => {
-  const { children, buttonType = 'button', menuItems = [] } = props;
-  const keyedMenuIcon = menuItems.map((el) => {
+  const {
+    children,
+    buttonType = 'button',
+    menuItems = [],
+    dropdownIcon = true,
+  } = props;
+  const keyedMenuIcon = menuItems.map((el, i) => {
     const newVal = el;
-    newVal.key = new Date().getTime().toString();
+    newVal.key = String(i);
     return newVal;
   });
 
@@ -29,14 +34,14 @@ const DropdownButton = (props: DropdownButtonProps) => {
   return (
     <>
       {buttonType === 'button' ? (
-        <Button variant="outline" {...props} endIcon={<KeyboardArrowDown />} onClick={handleClick}>{children}</Button>
+        <Button variant="outline" {...props} endIcon={dropdownIcon && <IcDropdown />} onClick={handleClick}>{children}</Button>
       ) : (
         <IconButton onClick={handleClick}>
-          <MoreVert />
+          <IcMore />
         </IconButton>
       )}
       <Menu
-        classes={{ root: 'mt-1', paper: 'min-w-[180px] shadow rounded-xl' }}
+        classes={{ root: 'mt-2', paper: 'min-w-[180px] shadow rounded-xl font-secondary' }}
         elevation={0}
         anchorOrigin={{
           vertical: 'bottom',
@@ -50,17 +55,23 @@ const DropdownButton = (props: DropdownButtonProps) => {
         open={open}
         onClose={handleClose}
       >
-        { keyedMenuIcon.map((item) => (
-          <MenuItem
-            key={item.key}
-            classes={{ root: `text-sm flex justify-start gap-2 ${item.danger && 'text-danger-500'}` }}
-            onClick={() => {
-              item.onClick();
-              handleClose();
-            }}
-          >
-            {item.label}
-          </MenuItem>
+        { keyedMenuIcon.map((item, i) => (
+          <div key={item.key}>
+            <MenuItem
+              classes={{ root: `font-sans text-base flex justify-start gap-2 ${item.danger && 'text-danger-500'}` }}
+              onClick={() => {
+                if (item.onClick) {
+                  item.onClick();
+                }
+                handleClose();
+              }}
+            >
+              {item.label}
+            </MenuItem>
+            {i < keyedMenuIcon.length - 1 && (
+              <Divider className="m-0" />
+            )}
+          </div>
         ))}
       </Menu>
     </>

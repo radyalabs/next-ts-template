@@ -1,6 +1,8 @@
-import { Typography as MUITypography } from '@mui/material';
+import MUITypography from '@mui/material/Typography';
 
 import type { TypographyProps } from './index.types';
+
+import styles from './index.module.scss';
 
 const Typography = (props: TypographyProps) => {
   const {
@@ -11,17 +13,36 @@ const Typography = (props: TypographyProps) => {
     gutterBottom = false,
     noWrap = false,
     paragraph = false,
-    variant = 'inherit',
+    size = 'medium',
+    type = 'primary',
+    variant = 'body',
   } = props;
+
+  const typographyStyle = [styles.typography];
+
+  if (className) typographyStyle.push(className);
+
+  if (type === 'primary') typographyStyle.push(styles.primary);
+  if (type === 'secondary') typographyStyle.push(styles.secondary);
+
+  if (variant === 'body') typographyStyle.push(styles.body);
+  if (variant === 'display') typographyStyle.push(styles.display);
+  if (variant === 'title') typographyStyle.push(styles.title);
+  if (variant === 'label') typographyStyle.push(styles.label);
+  if (variant === 'headline') typographyStyle.push(styles.headline);
+
+  if (size === 'small') typographyStyle.push(styles.small);
+  if (size === 'medium') typographyStyle.push(styles.medium);
+  if (size === 'large') typographyStyle.push(styles.large);
+
   return (
     <MUITypography
       align={align}
       component={as}
-      className={className}
+      className={typographyStyle.join(' ')}
       gutterBottom={gutterBottom}
       noWrap={noWrap}
       paragraph={paragraph}
-      variant={variant}
     >
       {children}
     </MUITypography>

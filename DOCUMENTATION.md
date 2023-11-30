@@ -16,8 +16,8 @@ dengan harapan dapat membuat struktur projek jadi lebih rapi dengan memisah-misa
 component dan global component.
 
 Pada setiap component juga diberlakukan pemisahan file berdasarkan fungsinya, contoh Sidebar disitu ada SIdebar.tsx,
-index.hooks.ts, Sidebar.types.ts. Dimana index.tsx berisi view dari component tsb. logic business disimpan di
-index.hooks.ts dan type atau interface yg digunakan component tsb ada di Sidebar.types.ts.
+PositionList.hooks.ts, Sidebar.types.ts. Dimana PositionList.tsx berisi view dari component tsb. logic business disimpan di
+PositionList.hooks.ts dan type atau interface yg digunakan component tsb ada di Sidebar.types.ts.
 
 ```plain
 .
@@ -60,12 +60,7 @@ index.hooks.ts dan type atau interface yg digunakan component tsb ada di Sidebar
 │   │   │   ├── ArrowRounded.tsx
 │   │   │   ├── Bookmark.tsx
 │   │   │   ├── Book.tsx
-│   │   │   ├── index.ts
-│   │   │   ├── index.types.ts
-│   │   │   ├── NavChevron
-│   │   │   │   ├── NavChevron.tsx
-│   │   │   │   └── NavChevron.types.ts
-│   │   │   └── Spinner.tsx
+│   │   │   └── index.ts
 │   │   ├── layout
 │   │   │   ├── Content
 │   │   │   │   ├── index.hooks.ts
@@ -93,14 +88,11 @@ index.hooks.ts dan type atau interface yg digunakan component tsb ada di Sidebar
 │   │   └── tables.ts
 │   ├── contexts
 │   │   ├── AuthContext
-│   │   │   ├── index.tsx
-│   │   │   └── index.types.ts
-│   │   ├── LayoutContext
-│   │   │   ├── index.tsx
-│   │   │   └── index.types.ts
-│   │   └── ToasterContext
-│   │       ├── index.tsx
-│   │       └── index.types.ts
+│   │   │   ├── AuthContext.tsx
+│   │   │   └── AuthContext.types.ts
+│   │   └── LayoutContext
+│   │       ├── LayoutContext.tsx
+│   │       └── LayoutContext.types.ts
 │   ├── helpers
 │   │   ├── createColumnData.ts
 │   │   ├── fetcher.ts
@@ -108,13 +100,14 @@ index.hooks.ts dan type atau interface yg digunakan component tsb ada di Sidebar
 │   │   └── updateURLQuery.ts
 │   ├── hooks
 │   │   ├── useGetData.ts
-│   │   └── useMutateData.ts
+│   │   ├── useMutateData.ts
+│   │   └── useToaster.ts
 │   ├── pages
 │   │   ├── api
 │   │   │   ├── auth
 │   │   │   └── hello.ts
 │   │   ├── _app.tsx
-│   │   ├── crud-example
+│   │   ├── dashboard
 │   │   │   └── index.tsx
 │   │   ├── _document.tsx
 │   │   ├── index.tsx
@@ -135,24 +128,56 @@ index.hooks.ts dan type atau interface yg digunakan component tsb ada di Sidebar
 │   │   ├── slugToTitle.ts
 │   │   └── toTitleCase.ts
 │   └── views/
-│       ├── CrudExample/
-│       │   └── CrudList/
-│       │       ├── index.constants.ts
-│       │       ├── index.hooks.ts
-│       │       ├── index.normalizer.ts
-│       │       ├── index.tsx
-│       │       └── index.types.ts
-│       ├── List/
-│       │   ├── index.hooks.ts
-│       │   ├── index.tsx
-│       │   └── index.types.ts
+│       ├── Dashboard/
+│       │   ├── Dashboard.hooks.ts
+│       │   ├── Dashboard.tsx
+│       │   └── index.ts
+│       ├── UserManagement/
+│       │   ├── normalizers/
+│       │   │   ├── applicationScopesNormalizer.ts
+│       │   │   └── userNormalizer.ts
+│       │   ├── types/
+│       │   │   └── applicationScope.ts
+│       │   ├── UserManagementList/
+│       │   │   ├── index.ts
+│       │   │   ├── UserManagementList.constants.ts
+│       │   │   ├── UserManagementList.hooks.ts
+│       │   │   ├── UserManagementList.tsx
+│       │   │   └── UserManagementList.types.ts
+│       │   └── UserManagementDetail/
+│       │       ├── components/
+│       │       │   └── UserDetailSkeleton
+│       │       │       ├── index.ts
+│       │       │       └── UserDetailSkeleton.tsx
+│       │       ├── index.ts
+│       │       ├── UserManagementDetail.hooks.ts
+│       │       └── UserManagementDetail.tsx
 │       └── Login/
-│           ├── index.hooks.ts
-│           ├── index.tsx
-│           └── index.types.ts
+│           ├── index.ts
+│           ├── Login.helpers.ts
+│           ├── Login.hooks.ts
+│           ├── Login.tsx
+│           └── Login.types.ts
 ├── .commitlintrc.json
 ├── .dockerignore
 ├── .env.development
+├── .env.staging
+├── .env.production
+├── .eslintignore
+├── .eslintrc.json
+├── .gitignore
+├── .prettierrc.json
+├── DOCUMENTATION.md
+├── Makefile
+├── next.config.js
+├── package.json
+├── pnpm-lock.yaml
+├── postcss.config.js
+├── README.md
+├── svg-template.js
+├── svgr-config.json
+├── tailwind.config.js
+└── tsconfig.json
 ```
 
 Root
@@ -280,14 +305,14 @@ Contoh: direktori page ke halaman login adalah seperti ini:
 
 │   ├── pages
 │   │   └── login
-│   │   │   └── index.tsx
+│   │   │   └── PositionList.tsx
 ```
 Maka url ke halaman login adalah [BASE_URL]/login.
 
 Didalam subdirektori tersebut terdiri dari:
 
-index.tsx: berfungsi sebagai entry point terhadap view yang akan digunakan yang ada di folder src/views, 
-contoh isi index.tsx sederhananya seperti ini:
+PositionList.tsx: berfungsi sebagai entry point terhadap view yang akan digunakan yang ada di folder src/views, 
+contoh isi PositionList.tsx sederhananya seperti ini:
 
 ```typescript jsx
 import Head from 'next/head';
@@ -325,7 +350,7 @@ subdirektori bernama komponen tersebut menggunakan UpperCamelCase.
 
 Didalam subdirektori tersebut terdiri dari:
 
-* index.tsx: file ini hanya berisi view dari komponen tanpa ada business logic apapun. Contohnya seperti
+* PositionList.tsx: file ini hanya berisi view dari komponen tanpa ada business logic apapun. Contohnya seperti
 ini:
 
 ```typescript jsx
@@ -345,7 +370,7 @@ const CrudList = () => {
   return (
     <>
       <Typography
-        variant="h5"
+        variant="headline"
         as="h1"
         className="font-bold"
         gutterBottom
@@ -370,7 +395,7 @@ export default CrudList;
 
 ```
 
-* index.hooks.ts: file ini berisi dari logic business untuk view dari komponen tersebut. Contoh:
+* PositionList.hooks.ts: file ini berisi dari logic business untuk view dari komponen tersebut. Contoh:
 
 ```typescript
 const useCrudList = () => {

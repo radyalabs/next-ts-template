@@ -1,5 +1,5 @@
 .container {
-  @apply rounded-xl;
+  @apply rounded-xl text-n-2;
   &.error {
     @apply bg-danger-600;
   }

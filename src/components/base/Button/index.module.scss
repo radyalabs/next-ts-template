@@ -1,22 +1,47 @@
 .button {
   @apply border-0 px-4 cursor-pointer py-2
   transition-colors ease-in-out duration-300
-  h-auto normal-case
-  rounded-md;
+  h-auto normal-case font-medium text-base
+  rounded-lg text-n-1;
+
+  .iconDefault {
+    @apply [&>*]:fill-n-1 [&>*]:h-4 [&>*]:w-4;
+  }
+
+  .iconSlate {
+    @apply[&>*]:fill-n-13;
+  }
+
+  .iconPrimary {
+    @apply [&>*]:fill-primary-500;
+  }
+
+  .iconDanger {
+    @apply [&>*]:fill-danger-500;
+  }
+
+  .iconDisabled {
+    @apply [&>*]:fill-n-6;
+  }
 
   &.colorDefault {
-    @apply bg-slate-200 hover:bg-slate-300
-    text-slate-900;
+    @apply bg-n-8 hover:bg-n-9 border-transparent;
   }
 
   &.colorPrimary {
-    @apply bg-primary-500 hover:bg-primary-700
-    border-transparent text-white;
+    @apply bg-primary-500 hover:bg-primary-600 border-transparent;
+  }
+
+  &.colorSecondary {
+    @apply bg-primary-200 hover:bg-primary-300
+    border-transparent text-primary-500;
+    &.icon {
+      @apply [&>*]:fill-primary-500;
+    }
   }
 
   &.colorDanger {
-    @apply bg-danger-500 hover:bg-danger-700
-    text-white;
+    @apply bg-danger-500 hover:bg-danger-700 text-n-1;
   }
 
   &.variantDefault {
@@ -24,25 +49,62 @@
   }
 
   &.variantText {
-    @apply border-none p-1 bg-transparent hover:bg-transparent;
-  }
-
-  &.variantOutline {
-    @apply border border-solid;
+    @apply border-none bg-transparent hover:bg-transparent;
 
     &.colorDefault {
-      @apply border-slate-800 bg-transparent hover:bg-slate-800
-      text-slate-800 hover:text-white;
+      @apply text-n-13 fill-n-13;
     }
 
     &.colorPrimary {
-      @apply border-primary-500 bg-transparent hover:bg-primary-500
-      text-primary-500 hover:text-white;
+      @apply text-primary-500 fill-primary-500;
+    }
+
+    &.colorSecondary {
+      @apply text-primary-200 fill-primary-200;
     }
 
     &.colorDanger {
-      @apply border-danger-500 bg-transparent hover:bg-danger-500
-      text-danger-500 hover:text-white;
+      @apply text-danger-500 fill-danger-500;
+    }
+  }
+
+  &.variantOutline {
+    @apply border-solid border-2;
+
+    .icon {
+      @apply [&>*]:fill-primary-500;
+    }
+
+    &.colorDefault {
+      @apply border-slate-800 bg-transparent hover:bg-slate-200
+      text-slate-800;
+
+      .icon {
+        @apply [&>*]:fill-slate-800;
+      }
+    }
+
+    &.colorPrimary {
+      @apply border-primary-500 bg-transparent hover:bg-primary-50
+      text-primary-500;
+    }
+
+    &.colorSecondary {
+      @apply border-primary-300 bg-transparent hover:bg-primary-400
+      text-primary-300;
+
+      .icon {
+        @apply [&>*]:fill-primary-300;
+      }
+    }
+
+    &.colorDanger {
+      @apply border-danger-500 bg-transparent hover:bg-danger-50
+      text-danger-500;
+
+      .icon {
+        @apply [&>*]:fill-danger-500;
+      }
     }
   }
 
@@ -51,30 +113,35 @@
 
     &.colorDefault {
       @apply border-slate-800 bg-transparent hover:bg-slate-800
-      text-slate-800 hover:text-white;
+      text-slate-800 hover:text-n-1;
     }
 
     &.colorPrimary {
       @apply border-primary-500 bg-transparent hover:bg-primary-500
-      text-primary-500 hover:text-white;
+      text-primary-500 hover:text-n-1;
+    }
+
+    &.colorSecondary {
+      @apply border-primary-300 bg-transparent hover:bg-primary-400
+      text-primary-300 fill-primary-300;
     }
 
     &.colorDanger {
       @apply border-danger-500 bg-transparent hover:bg-danger-500
-      text-danger-500 hover:text-white;
+      text-danger-500 hover:text-n-1;
     }
   }
 
   &.sizeSmall {
-    @apply text-sm;
+    @apply text-sm min-w-min px-5 py-1;
   }
 
   &.sizeMedium {
-    @apply text-base;
+    @apply px-5 py-2;
   }
 
   &.sizeLarge {
-    @apply text-lg;
+    @apply text-lg p-4;
   }
 
   &.rounded {
@@ -83,16 +150,13 @@
 
   &.disabled,
   &.disabled.colorPrimary,
-  &.disabled.colorDanger,
-  &.disabled.variantOutline.colorDefault,
-  &.disabled.variantOutline.colorPrimary,
-  &.disabled.variantOutline.colorDanger,
-  &.disabled.variantDashed.colorDefault,
-  &.disabled.variantDashed.colorPrimary,
-  &.disabled.variantDashed.colorDanger {
+  &.disabled.colorSecondary,
+  &.disabled.colorDanger, {
     @apply cursor-not-allowed
-    border border-solid border-[#D9D9D9]
-    bg-[#F5F5F5] text-[#BFBFBF]
-    hover:bg-[#F5F5F5];
+    border border-solid border-n-6
+    bg-n-4 text-n-6;
+    &.variantText {
+      @apply bg-transparent border-transparent;
+    }
   }
 }

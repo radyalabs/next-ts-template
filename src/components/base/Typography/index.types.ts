@@ -7,13 +7,14 @@ export interface TypographyProps {
    */
   align?: 'inherit' | 'left' | 'center' | 'right' | 'justify';
   /**
-   * Transform rendered html tag from it's original predefined tag based on it's selected presets
+   * Transform rendered html tag from its original predefined tag based on it's selected presets
    */
   as?: ElementType;
   /**
    * The content of the component.
    */
   children?: ReactNode;
+  type?: 'primary' | 'secondary';
   /**
    * Override or extend the styles applied to the component.
    */
@@ -39,38 +40,10 @@ export interface TypographyProps {
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  variant?:
-  'inherit'
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'h4'
-  | 'h5'
-  | 'h6'
-  | 'subtitle1'
-  | 'subtitle2'
-  | 'body1'
-  | 'body2'
-  | 'caption'
-  | 'button'
-  | 'overline';
-  /**
-   * The component maps the variant prop to a range of different HTML element types.
-   * For instance, subtitle1 to `<h6>`.
-   * If you wish to change that mapping, you can provide your own.
-   * Alternatively, you can use the `component` prop.
-   * @default {
-   *   h1: 'h1',
-   *   h2: 'h2',
-   *   h3: 'h3',
-   *   h4: 'h4',
-   *   h5: 'h5',
-   *   h6: 'h6',
-   *   subtitle1: 'h6',
-   *   subtitle2: 'h6',
-   *   body1: 'p',
-   *   body2: 'p',
-   *   inherit: 'p',
-   * }
-   */
+  size?: 'small' | 'medium' | 'large';
+  variant?: 'display'
+  | 'headline'
+  | 'title'
+  | 'label'
+  | 'body'
 }

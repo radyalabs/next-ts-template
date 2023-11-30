@@ -1,0 +1,17 @@
+.skeleton {
+  &.sm {
+    @apply w-12;
+  }
+
+  &.md {
+    @apply w-32;
+  }
+
+  &.lg {
+    @apply w-48;
+  }
+
+  &.xl {
+    @apply w-72;
+  }
+}
