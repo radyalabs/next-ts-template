@@ -7,15 +7,16 @@ import { APP_TITLE } from '@/constants/config';
 import { useAuthContext } from '@/contexts/AuthContext';
 
 const Home = () => {
-  const { isAuthenticated } = useAuthContext();
+  const { isAuthenticated, profile } = useAuthContext();
   const router = useRouter();
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && profile) {
       router.push('/dashboard');
     } else {
       router.push('/login');
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, profile, router]);
+
   return (
     <>
       <Head>

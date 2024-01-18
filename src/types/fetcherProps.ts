@@ -1,7 +1,7 @@
-export interface FetcherProps<T> {
+export interface FetcherProps<T, TParam = T> {
   url: string;
-  data?: Record<string, unknown>;
-  normalizer?: (data: T) => T;
+  data?: unknown;
+  normalizer?: (data: TParam) => T;
   headers?: Record<string, string>;
   params?: Record<string, unknown>;
   method: string;

@@ -1,135 +1,517 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
-import {
-  Table, TableBody, TableCell, TableHead, TableRow, TableSortLabel,
-} from '@mui/material';
+import Chip from '@mui/material/Chip';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import TableSortLabel from '@mui/material/TableSortLabel';
+import type { KeyboardEvent } from 'react';
 
 import Button from '@/components/base/Button';
+import DatePicker from '@/components/base/DatePicker';
+import Select from '@/components/base/Select';
+import Spinner from '@/components/base/Spinner';
 import TextField from '@/components/base/Textfield';
-import { Spinner } from '@/components/icons';
+import Tooltip from '@/components/base/Tooltip';
+import Typography from '@/components/base/Typography';
+import {
+  IcPost, IcSearch, IcSort, IcSortingDown,
+} from '@/components/icons';
+import ActionButton from '@/components/ui/ActionButton';
 import useDataTable from '@/components/ui/DataTable/index.hooks';
 import type { TableProps } from '@/components/ui/DataTable/index.types';
-import DropdownButton from '@/components/ui/DropdownButton';
+import Description from '@/components/ui/Description';
+import Modal from '@/components/ui/Modal';
+import { INITIAL_PAGESIZE } from '@/constants/config';
+import { formatDateApi, noop } from '@/utils';
 
 const DataTable = (props: TableProps) => {
   const {
+    arrayColumnKey = '',
+    arrayColumnUniqueKey = '',
+    appendHeader,
     columns,
     data,
+    exportBtnLabel = 'Export Data',
+    label,
     loading = false,
     page = 1,
-    pageSize = 10,
+    pageSize = INITIAL_PAGESIZE,
     rowActions = [],
+    searchPlaceholder = 'Cari',
+    showAuditTrail = true,
+    showCountTotal = false,
+    showExportButton = false,
     showPagination = false,
+    showPageSizeChanger = true,
+    showSearch = true,
+    statusLabels = ['Active', 'Inactive'],
+    totalData = 0,
     uniqueRowKey,
+    onClickDetail = noop,
+    onClickExport = noop,
   } = props;
+  const { emptyState } = label || {};
   const {
+    title: emptyTitle = 'Mohon maaf, Pencarian tidak ditemukan',
+    message: emptyMessage = 'Mohon cek kembali kata kunci dan filter yang anda masukkan',
+  } = emptyState || {};
+  const {
+    auditData,
     displayPage,
+    displayPageSize,
+    filterExist,
+    filterInputValues,
+    filterValues,
+    initFilterVal,
+    openAuditTrail,
+    pageSizeOptions,
     sortState,
+    searchQuery,
     handleChangePage,
+    handleCloseAuditTrail,
+    handleFilterChange,
+    handleFilterInputChange,
+    handleOpenAuditTrail,
+    handlePageSizeChange,
+    handleSearchQueryChange,
     handleSort,
     onQuickPageChange,
     onSubmitPage,
+    submitSearch,
   } = useDataTable(props);
   return (
-    <div className="rounded-xl shadow-inner border-solid border border-neutral-300">
-      <Table sx={{ minWidth: 650 }} aria-label="simple table" className="table-fixed w-full">
-        <TableHead>
-          <TableRow className="bg-neutral-300">
-            {columns.map((column) => (
+    <>
+      <div className="flex justify-between items-center flex-wrap">
+        {(showPageSizeChanger || showSearch) && (
+          <div className="p-4 text-base text-neutral-600 flex items-center">
+            {showPageSizeChanger && (
+              <>
+                <Typography as="span">Show </Typography>
+                <Select
+                  className="inline-block mx-2"
+                  value={displayPageSize}
+                  options={pageSizeOptions}
+                  onChange={handlePageSizeChange}
+                  size="small"
+                />
+              </>
+            )}
+            {showSearch && (
+              <TextField
+                classes={{ container: 'my-0', input: 'w-64' }}
+                value={searchQuery}
+                size="small"
+                placeholder={searchPlaceholder}
+                onChange={handleSearchQueryChange}
+                onKeyUp={submitSearch}
+                prependObject={<IcSearch />}
+              />
+            )}
+          </div>
+        )}
+        { showExportButton && (
+          <div>
+            <Button variant="outline" color="primary" onClick={onClickExport}>
+              {exportBtnLabel}
+            </Button>
+          </div>
+        )}
+        { appendHeader }
+      </div>
+      <TableContainer sx={{ maxHeight: '52vh', maxWidth: '100%' }} className="mx-auto">
+        <Table
+          stickyHeader
+          sx={{ minWidth: 800 }}
+          className="table-fixed border-solid border border-neutral-300
+            rounded-xl border-separate border-tools-table-outline py-4 mb-2"
+        >
+          <TableHead>
+            <TableRow className="[&>th]:font-bold [&>th]:text-n-13">
               <TableCell
-                className="first:rounded-tl-xl last:rounded-tr-xl"
-                sortDirection="asc"
-                key={column.dataKey}
-                classes={{ root: 'break-words' }}
-                width={column.width}
+                width={40}
+                classes={{ root: 'break-words border-2 border-primary-500 sticky left-0 z-20' }}
+                align="center"
               >
-                {(column.sortable && column.sortKey) && Object.keys(sortState).length ? (
-                  <TableSortLabel
-                    active={sortState[column.sortKey].active}
-                    direction={sortState[column.sortKey].direction}
-                    onClick={() => handleSort(column.sortKey || '')}
-                  >
-                    {column.name}
-                  </TableSortLabel>
-                ) : column.name}
+                No.
               </TableCell>
-            ))}
-            {rowActions.length > 0 && <TableCell />}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((row) => (
-            <TableRow
-              key={String(row[uniqueRowKey])}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
               {columns.map((column) => (
                 <TableCell
-                  component="th"
-                  scope="row"
-                  key={`${column.dataKey}-${row[column.dataKey]}-${row[uniqueRowKey]}`}
-                  className="break-words"
+                  sortDirection="asc"
+                  key={column.dataKey}
+                  classes={{
+                    root: `break-words border-2 border-primary-500 
+                    ${column.sticky ? ' sticky z-20' : ''}`,
+                  }}
+                  sx={column.sticky ? { left: `${column.stickyPosition}px` } : {}}
+                  width={column.width || 100}
                 >
-                  {row[column.dataKey] ? String(row[column.dataKey]) : '-'}
+                  {(column.sortable && column.sortKey) && Object.keys(sortState).length ? (
+                    <TableSortLabel
+                      active={sortState[column.sortKey].active}
+                      direction={sortState[column.sortKey].direction}
+                      onClick={() => handleSort(column.sortKey || '')}
+                      IconComponent={IcSortingDown}
+                      hideSortIcon
+                      className="hover:text-n-13 text-n-13"
+                    >
+                      <span>{column.name}</span>
+                      {!sortState[column.sortKey].active && <IcSort className="fill-n-13" />}
+                    </TableSortLabel>
+                  ) : column.name}
                 </TableCell>
               ))}
               {rowActions.length > 0 && (
-                <TableCell align="center">
-                  <DropdownButton
-                    buttonType="dots"
-                    className="p-2"
-                    size="small"
-                    menuItems={rowActions.map((el) => ({
-                      label: el.label,
-                      danger: el.danger,
-                      onClick: () => el.onClick(String(row[uniqueRowKey])),
-                    }))}
-                  >
-                    Action
-                  </DropdownButton>
+                <TableCell
+                  width={50}
+                  classes={{ root: 'break-words border-2 border-primary-500' }}
+                  align="center"
+                >
+                  Action
+                </TableCell>
+              )}
+              {showAuditTrail && (
+                <TableCell
+                  width={50}
+                  classes={{ root: 'break-words border-2 border-primary-500' }}
+                  align="center"
+                >
+                  Audit Trail
                 </TableCell>
               )}
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      {loading && (
-        <div className="flex justify-center items-center w-full min-h-[500px]">
-          <Spinner width={80} height={80} />
-        </div>
-      )}
-      {showPagination && (
-        <div
-          className="flex flex-row justify-end items-center p-4 [&>*]:mx-1 border-0 border-t border-solid border-neutral-300"
-        >
-          <Button
-            className="p-1 min-w-0 w-8"
-            disabled={Number(page) === 1 || !page}
-            onClick={() => handleChangePage(Number(page) - 1)}
-            variant="outline"
+          </TableHead>
+          <TableBody className="[&>tr>td]:py-2">
+            {Boolean(filterExist) && (
+              <TableRow>
+                <TableCell
+                  width={40}
+                  classes={{ root: 'bg-n-1 sticky left-0 z-10' }}
+                />
+                {columns.map(({
+                  dataKey,
+                  filterKey,
+                  filterOption,
+                  filterType = 'dropdown',
+                  sticky,
+                  stickyPosition,
+                  width,
+                }, i) => (
+                  <TableCell
+                    sortDirection="asc"
+                    key={dataKey}
+                    classes={{
+                      root: `bg-n-1 ${sticky ? ' sticky z-10' : ''}`,
+                    }}
+                    sx={sticky ? { left: `${stickyPosition}px` } : {}}
+                    width={width || 100}
+                  >
+                    {Boolean(filterKey) && (
+                      <>
+                        {filterType === 'dropdown' && (
+                          <Select
+                            options={filterOption}
+                            placeholder="All"
+                            size="small"
+                            value={filterValues.length ? filterValues[i] : initFilterVal[i]}
+                            block
+                            className="w-full"
+                            onChange={(e) => handleFilterChange(String(e.target.value), i, filterKey || '')}
+                          />
+                        )}
+                        {filterType === 'text' && (
+                          <TextField
+                            placeholder="Search"
+                            size="small"
+                            value={filterValues.length ? filterValues[i] : initFilterVal[i]}
+                            block
+                            className="w-full"
+                            onKeyUp={(e: KeyboardEvent<HTMLInputElement>) => {
+                              if (e.key === 'Enter') {
+                                handleFilterChange(filterInputValues[i], i, filterKey || '');
+                              }
+                            }}
+                            onChange={(e) => handleFilterInputChange(String(e.target.value), i)}
+                          />
+                        )}
+                        {filterType === 'date' && (
+                          <DatePicker
+                            placeholder="Search"
+                            size="small"
+                            value={
+                              filterInputValues.length
+                                ? new Date(filterInputValues[i])
+                                : null
+                            }
+                            block
+                            className="w-full"
+                            onChange={(e) => (e ? handleFilterChange(formatDateApi(e), i, filterKey || '') : null)}
+                          />
+                        )}
+                      </>
+                    )}
+                  </TableCell>
+                ))}
+                {rowActions.length > 0 && (
+                  <TableCell
+                    width={80}
+                  />
+                )}
+                {showAuditTrail && (
+                  <TableCell
+                    width={50}
+                  />
+                )}
+              </TableRow>
+            )}
+            {loading && (
+              <TableRow>
+                <TableCell colSpan={columns.length + 3}>
+                  <div className="flex justify-center items-center w-full min-h-[300px]">
+                    <Spinner width={80} height={80} />
+                  </div>
+                </TableCell>
+              </TableRow>
+            )}
+            {!loading && (data.length > 0 ? data.map((row, i) => (
+              <Fragment key={String(row[uniqueRowKey])}>
+                <TableRow
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell
+                    component="td"
+                    scope="row"
+                    className="break-words sticky left-0 z-10 bg-n-1"
+                    align="center"
+                    rowSpan={arrayColumnKey
+                      ? (row[arrayColumnKey] as Array<Record<string, unknown>> || []).length || 1
+                      : 1}
+                  >
+                    <Typography as="span" className="bg-gray-300 py-1 px-2 rounded-md">
+                      {page * pageSize - pageSize + i + 1}
+                    </Typography>
+                  </TableCell>
+                  {columns.map((column) => (
+                    <TableCell
+                      component="td"
+                      scope="row"
+                      key={column.dataKey}
+                      classes={{
+                        root: `break-words bg-n-1 
+                      ${column.sticky ? ' sticky z-10' : ''}`,
+                      }}
+                      sx={column.sticky ? { left: `${column.stickyPosition}px` } : {}}
+                      rowSpan={!column.isArrayColumn
+                        ? (row[arrayColumnKey] as Array<Record<string, unknown>> || []).length || 1
+                        : 1}
+                    >
+                      {!column.isArrayColumn ? (
+                        <>
+                          {column.dataType === 'action-detail' && (
+                            <Button
+                              variant="text"
+                              className="text-base text-primary-500 text-left p-0"
+                              onClick={() => onClickDetail(String(row[uniqueRowKey]))}
+                            >
+                              {String(row[column.dataKey])}
+                            </Button>
+                          )}
+                          {column.dataType === 'number' && (
+                            <span>{Number(row[column.dataKey])}</span>
+                          )}
+                          {column.dataType === 'status' && (
+                            <Chip
+                              color={row[column.dataKey] ? 'success' : 'default'}
+                              label={row[column.dataKey] ? statusLabels[0] : statusLabels[1]}
+                              className="text-n-8 bg-n4"
+                              classes={{
+                                root: 'rounded-lg text-sm font-semibold min-w-[6rem]',
+                                colorSuccess: 'bg-success-50 text-success-500',
+                              }}
+                            />
+                          )}
+                          {(!column.dataType || column.dataType === 'string') && (
+                            <span className={column.className}>{String(row[column.dataKey])}</span>
+                          )}
+                        </>
+                      ) : (
+                        <span className={column.className}>
+                          {
+                            !(row[arrayColumnKey] as Array<Record<string, unknown>>)[0]
+                              ? '-'
+                              : String((
+                                row[arrayColumnKey] as Array<Record<string, unknown>>
+                              )[0][column.dataKey])
+                          }
+                        </span>
+                      )}
+                    </TableCell>
+                  ))}
+                  {rowActions.length > 0 && (
+                    <TableCell
+                      component="td"
+                      scope="row"
+                      align="center"
+                      rowSpan={arrayColumnKey
+                        ? (row[arrayColumnKey] as Array<Record<string, unknown>> || []).length || 1
+                        : 1}
+                    >
+                      <div className="flex justify-center gap-2">
+                        {rowActions.map(({
+                          onClick,
+                          disabledFn = () => false,
+                          showFn = () => true,
+                          color = 'default',
+                          icon = null,
+                          tooltip = '',
+                        }) => (
+                          showFn(row) && (
+                            <Tooltip
+                              key={color + icon}
+                              title={tooltip}
+                            >
+                              <div>
+                                <ActionButton
+                                  color={color}
+                                  onClick={() => onClick(row)}
+                                  disabled={disabledFn(row)}
+                                >
+                                  {icon}
+                                </ActionButton>
+                              </div>
+                            </Tooltip>
+                          )
+                        ))}
+                      </div>
+                    </TableCell>
+                  )}
+                  {showAuditTrail && (
+                    <TableCell
+                      component="td"
+                      scope="row"
+                      align="center"
+                      rowSpan={arrayColumnKey
+                        ? (row[arrayColumnKey] as Array<Record<string, unknown>> || []).length || 1
+                        : 1}
+                    >
+                      <div className="flex justify-center">
+                        <ActionButton onClick={() => handleOpenAuditTrail(row)}>
+                          <IcPost />
+                        </ActionButton>
+                      </div>
+                    </TableCell>
+                  )}
+                </TableRow>
+                {arrayColumnKey
+                  && (row[arrayColumnKey] as Array<Record<string, unknown>> || [])
+                    .slice(1)
+                    .map((item) => (
+                      <TableRow
+                        key={String(row[uniqueRowKey]) + item[arrayColumnUniqueKey]}
+                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                      >
+                        {columns.filter((col) => col.isArrayColumn).map((column) => (
+                          <TableCell
+                            component="td"
+                            scope="row"
+                            key={column.dataKey}
+                            classes={{
+                              root: `break-words bg-n-1 
+                      ${column.sticky ? ' sticky z-10' : ''}`,
+                            }}
+                            sx={column.sticky ? { left: `${column.stickyPosition}px` } : {}}
+                          >
+                            <span className={column.className}>
+                              {String((item[column.dataKey]))}
+                            </span>
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))}
+              </Fragment>
+            )) : (
+              <TableRow>
+                <TableCell colSpan={columns.length + 3}>
+                  <div className="text-center p-24">
+                    <Typography variant="title">
+                      {emptyTitle}
+                    </Typography>
+                    <Typography>
+                      {emptyMessage}
+                    </Typography>
+                  </div>
+                </TableCell>
+              </TableRow>
+            )
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <div className="grid grid-cols-2 items-center [&>*]:p-4">
+        {showCountTotal && (
+          <Typography>
+            {`Showing ${page * pageSize - pageSize + 1} - ${
+              data.length < pageSize
+                ? page * pageSize - pageSize + data.length
+                : page * pageSize - pageSize + pageSize
+            } from ${totalData} data`}
+          </Typography>
+        )}
+        {showPagination && (
+          <div
+            className={`flex flex-row justify-end items-center [&>*]:mx-1 ${!showCountTotal ? 'col-span-2' : ''}`}
           >
-            &lt;
-          </Button>
-          <TextField
-            type="number"
-            placeholder="Page"
-            value={String(displayPage || '')}
-            size="small"
-            className="m-0 w-14"
-            onKeyUp={onSubmitPage}
-            onChange={onQuickPageChange}
-          />
-          <Button
-            className="p-1 min-w-0 w-8"
-            onClick={() => handleChangePage(Number(page) + 1)}
-            disabled={data.length < pageSize}
-            variant="outline"
-          >
-            &gt;
-          </Button>
-        </div>
-      )}
-    </div>
+            <Button
+              className="min-w-0 w-8 px-3.5"
+              size="small"
+              disabled={Number(page) === 1 || !page}
+              onClick={() => handleChangePage(Number(page) - 1)}
+              color="primary"
+            >
+              &lt; Prev
+            </Button>
+            <TextField
+              type="number"
+              placeholder="Page"
+              value={String(displayPage || '')}
+              size="small"
+              className="m-0 w-14 p-0"
+              classes={{
+                container: 'my-0 p-1',
+                input: 'px-1',
+              }}
+              onKeyUp={onSubmitPage}
+              onChange={onQuickPageChange}
+            />
+            <Button
+              className="min-w-0 w-8 px-3.5"
+              size="small"
+              onClick={() => handleChangePage(Number(page) + 1)}
+              disabled={data.length < pageSize}
+              color="primary"
+            >
+              Next &gt;
+            </Button>
+          </div>
+        )}
+      </div>
+      <Modal
+        open={openAuditTrail}
+        title="Audit Trail"
+        onClose={handleCloseAuditTrail}
+        width={350}
+      >
+        <Modal.Content className="[&>*]:mb-4">
+          <Description label="Created By" value={String(auditData.createdByFullName)} />
+          <Description label="Created Date" value={String(auditData.createdAt)} />
+          <Description label="Updated By" value={String(auditData.lastUpdatedByFullName)} />
+          <Description label="Updated Date" value={String(auditData.lastUpdatedAt)} />
+        </Modal.Content>
+      </Modal>
+    </>
   );
 };
 

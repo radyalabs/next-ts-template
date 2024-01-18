@@ -1,10 +1,6 @@
-import type { SyntheticEvent } from 'react';
+import type { ToastMessageContext } from '@/types/toaster';
 
 export interface ToasterProps {
-  autoHideDuration: number | null;
-  error: boolean,
+  context?: ToastMessageContext;
   message: string;
-  onClose: (event: SyntheticEvent | Event, reason: string) => void;
-  open: boolean;
-  toasterKey: string;
 }

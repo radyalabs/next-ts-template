@@ -1,8 +1,11 @@
-import { Tooltip as MUITooltip } from '@mui/material';
+import { forwardRef } from 'react';
+
+import MUITooltip from '@mui/material/Tooltip';
+import type { ForwardedRef } from 'react';
 
 import type { TooltipProps } from './index.types';
 
-const Tooltip = (props: TooltipProps) => {
+const Tooltip = forwardRef((props: TooltipProps, forwardedRef: ForwardedRef<Element>) => {
   const {
     children,
     className = '',
@@ -18,6 +21,7 @@ const Tooltip = (props: TooltipProps) => {
     <MUITooltip
       arrow
       title={title}
+      classes={{ tooltip: 'font-sans' }}
       className={className}
       open={open}
       onClose={onClose}
@@ -25,10 +29,11 @@ const Tooltip = (props: TooltipProps) => {
       disableFocusListener={disableFocus}
       disableHoverListener={disableHover}
       placement={placement}
+      ref={forwardedRef}
     >
       { children }
     </MUITooltip>
   );
-};
+});
 
 export default Tooltip;

@@ -1,54 +1,82 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
 
 import mark from '@/assets/brand_mark_primary.png';
 import logo from '@/assets/brand_primary.png';
-import Tooltip from '@/components/base/Tooltip';
+import Button from '@/components/base/Button';
+import { IcHide, IcShow } from '@/components/icons';
 
+import MenuItem from './components/MenuItem';
 import useSidebar from './index.hooks';
 
 const Sidebar = () => {
   const {
     isCollapsed,
     menus,
-    isActive,
+    toggleCollapsed,
   } = useSidebar();
   return (
     <aside
-      className={`${!isCollapsed ? 'w-64' : 'w-24'} fixed h-full drop-shadow-xl z-50 transition-width transition-slowest ease`}
+      className={`${!isCollapsed ? 'w-64' : 'w-24'} font-sans fixed h-full drop-shadow-xl z-50 transition-width transition-slowest ease`}
       aria-label="Sidebar"
     >
-      <div className="overflow-y-auto bg-gray-50 h-full px-2">
-        <div className="flex justify-center mb-10 p-2">
-          <Link href="/">
-            <Image
-              src={!isCollapsed ? logo : mark}
-              alt="Brand Logo"
-              className="min-h-[5rem] h-5 w-auto object-contain"
-              priority
-            />
-          </Link>
+      <div className="overflow-y-auto bg-n-1 h-full px-2">
+        <div className={`flex justify-between ${!isCollapsed ? 'px-6 py-5' : 'px-2 py-5'}`}>
+          <Image
+            src={!isCollapsed ? logo : mark}
+            alt="Brand Logo"
+            className="min-h-11 h-11 w-auto object-contain"
+            priority
+          />
+          <Button variant="text" onClick={toggleCollapsed} type="button" className="p-0 [&>*]:fill-neutral-500">
+            {
+              !isCollapsed
+                ? <IcHide width={15} height={15} />
+                : <IcShow width={15} height={15} />
+            }
+          </Button>
         </div>
-        <ul className="space-y-2 text-gray-600 list-none p-0">
+
+        <List
+          sx={{ width: '100%' }}
+          component="nav"
+        >
           {menus.map((menu) => (
-            <Tooltip key={menu.path} title={isCollapsed ? menu.name : ''} placement="right">
-              <li>
-                <Link
-                  href={menu.path}
-                  className={`flex ${isCollapsed && 'justify-center'} items-center p-2 text-base 
-                    font-normal rounded-lg hover:bg-gray-200 gap-2 text-neutral-700 
-                    no-underline ${isActive(menu.path) && 'bg-gray-200 shadow-inner'}`}
+            !menu.subMenu ? (
+              <MenuItem menu={menu} key={menu.id} />
+            ) : (
+              <Fragment key={menu.id}>
+                <ListItemButton
+                  classes={{
+                    root: 'rounded-2xl mb-2 justify-center whitespace-nowrap text-neutral-700 text-base',
+                  }}
                 >
-                  {menu.icon}
-                  <span>
-                    {!isCollapsed ? menu.name : ''}
-                  </span>
-                </Link>
-              </li>
-            </Tooltip>
+                  {!isCollapsed && (
+                    <ListItemText
+                      classes={{ primary: 'text-sm font-secondary' }}
+                      primary={menu.name}
+                    />
+                  )}
+                </ListItemButton>
+                <List
+                  component="div"
+                  disablePadding
+                  className="mb-5"
+                >
+                  {
+                    (menu.subMenu || []).map((submenu) => (
+                      <MenuItem menu={submenu} key={submenu.id} />
+                    ))
+                  }
+                </List>
+              </Fragment>
+            )
           ))}
-        </ul>
+        </List>
       </div>
     </aside>
   );

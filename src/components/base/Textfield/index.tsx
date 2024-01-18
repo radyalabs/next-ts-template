@@ -1,9 +1,12 @@
 import { forwardRef } from 'react';
 
-import { TextField as MUITextField } from '@mui/material';
+import InputAdornment from '@mui/material/InputAdornment';
+import MUITextField from '@mui/material/TextField';
 import type { ForwardedRef } from 'react';
 
-import type TextFieldProps from './index.types';
+import Label from '@/components/base/Label';
+
+import type { TextFieldProps } from './index.types';
 
 import styles from './index.module.scss';
 
@@ -11,17 +14,22 @@ const TextField = forwardRef(
   (props: TextFieldProps, forwardedRef: ForwardedRef<HTMLInputElement>) => {
     const {
       appendObject,
+      autoComplete,
+      autoFocus = false,
       block = false,
       classes,
-      className,
+      className = '',
       disabled = false,
       error = false,
       id,
+      inlineLabel,
       innerClassName,
       label,
+      labelLayout = 'vertical',
+      maxLength,
       message,
       name,
-      placeholder = 'Enter text here',
+      placeholder,
       prependObject,
       required = false,
       rounded,
@@ -34,6 +42,7 @@ const TextField = forwardRef(
       onClick,
       onFocus,
       onKeyUp,
+      onKeyDown,
     } = props || {};
     const {
       label: labelClass = '',
@@ -57,22 +66,47 @@ const TextField = forwardRef(
       containerStyle.push(styles.block);
     }
     return (
-      <div className={className}>
+      <div
+        className={`${className} ${
+          labelLayout === 'horizontal' ? 'flex items-center' : 'flex flex-col gap-2'
+        }`}
+      >
         {!!label && (
-          <label htmlFor={id} className={`font-semibold mb-1 block text-gray-500 ${labelClass}`}>{label}</label>
+          <Label
+            id={id}
+            labelLayout={labelLayout}
+            className={labelClass}
+            required={required}
+            value={label}
+          />
         )}
         <MUITextField
-          className={`${containerStyle.join(' ')} ${containerClass}`}
+          autoComplete={autoComplete}
+          aria-autocomplete="inline"
+          autoFocus={autoFocus}
+          className={`${containerStyle.join(' ')} ${containerClass} ${
+            labelLayout === 'horizontal' && 'w-3/4'
+          } my-0`}
           placeholder={placeholder}
           type={type}
           value={value}
           error={error}
           required={required}
           InputProps={{
-            className: `${textFieldStyle.join(' ')} ${inputClass}`,
-            startAdornment: prependObject,
-            endAdornment: appendObject,
+            classes: { input: inputClass },
+            className: `${textFieldStyle.join(
+              ' ',
+            )} ${innerClassName} rounded-xl`,
+            startAdornment: (
+              prependObject && <InputAdornment position="start" classes={{ root: '[&>*]:fill-n-7' }}>{prependObject}</InputAdornment>
+            ),
+            endAdornment: (
+              appendObject && <InputAdornment position="end" classes={{ root: '[&>*]:fill-n-7' }}>{appendObject}</InputAdornment>
+            ),
+            inputProps: { maxLength, className: `py-3 px-3.5 ${!!prependObject && 'pl-0'} ${!!appendObject && 'pr-0'}` },
           }}
+          InputLabelProps={{ shrink: !!value, className: 'text-base -my-1' }}
+          label={inlineLabel}
           margin="dense"
           size={size}
           onBlur={onBlur}
@@ -83,8 +117,9 @@ const TextField = forwardRef(
           ref={forwardedRef}
           name={name}
           onKeyUp={onKeyUp}
+          onKeyDown={onKeyDown}
+          helperText={message}
         />
-        <p className={`text-xs ml-2 mt-1 ${error ? 'text-danger-500' : ''}`}>{message}</p>
       </div>
     );
   },

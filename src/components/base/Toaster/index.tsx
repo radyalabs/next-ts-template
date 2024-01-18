@@ -1,4 +1,6 @@
-import { Snackbar, SnackbarContent } from '@mui/material';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+import SnackbarContent from '@mui/material/SnackbarContent';
 
 import type { ToasterProps } from './index.types';
 
@@ -6,24 +8,27 @@ import styles from './index.module.scss';
 
 const Toaster = (props: ToasterProps) => {
   const {
-    autoHideDuration = 3000,
-    error = false,
+    context = 'default',
     message = '',
-    onClose,
-    open = false,
-    toasterKey = 'main',
   } = props;
   const containerStyle = [styles.container];
-  if (error) containerStyle.push(styles.error);
   return (
     <Snackbar
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-      autoHideDuration={autoHideDuration}
-      key={toasterKey}
-      onClose={onClose}
-      open={open}
+      open
     >
-      <SnackbarContent message={message} className={containerStyle.join(' ')} />
+      {context === 'default' ? (
+        <SnackbarContent message={message} className={containerStyle.join(' ')} />
+      ) : (
+        <Alert
+          severity={context}
+          className={containerStyle.join(' ')}
+          sx={{ minWidth: '320px' }}
+          variant="filled"
+        >
+          {message}
+        </Alert>
+      )}
     </Snackbar>
   );
 };

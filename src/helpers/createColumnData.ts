@@ -1,4 +1,4 @@
-import type { DropdownOption } from '@/types/forms';
+import type { SelectItem } from '@/types/inputs';
 import type { TableColumn } from '@/types/tables';
 
 const createColumnData = (
@@ -9,7 +9,7 @@ const createColumnData = (
   filterKey?: string,
   filterType?: 'text' | 'dropdown' | 'date' | null,
   filterPlaceholder?: string,
-  filterOption?: DropdownOption[],
+  filterOption?: SelectItem[],
   width?: number,
 ): TableColumn => ({
   name,

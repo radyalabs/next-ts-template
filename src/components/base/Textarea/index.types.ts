@@ -48,7 +48,8 @@ interface TextareaProps {
    */
   block?: boolean;
   label?: string;
-  onChange?: ChangeEventHandler;
+  labelLayout?: 'vertical' | 'horizontal';
+  onChange?: ChangeEventHandler<HTMLTextAreaElement>;
   onBlur?: FocusEventHandler;
   onFocus?: FocusEventHandler;
   onClick?: MouseEventHandler;
