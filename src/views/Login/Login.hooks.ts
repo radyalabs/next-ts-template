@@ -34,7 +34,6 @@ const useLogin = () => {
 
   useEffect(() => {
     if (isAuthenticated && profile) {
-      toaster.show('You are already logged in');
       router.push('/dashboard');
     }
   }, [isAuthenticated, profile, router, toaster]);

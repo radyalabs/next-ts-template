@@ -1,15 +1,14 @@
-import Head from 'next/head';
+import type { Metadata } from 'next';
 
 import { APP_TITLE } from '@/constants/config';
 import Logout from '@/views/Logout';
 
+export const metadata: Metadata = {
+  title: `${APP_TITLE} - Logout`,
+};
+
 const LogoutPage = () => (
-  <>
-    <Head>
-      <title>{`${APP_TITLE} - Logout`}</title>
-    </Head>
-    <Logout />
-  </>
+  <Logout />
 );
 
 export default LogoutPage;
