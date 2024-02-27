@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/** @type {import('tailwindcss').Config} */
-const defaultTheme = require('tailwindcss/defaultTheme');
-const colors = require('tailwindcss/colors');
+import type { Config } from 'tailwindcss';
+import colors from 'tailwindcss/colors';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
-module.exports = {
+export default {
   content: [
     './src/components/**/*.{js,ts,jsx,tsx}',
     './src/context/**/*.{js,ts,jsx,tsx}',
@@ -125,6 +124,17 @@ module.exports = {
       sans: ['var(--font-rubik)', ...defaultTheme.fontFamily.sans],
       secondary: ['var(--font-quicksand)', 'sans-serif'],
     },
+    fontSize: {
+      xs: '0.6875rem',
+      sm: '0.75rem',
+      base: '0.875rem',
+      lg: '1rem',
+      xl: '1.125rem',
+      '2xl': '1.25rem',
+      '3xl': '1.563rem',
+      '4xl': '1.953rem',
+      '5xl': '2.441rem',
+    },
     extend: {
       spacing: {
         128: '32rem',
@@ -155,4 +165,4 @@ module.exports = {
     },
   },
   plugins: [],
-};
+} satisfies Config;
