@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -16,6 +16,7 @@ import type { LoginResponse, LoginSchema } from './Login.types';
 
 const useLogin = () => {
   const router = useRouter();
+  const query = useSearchParams();
   const toaster = useToaster();
   const { isAuthenticated, profile } = useAuthContext();
 
@@ -40,43 +41,38 @@ const useLogin = () => {
 
   const onAfterLogin = () => {
     toaster.success('Successfully logged in');
-    const { returnUrl } = router.query;
-    router.push(returnUrl ? String(returnUrl) : '/dashboard');
+    if (query) {
+      const { returnUrl } = Object.fromEntries(query.entries());
+      router.push(returnUrl ? String(returnUrl) : '/dashboard');
+    }
   };
 
-  const {
-    mutate: mutateSubmit,
-    isLoading: isSubmitting,
-  } = usePostData<LoginResponse>(
-    ['loginPost'],
-    ENDPOINT.IDENTITY.LOGIN,
-    {
-      options: {
-        onSuccess: (data) => {
-          saveToken(data);
-          onAfterLogin();
-        },
-        onError: (error) => {
-          const { response } = error || {};
-          const { data } = response || {};
-          const { message, code, payload } = data || {};
-          if (code === HTTP_CODE.badRequest && payload) {
-            (payload || []).forEach((el) => {
-              const { propertyName, message: payloadMessage } = el;
-              setError(
-                `${propertyName.charAt(0).toLowerCase()}${propertyName.slice(
-                  1,
-                )}` as 'root',
-                { type: 'custom', message: payloadMessage },
-              );
-            });
-            return;
-          }
-          toaster.error(message || 'Terjadi kesalahan pada server');
-        },
+  const { mutate: mutateSubmit, isLoading: isSubmitting } = usePostData<LoginResponse>(['loginPost'], ENDPOINT.IDENTITY.LOGIN, {
+    options: {
+      onSuccess: (data) => {
+        saveToken(data);
+        onAfterLogin();
+      },
+      onError: (error) => {
+        const { response } = error || {};
+        const { data } = response || {};
+        const { message, code, payload } = data || {};
+        if (code === HTTP_CODE.badRequest && payload) {
+          (payload || []).forEach((el) => {
+            const { propertyName, message: payloadMessage } = el;
+            setError(
+              `${propertyName.charAt(0).toLowerCase()}${propertyName.slice(
+                1,
+              )}` as 'root',
+              { type: 'custom', message: payloadMessage },
+            );
+          });
+          return;
+        }
+        toaster.error(message || 'Terjadi kesalahan pada server');
       },
     },
-  );
+  });
 
   const onSubmit = (data: LoginSchema) => {
     mutateSubmit(data);
