@@ -1,4 +1,5 @@
 import { type ReactNode } from 'react';
+import type { Metadata, Viewport } from 'next';
 import { Quicksand, Rubik } from 'next/font/google';
 
 import { ThemeProvider } from '@mui/material';
@@ -22,6 +23,19 @@ const quicksand = Quicksand({
   display: 'swap',
   variable: '--font-quicksand',
 });
+
+export const metadata: Metadata = {
+  icons: {
+    icon: '/favicon.ico',
+  },
+};
+
+export const viewport: Viewport = {
+  width: '1280',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: true,
+};
 
 const RootLayout = ({ children }: { children: ReactNode }) => (
   <html lang="en">

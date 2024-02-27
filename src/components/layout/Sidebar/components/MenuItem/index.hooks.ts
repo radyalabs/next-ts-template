@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 
 import { useLayoutContext } from '@/contexts/LayoutContext';
 
@@ -8,9 +8,9 @@ import type { MenuItemProps } from './index.types';
 const useMenuItem = (props: MenuItemProps) => {
   const { menu } = props;
   const { isCollapsed } = useLayoutContext();
-  const location = useRouter();
+  const pathname = usePathname() || '';
 
-  const isActive = (path: string): boolean => location.pathname.startsWith(path);
+  const isActive = (path: string): boolean => pathname.startsWith(path);
   const [open, setOpen] = useState<boolean>(isActive(menu.path));
 
   const handleClick = () => {
