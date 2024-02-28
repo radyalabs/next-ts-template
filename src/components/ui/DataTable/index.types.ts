@@ -2,11 +2,11 @@ import type { ReactNode } from 'react';
 
 import type { SortParam, TableColumn } from '@/types/tables';
 
-export interface TableProps {
+export interface TableProps<T = Record<string, string | number>> {
   appendHeader?: ReactNode;
   arrayColumnKey?: string;
   arrayColumnUniqueKey?: string;
-  data: Array<Record<string, unknown>>;
+  data: T[];
   columns: TableColumn[];
   exportBtnLabel?: string;
   hasArrayColumn?: boolean;
@@ -14,7 +14,7 @@ export interface TableProps {
   loading?: boolean;
   page?: number;
   pageSize?: number;
-  rowActions?: ActionProps[];
+  rowActions?: Array<ActionProps<T>>;
   searchPlaceholder?: string;
   searchValue?: string;
   showCountTotal?: boolean;
@@ -35,12 +35,12 @@ export interface TableProps {
   uniqueRowKey: string;
 }
 
-export interface ActionProps {
+export interface ActionProps<T = Record<string, unknown>> {
   color?: 'default' | 'primary' | 'success' | 'danger';
-  onClick: (row: Record<string, unknown>) => void;
+  onClick: (row: T) => void;
   icon?: string | ReactNode;
-  disabledFn?: (row: Record<string, unknown>) => boolean;
-  showFn?: (row: Record<string, unknown>) => boolean;
+  disabledFn?: (row: T) => boolean;
+  showFn?: (row: T) => boolean;
   tooltip?: string;
 }
 

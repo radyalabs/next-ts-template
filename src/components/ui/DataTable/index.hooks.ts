@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation';
 
 import type { ChangeEvent, KeyboardEvent } from 'react';
 
@@ -12,7 +12,7 @@ import type {
   TableProps,
 } from './index.types';
 
-const useDataTable = (props: TableProps) => {
+const useDataTable = <T>(props: TableProps<T>) => {
   const {
     columns,
     page = 1,
@@ -24,7 +24,7 @@ const useDataTable = (props: TableProps) => {
     onSearchChange = noop,
     onSortChange = noop,
   } = props || {};
-  const { query } = useRouter();
+  const query = useSearchParams();
   const [displayPage, setDisplayPage] = useState(page);
   const [displayPageSize, setDisplayPageSize] = useState(pageSize);
   const [sortState, setSortState] = useState<DynamicSortState>(() => {
@@ -51,7 +51,7 @@ const useDataTable = (props: TableProps) => {
   const [filterInputValues, setFilterInputValues] = useState<string[]>([]);
 
   const initFilterVal: string[] = Array(columns.length).fill('');
-  for (const [key, value] of Object.entries(query)) {
+  for (const [key, value] of (query || []).entries()) {
     const colIndex = columns.findIndex((col) => col.filterKey === key);
     if (colIndex > -1 && typeof value === 'string') {
       initFilterVal[colIndex] = value;

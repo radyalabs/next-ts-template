@@ -1,77 +1,43 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 import { ENDPOINT } from '@/constants/apiURL';
 import { useModalContext } from '@/contexts/ModalContext';
-import { updateURLQuery } from '@/helpers';
 import useGetData from '@/hooks/useGetData';
 import { useDeleteData } from '@/hooks/useMutateData';
+import useQueryParams from '@/hooks/useQueryParams';
 import { userListNormalizer } from '@/normalizers';
-import type { SortParam, TableColumn } from '@/types/tables';
 import type { User, UserListResponse } from '@/types/user';
 import { createQueryParams } from '@/utils';
 
-import { INIT_QUERY_PARAMS, TABLE_COLUMNS } from './UserManagementList.constants';
-import type { UserQueryParams } from './UserManagementList.types';
-
 const useUserManagementList = () => {
   const router = useRouter();
-  const { query: initQuery } = router;
   const modal = useModalContext();
-  const tableColumns: TableColumn[] = TABLE_COLUMNS;
+  const {
+    queryParams,
+    onPageChange,
+    onPageSizeChange,
+    onSearchChange,
+    onSortChange,
+  } = useQueryParams();
+
   const { USER_MGMT } = ENDPOINT;
-  const [queryParams, setQueryParams] = useState<UserQueryParams>(INIT_QUERY_PARAMS);
   const [selectedId, setSelectedId] = useState('');
-  const updateQueryParams = (queryObject: Partial<UserQueryParams>) => {
-    setQueryParams((prevState) => {
-      const newState: UserQueryParams = { ...prevState, ...queryObject };
-      updateURLQuery(router, newState);
-      return newState;
-    });
-  };
-
-  const onPageChange = (val: number) => {
-    updateQueryParams({ page: val });
-  };
-
-  const onSortChange = (params: SortParam) => {
-    const {
-      key,
-      direction,
-    } = params;
-    onPageChange(1);
-    updateQueryParams({
-      orderBy: key,
-      orderType: direction,
-    });
-  };
-
-  const onPageSizeChange = (val: number) => {
-    updateQueryParams({ size: val });
-  };
-
-  const onSearchChange = (val: string) => {
-    updateQueryParams({ s: val });
-  };
 
   const handleDetail = (id: string) => {
-    router.push(`/user-access-management/detail/${id}`);
+    router.push(`/user-access-management/${id}`);
   };
 
   const handleEdit = (id: string) => {
     router.push(`/user-access-management/edit/${id}`);
   };
 
-  useEffect(() => {
-    setQueryParams((prevState) => ({ ...prevState, ...initQuery }));
-  }, [initQuery]);
-
   const {
     data,
     isLoading,
     refetch,
   } = useGetData<UserListResponse>(
-    ['userList', createQueryParams(queryParams)],
+    ['userList', createQueryParams(queryParams || {})],
     USER_MGMT.USERS,
     {
       params: queryParams,
@@ -131,7 +97,6 @@ const useUserManagementList = () => {
   return {
     data,
     isLoading,
-    tableColumns,
     queryParams,
     handleDelete,
     handleDetail,

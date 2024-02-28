@@ -16,7 +16,7 @@ const NotFound = () => (
         style={{ objectFit: 'contain' }}
       />
     </div>
-    <div className="flex flex-col gap-2 [&>*]:text-n-1 items-center">
+    <div className="flex flex-col gap-2 [&>*]:text-n-1 items-center mb-4">
       <Typography variant="headline">Page Not Found</Typography>
       <Typography size="large">
         It seems this page is not available

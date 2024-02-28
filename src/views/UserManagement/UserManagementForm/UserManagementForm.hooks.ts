@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { ChangeEvent } from 'react';
@@ -18,22 +18,22 @@ import applicationScopesNormalizer from '../normalizers/applicationScopesNormali
 import userNormalizer from '../normalizers/userNormalizer';
 import type { ApplicationScopes } from '../types/applicationScope';
 
-const useUserManagementForm = () => {
+const useUserManagementForm = (userId = '') => {
   const router = useRouter();
-  const { query } = router;
   const modal = useModalContext();
   const toaster = useToaster();
   const { USER_MGMT } = ENDPOINT;
   const { SCOPES } = USER_MGMT;
   const [checkedScopes, setCheckedScopes] = useState<string[]>([]);
   const [checkAll, setCheckAll] = useState<boolean[]>([]);
-  const isEdit = useMemo(() => !!query.id, [query]);
+  const isEdit = useMemo(() => !!userId, [userId]);
   const pageTitle = useMemo(() => (isEdit ? 'Edit' : 'Save'), [isEdit]);
 
   const schema = z.object({
-    email:
-      z.string().email({ message: 'Invalid email format' })
-        .and(z.string().min(1, { message: 'Email has not been filled in' })),
+    email: z
+      .string()
+      .email({ message: 'Invalid email format' })
+      .and(z.string().min(1, { message: 'Email has not been filled in' })),
     fullName: z.string().min(1, { message: 'Password has not been filled in' }),
   });
 
@@ -49,16 +49,9 @@ const useUserManagementForm = () => {
     resolver: zodResolver(schema),
   });
 
-  const {
-    data: scopes = [],
-    isLoading: isLoadingScopes,
-  } = useGetData<ApplicationScopes>(
-    ['userScopes'],
-    SCOPES,
-    {
-      normalizer: applicationScopesNormalizer,
-    },
-  );
+  const { data: scopes = [], isLoading: isLoadingScopes } = useGetData<ApplicationScopes>(['userScopes'], SCOPES, {
+    normalizer: applicationScopesNormalizer,
+  });
 
   const handleBack = () => {
     router.back();
@@ -76,7 +69,10 @@ const useUserManagementForm = () => {
     const checkedAll = [...checkAll];
     checkedAll[i] = !checkedAll[i];
     setCheckAll(checkedAll);
-    setCheckedScopes([...checkedScopes, ...scopes[i].scopes.map((scope) => scope.name)]);
+    setCheckedScopes([
+      ...checkedScopes,
+      ...scopes[i].scopes.map((scope) => scope.name),
+    ]);
     if (checkAll[i]) {
       const newVal = checkedScopes.filter(
         (val) => !scopes[i].scopes.flatMap((scope) => scope.name).includes(val),
@@ -85,11 +81,9 @@ const useUserManagementForm = () => {
     }
   };
 
-  const {
-    data: userData,
-  } = useGetData<User>(
-    ['userDetail', String(query.id)],
-    USER_MGMT.USERS_BY_ID(String(query.id)),
+  const { data: userData } = useGetData<User>(
+    ['userDetail', String(userId)],
+    USER_MGMT.USERS_BY_ID(String(userId)),
     {
       normalizer: userNormalizer,
       options: {
@@ -111,12 +105,9 @@ const useUserManagementForm = () => {
     }
   }, [userScopes]);
 
-  const {
-    mutate: mutateSubmit,
-    isLoading: isSubmitting,
-  } = useMutateData(
+  const { mutate: mutateSubmit, isLoading: isSubmitting } = useMutateData(
     ['loginPost'],
-    !isEdit ? USER_MGMT.USERS : USER_MGMT.USERS_BY_ID(String(query.id)),
+    !isEdit ? USER_MGMT.USERS : USER_MGMT.USERS_BY_ID(String(userId)),
     !isEdit ? 'post' : 'put',
     {
       options: {

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 import { ENDPOINT } from '@/constants/apiURL';
 import useGetData from '@/hooks/useGetData';
@@ -12,9 +12,8 @@ import type {
   ApplicationScopes,
 } from '../types/applicationScope';
 
-const useUserManagementDetail = () => {
+const useUserManagementDetail = (id: string) => {
   const router = useRouter();
-  const { query } = router;
   const { USER_MGMT } = ENDPOINT;
   const { USERS_BY_ID, SCOPES } = USER_MGMT;
 
@@ -22,12 +21,12 @@ const useUserManagementDetail = () => {
     data: userData,
     isLoading: isLoadingUserData,
   } = useGetData<User>(
-    ['userDetail', String(query.id)],
-    USERS_BY_ID(String(query.id)),
+    ['userDetail', String(id)],
+    USERS_BY_ID(String(id)),
     {
       normalizer: userNormalizer,
       options: {
-        enabled: !!query.id,
+        enabled: !!id,
       },
     },
   );
