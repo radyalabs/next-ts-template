@@ -13,23 +13,23 @@ export const useMutateData = <T = void>(
 ) => {
   const { normalizer, options } = extras || {};
   const { onSuccess, onError, retry } = options || {};
-  const { mutate, data, isLoading } = useMutation<
+  const { mutate, data, isPending: isLoading } = useMutation<
   T,
   AxiosError<BaseError>,
   unknown
   >(
-    key,
-    (body) => defaultFetcherFn<T>({
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      data: body,
-      method,
-      normalizer,
-      url,
-    }),
     {
+      mutationKey: key,
+      mutationFn: (body) => defaultFetcherFn<T>({
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        data: body,
+        method,
+        normalizer,
+        url,
+      }),
       onSuccess,
       onError,
       retry,

@@ -12,26 +12,27 @@ const useGetData = <T, TParam = T>(
 ) => {
   const { options, params, normalizer } = extras || {};
   const { enabled = true, initialData = undefined, retry = 3 } = options || {};
+
   const {
     data, error, isError, isFetching, isLoading, refetch,
   } = useQuery<
   T,
   AxiosError<BaseError>
   >(
-    key,
-    () => defaultFetcherFn<T, TParam>({
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      method: 'get',
-      normalizer,
-      url,
-      params,
-    }),
     {
-      enabled,
+      queryKey: key,
+      queryFn: () => defaultFetcherFn<T, TParam>({
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        method: 'get',
+        normalizer,
+        url,
+        params,
+      }),
       initialData,
+      enabled,
       retry,
     },
   );
