@@ -1,3 +1,5 @@
+'use client';
+
 import Button from '@/components/base/Button';
 import Checkbox from '@/components/base/Checkbox';
 import Paper from '@/components/base/Paper';
@@ -8,7 +10,7 @@ import PageHeader from '@/components/ui/PageHeader';
 
 import useUserManagementForm from './UserManagementForm.hooks';
 
-const UserManagementForm = () => {
+const UserManagementForm = ({ id = '' }: { id?: string }) => {
   const {
     checkAll,
     checkedScopes,
@@ -24,7 +26,7 @@ const UserManagementForm = () => {
     handleCheck,
     handleCheckAll,
     onSubmit,
-  } = useUserManagementForm();
+  } = useUserManagementForm(id);
   return (
     <>
       <Paper className="p-4 mb-5">
@@ -36,7 +38,8 @@ const UserManagementForm = () => {
                 label: 'List User Access Management',
                 href: '/user-access-management',
               },
-              { label: `${!isEdit ? 'Create' : 'Edit'} User` }]}
+              { label: `${!isEdit ? 'Create' : 'Edit'} User` },
+            ]}
             showBackBtn
             onClickBackBtn={handleBack}
           />
@@ -68,7 +71,11 @@ const UserManagementForm = () => {
       </Paper>
       {!isLoadingScopes ? (
         scopes.map((application, i) => (
-          <Paper title={application.name} className="p-4 mb-5" key={application.name}>
+          <Paper
+            title={application.name}
+            className="p-4 mb-5"
+            key={application.name}
+          >
             <Table
               stickyHeader
               className="table-fixed border-solid border border-neutral-300
@@ -77,7 +84,9 @@ const UserManagementForm = () => {
               <Table.TableHead>
                 <Table.TableRow className="[&>th]:font-bold [&>th]:text-n-13 [&>th]:py-0">
                   <Table.TableCell
-                    classes={{ root: 'break-words border-2 border-primary-500' }}
+                    classes={{
+                      root: 'break-words border-2 border-primary-500',
+                    }}
                     width={50}
                   >
                     <Checkbox
@@ -89,7 +98,9 @@ const UserManagementForm = () => {
                   </Table.TableCell>
                   <Table.TableCell
                     align="center"
-                    classes={{ root: 'break-words border-2 border-primary-500' }}
+                    classes={{
+                      root: 'break-words border-2 border-primary-500',
+                    }}
                   >
                     Description
                   </Table.TableCell>
@@ -106,9 +117,7 @@ const UserManagementForm = () => {
                         checked={checkedScopes.includes(scope.name)}
                       />
                     </Table.TableCell>
-                    <Table.TableCell>
-                      {scope.description}
-                    </Table.TableCell>
+                    <Table.TableCell>{scope.description}</Table.TableCell>
                   </Table.TableRow>
                 ))}
               </Table.TableBody>
@@ -116,9 +125,7 @@ const UserManagementForm = () => {
           </Paper>
         ))
       ) : (
-        <Paper
-          className="px-8 py-5 animate-pulse"
-        >
+        <Paper className="px-8 py-5 animate-pulse">
           <TextSkeleton width="lg" className="mb-4" />
           <hr />
           <div className="my-6 bg-gray-300 animate-pulse w-full h-72 rounded-lg" />

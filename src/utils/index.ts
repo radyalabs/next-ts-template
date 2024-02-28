@@ -1,4 +1,3 @@
-import axiosInstance from './axiosInstance';
 import createQueryParams from './createQueryParams';
 import findLastIndex from './findLastIndex';
 import formatDate from './formatDate';
@@ -10,7 +9,6 @@ import toIDR from './toIDR';
 import toTitleCase from './toTitleCase';
 
 export {
-  axiosInstance,
   createQueryParams,
   findLastIndex,
   formatDate,

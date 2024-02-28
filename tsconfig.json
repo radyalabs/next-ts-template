@@ -23,6 +23,7 @@
       "@/enums/*": ["./src/enums/*"],
       "@/helpers": ["./src/helpers/index.ts"],
       "@/hooks/*": ["./src/hooks/*"],
+      "@/lib/*": ["./src/lib/*"],
       "@/normalizers": ["./src/normalizers/index.ts"],
       "@/pages/*": ["./src/pages/*"],
       "@/stores/*": ["./src/stores/*"],
@@ -30,15 +31,21 @@
       "@/types/*": ["./src/types/*"],
       "@/utils": ["./src/utils/index.ts"],
       "@/views/*": ["./src/views/*"]
-    }
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".eslintrc.js",
-    "tailwind.config.js",
-    "next.config.js"
+    "tailwind.config.ts",
+    "next.config.js",
+    ".next/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

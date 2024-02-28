@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 
 import Button from '@/components/base/Button';
@@ -10,7 +12,8 @@ import {
 } from '@/components/icons';
 import Table from '@/components/ui/DataTable';
 import PageHeader from '@/components/ui/PageHeader';
-import type { User } from '@/types/user';
+import type { User, UserList } from '@/types/user';
+import { TABLE_COLUMNS } from '@/views/UserManagement/UserManagementList/UserManagementList.constants';
 
 import useUserManagementList from './UserManagementList.hooks';
 
@@ -18,7 +21,6 @@ const UserManagementList = () => {
   const {
     data,
     isLoading,
-    tableColumns,
     queryParams,
     handleDelete,
     handleDetail,
@@ -47,8 +49,8 @@ const UserManagementList = () => {
         </Link>
       </PageHeader>
       <Paper className="p-4">
-        <Table
-          columns={tableColumns}
+        <Table<UserList>
+          columns={TABLE_COLUMNS}
           data={(data && data.items) || []}
           loading={isLoading}
           onPageChange={onPageChange}

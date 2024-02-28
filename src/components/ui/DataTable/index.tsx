@@ -28,7 +28,7 @@ import Modal from '@/components/ui/Modal';
 import { INITIAL_PAGESIZE } from '@/constants/config';
 import { formatDateApi, noop } from '@/utils';
 
-const DataTable = (props: TableProps) => {
+const DataTable = <T extends Record<string, unknown>>(props: TableProps<T>) => {
   const {
     arrayColumnKey = '',
     arrayColumnUniqueKey = '',
@@ -82,7 +82,7 @@ const DataTable = (props: TableProps) => {
     onQuickPageChange,
     onSubmitPage,
     submitSearch,
-  } = useDataTable(props);
+  } = useDataTable<T>(props);
   return (
     <>
       <div className="flex justify-between items-center flex-wrap">

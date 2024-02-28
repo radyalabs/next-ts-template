@@ -1,3 +1,5 @@
+'use client';
+
 import Paper from '@/components/base/Paper';
 import Table from '@/components/base/Table';
 import TextSkeleton from '@/components/base/TextSkeleton';
@@ -8,14 +10,14 @@ import PageHeader from '@/components/ui/PageHeader';
 import UserDetailSkeleton from './components/UserDetailSkeleton';
 import useUserManagementDetail from './UserManagementDetail.hooks';
 
-const UserManagementDetail = () => {
+const UserManagementDetail = ({ id }: { id: string }) => {
   const {
     filteredUserScopes,
     isLoadingScopes,
     isLoadingUserData,
     userData,
     handleBack,
-  } = useUserManagementDetail();
+  } = useUserManagementDetail(id);
   const { email = '', fullName = '' } = userData || {};
   return (
     <>
@@ -27,7 +29,8 @@ const UserManagementDetail = () => {
               label: 'List User Access Management',
               href: '/user-access-management',
             },
-            { label: 'Detail User' }]}
+            { label: 'Detail User' },
+          ]}
           showBackBtn
           onClickBackBtn={handleBack}
         />
@@ -37,7 +40,11 @@ const UserManagementDetail = () => {
           {!isLoadingUserData ? (
             <>
               <Description label="Email" value={email} layout="vertical" />
-              <Description label="Fullname" value={fullName} layout="vertical" />
+              <Description
+                label="Fullname"
+                value={fullName}
+                layout="vertical"
+              />
             </>
           ) : (
             <UserDetailSkeleton />
@@ -56,25 +63,33 @@ const UserManagementDetail = () => {
                 <Table.TableRow className="[&>th]:font-bold [&>th]:text-n-13">
                   <Table.TableCell
                     align="center"
-                    classes={{ root: 'break-words border-2 border-primary-500' }}
+                    classes={{
+                      root: 'break-words border-2 border-primary-500',
+                    }}
                   >
                     Description
                   </Table.TableCell>
                 </Table.TableRow>
               </Table.TableHead>
               <Table.TableBody>
-                {appScope.scopes.length ? appScope.scopes.map((scope) => (
-                  <Table.TableRow key={scope.name}>
-                    <Table.TableCell>
-                      <ul>
-                        <li>{scope.description}</li>
-                      </ul>
-                    </Table.TableCell>
-                  </Table.TableRow>
-                )) : (
+                {appScope.scopes.length ? (
+                  appScope.scopes.map((scope) => (
+                    <Table.TableRow key={scope.name}>
+                      <Table.TableCell>
+                        <ul>
+                          <li>{scope.description}</li>
+                        </ul>
+                      </Table.TableCell>
+                    </Table.TableRow>
+                  ))
+                ) : (
                   <Table.TableRow>
                     <Table.TableCell>
-                      <Typography variant="body" align="center" className="py-4">
+                      <Typography
+                        variant="body"
+                        align="center"
+                        className="py-4"
+                      >
                         {`This user don't have any permission for  ${appScope.name}`}
                       </Typography>
                     </Table.TableCell>
@@ -85,9 +100,7 @@ const UserManagementDetail = () => {
           </Paper>
         ))
       ) : (
-        <Paper
-          className="p-4 animate-pulse"
-        >
+        <Paper className="p-4 animate-pulse">
           <TextSkeleton width="lg" className="mb-5" />
           <hr />
           <div className="my-5 bg-gray-300 animate-pulse w-full h-72 rounded-lg" />

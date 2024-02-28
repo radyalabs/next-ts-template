@@ -3,9 +3,9 @@ import { getCookie } from 'cookies-next';
 
 import { BASE_API_URL } from '@/constants/apiURL';
 import { APP_TOKEN_KEY } from '@/constants/config';
+import axiosInstance from '@/lib/axiosInstance';
 import type { FetcherProps } from '@/types/fetcherProps';
 import type { BaseError } from '@/types/responses';
-import { axiosInstance } from '@/utils';
 
 const defaultFetcherFn = async <T, TParam = T>(options: FetcherProps<T, TParam>): Promise<T> => {
   getCookie(APP_TOKEN_KEY);

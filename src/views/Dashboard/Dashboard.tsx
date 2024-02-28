@@ -1,3 +1,5 @@
+'use client';
+
 import useDashboard from './Dashboard.hooks';
 
 const Dashboard = () => {

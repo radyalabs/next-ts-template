@@ -7,6 +7,7 @@
   "extends": [
     "next/core-web-vitals",
     "eslint:recommended",
+    "next",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "airbnb",
@@ -63,7 +64,8 @@
             "namedComponents": "arrow-function",
             "unnamedComponents": "arrow-function"
           }
-        ]
+        ],
+        "react/require-default-props": "off" // Since we do not use prop-types
       }
     }
   ],
@@ -134,7 +136,7 @@
       }
     ],
     "@typescript-eslint/no-explicit-any": "error",
-    "react/button-has-type": "warn",
+    "react/button-has-type": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off"
   }

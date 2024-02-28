@@ -20,6 +20,7 @@ export interface ErrorPayload {
 
 export interface BaseQueryParams {
   [key: string]: unknown;
+  s?: string;
   page: number;
   size: number;
   orderType: string;

@@ -32,6 +32,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       options: {
         initialData: INIT_PROFILE,
         enabled: isAuthenticated,
+        retry: 2,
       },
     },
   );
