@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import type { Metadata } from 'next';
 
 import { APP_TITLE } from '@/constants/config';
@@ -8,7 +9,9 @@ export const metadata: Metadata = {
 };
 
 const LogoutPage = () => (
-  <Logout />
+  <Suspense>
+    <Logout />
+  </Suspense>
 );
 
 export default LogoutPage;
