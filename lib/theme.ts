@@ -3,9 +3,8 @@
 import { Rubik } from 'next/font/google';
 
 import { createTheme } from '@mui/material/styles';
+import tailwindConfig from 'tailwind.config';
 import resolveConfig from 'tailwindcss/resolveConfig';
-
-import tailwindConfig from '../../tailwind.config';
 
 declare module '@mui/material/styles' {
   interface Palette {
