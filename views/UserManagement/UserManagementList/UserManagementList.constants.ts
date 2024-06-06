@@ -32,6 +32,5 @@ export const TABLE_COLUMNS: TableColumn[] = [
     dataKey: 'userOrganizationStatus',
     sortable: false,
     dataType: 'status',
-    sortKey: 'userOrganizationStatus',
   },
 ];
