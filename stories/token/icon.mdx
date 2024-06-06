@@ -1,0 +1,37 @@
+import { IconGallery, IconItem, Meta } from '@storybook/blocks';
+import tailwindConfig from 'tailwind.config';
+import resolveConfig from 'tailwindcss/resolveConfig';
+
+import * as Icons from 'components/icons';
+
+export const fullConfig = resolveConfig(tailwindConfig)
+export const colors = fullConfig.theme.colors;
+export const icons = Object.keys(Icons);
+
+<Meta title="Token/Icon" />
+
+# Icons
+Icons is the use of images and symbols to portray a subject, movement or ideal.
+In general, the most basic function of the icons is to convey the information quickly.
+People fix and perceive pictorial elements like icons and illustrations faster than words.
+
+## Getting Started
+You can start using it by importing the icon, like:
+```tsx
+// Import the icon individually
+import IcChecklist from '@/components/icons/IcChecklist';
+
+// Import multiple icon on one import
+import { IcEyeOpen, IcEyesClose } from '@/components/icons';
+```
+
+<IconGallery>
+  {icons.map(s => {
+    const Icon = Icons[s];
+    return (
+      <IconItem name={s}>
+        <Icon />
+      </IconItem>
+    )
+  })}
+</IconGallery>

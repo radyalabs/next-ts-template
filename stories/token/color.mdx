@@ -1,0 +1,56 @@
+import { ColorItem, ColorPalette, Meta } from '@storybook/blocks';
+import tailwindConfig from 'tailwind.config';
+import resolveConfig from 'tailwindcss/resolveConfig';
+
+export const fullConfig = resolveConfig(tailwindConfig)
+export const colors = fullConfig.theme.colors;
+
+<Meta title="Token/Color" />
+
+# Color 🎨
+Color token are used to set the color of every aspect of your application, either it text, background, border color, etc.
+These tokenization system is based on material color system where 500 is the primary color.
+
+## Getting Started
+You can start using it by implementing it in className in format \{type syntax} - \{color name} - \{token}.
+For example if you want to have a background with primary color 500, the className would be "bg-primary-500".
+
+```tsx
+// usage example
+<div className="bg-n-1 p-5 rounded-xl border border-solid border-n-5">
+  ...
+</div>
+```
+
+<ColorPalette>
+  <ColorItem
+    title="primary"
+    subtitle="Primary brand colors"
+    colors={colors.primary}
+  />
+  <ColorItem
+    title="secondary"
+    subtitle="Secondary brand colors"
+    colors={colors.secondary}
+  />
+  <ColorItem
+    title="success"
+    subtitle="Success colors"
+    colors={colors.success}
+  />
+  <ColorItem
+    title="danger"
+    subtitle="Danger colors"
+    colors={colors.danger}
+  />
+  <ColorItem
+    title="warning"
+    subtitle="Warning colors"
+    colors={colors.warning}
+  />
+  <ColorItem
+    title="n"
+    subtitle="Greyscale neutral colors"
+    colors={colors.n}
+  />
+</ColorPalette>

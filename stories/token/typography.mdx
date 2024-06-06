@@ -1,0 +1,45 @@
+import { Meta } from '@storybook/blocks';
+import Typography from 'components/base/Typography';
+
+export const variants = [
+  'display',
+  'headline',
+  'title',
+  'label',
+  'body',
+  'link',
+];
+
+export const sizes = ['large', 'medium', 'small']
+
+<Meta title="Token/Typography" />
+
+# Typography 📝
+
+Typography token are used to set the look and feel of the text on your application components or pages.
+Currently, this project use 2 font style, Rubik and Quicksand for primary and secondary font.
+
+Below is the props example with format \{variant} - \{size}
+
+<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+  <div>
+    <Typography variant="headline">Rubik</Typography>
+    {variants.map((v) => (
+      sizes.map((s) => (
+        <Typography variant={v} size={s}>
+          {`${v} - ${s}`}
+        </Typography>
+      ))
+    ))}
+  </div>
+  <div>
+    <Typography variant="headline" type="secondary">Quicksand</Typography>
+    {variants.map((v) => (
+      sizes.map((s) => (
+        <Typography variant={v} size={s}>
+          {`${v} - ${s}`}
+        </Typography>
+      ))
+    ))}
+  </div>
+</div>

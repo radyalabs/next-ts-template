@@ -1,0 +1,153 @@
+.button {
+  @apply font-sans inline-flex items-center justify-center gap-2 font-medium tracking-wide h-auto
+    text-white transition duration-300 justify-self-center focus-visible:outline-none
+    disabled:cursor-not-allowed disabled:shadow-none rounded-lg cursor-pointer whitespace-nowrap min-w-fit border-transparent;
+
+  .icon {
+    @apply [&>*]:fill-n-1 [&>*]:h-4 [&>*]:w-4 relative;
+  }
+
+  .iconSlate {
+    @apply[&>*]:fill-n-13;
+  }
+
+  .iconDanger {
+    @apply [&>*]:fill-danger-500;
+  }
+
+  .iconDisabled {
+    @apply [&>*]:fill-n-6;
+  }
+
+  &.colorDefault {
+    @apply bg-n-8 hover:bg-n-9 border-transparent;
+  }
+
+  &.colorPrimary {
+    @apply bg-primary-500 hover:bg-primary-600;
+  }
+
+  &.colorSecondary {
+    @apply bg-primary-200 hover:bg-primary-300
+    border-transparent text-primary-500;
+    &>span>* {
+      @apply fill-primary-500;
+    }
+  }
+
+  &.colorDanger {
+    @apply bg-danger-500 hover:bg-danger-700 text-n-1;
+  }
+
+  &.colorSuccess {
+    @apply bg-success-500 hover:bg-success-700 text-n-1;
+  }
+
+  &.colorWarning {
+    @apply bg-warning-500 hover:bg-warning-700 text-n-13;
+    &>span>* {
+      @apply fill-n-13;
+    }
+  }
+
+  &.variantDefault {
+    @apply border border-solid;
+  }
+
+  &.variantOutline {
+    @apply border-solid border-2 bg-transparent;
+
+    &>* {
+      @apply [&>*]:fill-primary-500;
+    }
+
+    &.colorDefault {
+      @apply border-slate-800 hover:bg-slate-200
+      text-slate-800;
+
+      &>* {
+        @apply [&>*]:fill-slate-800;
+      }
+    }
+
+    &.colorPrimary {
+      @apply border-primary-500 hover:bg-primary-50
+      text-primary-500;
+    }
+
+    &.colorSecondary {
+      @apply border-primary-300 hover:bg-primary-200
+      text-primary-300;
+
+      &>* {
+        @apply [&>*]:fill-primary-300;
+      }
+    }
+
+    &.colorDanger {
+      @apply border-danger-500 hover:bg-danger-50
+      text-danger-500;
+
+      &>* {
+        @apply [&>*]:fill-danger-500;
+      }
+    }
+
+    &.colorSuccess {
+      @apply border-success-500 hover:bg-success-50
+      text-success-500;
+
+      &>* {
+        @apply [&>*]:fill-success-500;
+      }
+    }
+
+    &.colorWarning {
+      @apply border-warning-500 hover:bg-warning-50
+      text-warning-500;
+
+      &>* {
+        @apply [&>*]:fill-warning-500;
+      }
+    }
+  }
+
+  &.variantDashed {
+    @apply border border-dashed;
+  }
+
+  &.variantText {
+    @apply border-none bg-transparent hover:bg-transparent whitespace-normal #{!important};
+  }
+
+  &.sizeSmall {
+    @apply text-sm min-w-min px-5 py-2;
+    &>* {
+      @apply h-4 w-4;
+    }
+  }
+
+  &.sizeMedium {
+    @apply px-5 py-3;
+  }
+
+  &.sizeLarge {
+    @apply text-lg p-5;
+  }
+
+  &.rounded {
+    @apply rounded-full;
+  }
+
+  &.disabled,
+  &.disabled.colorPrimary,
+  &.disabled.colorSecondary,
+  &.disabled.colorDanger, {
+    @apply cursor-not-allowed pointer-events-none
+    border border-solid border-n-6
+    bg-n-4 text-n-6 #{!important};
+    &.variantText {
+      @apply bg-transparent border-none #{!important};
+    }
+  }
+}

@@ -1,0 +1,33 @@
+.button {
+  @apply pb-0 p-1 border-0 rounded-md inline-flex items-center;
+
+  &.colorDefault {
+    @apply bg-gray-200 text-gray-300 hover:bg-gray-300
+    [&>*>*]:fill-gray-600 #{!important};
+  }
+
+  &.colorPrimary {
+    @apply bg-primary-50 text-primary-200 hover:bg-primary-200
+    [&>*>*]:fill-primary-600 #{!important};
+  }
+
+  &.colorSuccess {
+    @apply bg-success-50 text-success-200 hover:bg-success-200
+    [&>*>*]:fill-success-600 #{!important};
+  }
+
+  &.colorDanger {
+    @apply bg-danger-50 text-danger-200 hover:bg-danger-200
+    [&>*>*]:fill-danger-600 #{!important};
+  }
+
+  &.colorWarning {
+    @apply bg-warning-50 text-warning-200 hover:bg-warning-200
+    [&>*>*]:fill-warning-600 #{!important};
+  }
+
+  &.colorDisabled {
+    @apply bg-n-4 text-n-6 border-n-5
+    [&>*>*]:fill-n-6 #{!important};
+  }
+}
