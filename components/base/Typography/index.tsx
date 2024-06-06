@@ -1,5 +1,7 @@
 import MUITypography from '@mui/material/Typography';
 
+import Skeleton from '@/components/base/Skeleton';
+
 import type { TypographyProps } from './index.types';
 
 import styles from './index.module.scss';
@@ -10,6 +12,7 @@ const Typography = (props: TypographyProps) => {
     as = 'p',
     children,
     className,
+    loading,
     gutterBottom = false,
     noWrap = false,
     paragraph = false,
@@ -30,6 +33,10 @@ const Typography = (props: TypographyProps) => {
   if (variant === 'title') typographyStyle.push(styles.title);
   if (variant === 'label') typographyStyle.push(styles.label);
   if (variant === 'headline') typographyStyle.push(styles.headline);
+  if (variant === 'link') {
+    typographyStyle.push(styles.body);
+    typographyStyle.push(styles.link);
+  }
 
   if (size === 'small') typographyStyle.push(styles.small);
   if (size === 'medium') typographyStyle.push(styles.medium);
@@ -44,7 +51,7 @@ const Typography = (props: TypographyProps) => {
       noWrap={noWrap}
       paragraph={paragraph}
     >
-      {children}
+      {loading ? <Skeleton /> : children}
     </MUITypography>
   );
 };

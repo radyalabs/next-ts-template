@@ -63,12 +63,14 @@ export interface SelectProps {
    */
   options?: SelectItem[];
   block?: boolean;
+  clearable?: boolean;
   label?: string;
   labelLayout?: 'vertical' | 'horizontal';
   onChange?: (event: ModifiedSelectChangeEvent) => void;
   onBlur?: FocusEventHandler;
   onFocus?: FocusEventHandler;
   onClick?: MouseEventHandler;
+  onChangeSearchValue?: (value: string) => void;
   onKeyUp?: KeyboardEventHandler;
   required?: boolean;
   type?: InputHTMLAttributes<unknown>['type'];
@@ -82,6 +84,8 @@ export interface SelectProps {
     input?: string;
   }
   showSearch?: boolean;
+  inputValue?: string;
+  filteredOptions?: SelectItem[];
 }
 
 export type ModifiedSelectChangeEvent = SelectChangeEvent<string | string[] | number>;

@@ -40,9 +40,8 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
   return (
     <Dialog
       open={open}
-      onClose={onClose}
-      classes={{ root: 'font-sans', paper: 'min-w-[411px]' }}
-      container={() => document.getElementById('__next')}
+      onClose={showCancel ? onClose : onConfirm}
+      classes={{ root: 'font-sans', paper: 'min-w-[411px] rounded-xl' }}
     >
       <DialogTitle className="font-sans flex justify-between p-4">
         <Typography variant="title" className="text-xl font-semibold mr-8">{title}</Typography>

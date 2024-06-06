@@ -40,10 +40,16 @@ export interface TypographyProps {
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
-  size?: 'small' | 'medium' | 'large';
-  variant?: 'display'
-  | 'headline'
-  | 'title'
-  | 'label'
-  | 'body'
+  size?: TypographySize;
+  variant?: TypographyVariant
+  loading?: boolean;
 }
+
+export type TypographySize = 'small' | 'medium' | 'large';
+
+export type TypographyVariant = 'display'
+| 'headline'
+| 'title'
+| 'label'
+| 'body'
+| 'link';

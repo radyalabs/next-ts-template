@@ -2,6 +2,7 @@ import { forwardRef } from 'react';
 
 import MUIAutocomplete from '@mui/material/Autocomplete';
 import FormHelperText from '@mui/material/FormHelperText';
+import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import type { ForwardedRef } from 'react';
 
@@ -25,6 +26,9 @@ const Autocomplete = forwardRef(
       inputValue,
       label,
       labelLayout = 'vertical',
+      message,
+      multiple = false,
+      options = [],
       placeholder = 'Enter text here',
       prependObject,
       required = false,
@@ -35,12 +39,10 @@ const Autocomplete = forwardRef(
       onClick,
       onFocus,
       onKeyUp,
-      options = [],
+      value,
       isEqualToOption,
       onChange,
       onInputChange,
-      value,
-      message,
     } = props || {};
 
     const { defaultIsEqualToOption } = useAutocomplete();
@@ -110,6 +112,7 @@ const Autocomplete = forwardRef(
             options={options}
             sx={{ width: 300 }}
             size={size}
+            multiple={multiple}
             onBlur={onBlur}
             onClick={onClick}
             onFocus={onFocus}
@@ -119,6 +122,7 @@ const Autocomplete = forwardRef(
             className={`${containerClass} w-full`}
             classes={{
               inputRoot: `${error && message ? 'border border-solid border-danger-500' : ''}`,
+              listbox: 'max-h-[120px]',
             }}
             renderInput={
               (params) => (
@@ -132,15 +136,19 @@ const Autocomplete = forwardRef(
                   InputLabelProps={{ shrink: false }}
                   InputProps={{
                     ...params.InputProps,
-                    className: `${inputClass} ${innerClassName} rounded-xl text-base py-1`,
+                    className: `${inputClass} ${innerClassName} rounded-xl text-base py-1 flex flex-wrap bg-primary-500"`,
                   }}
                 />
               )
             }
             renderOption={(params, option) => (
-              <li {...params} key={option.value}>
+              <MenuItem
+                {...params}
+                className="text-base"
+                key={option.value}
+              >
                 {option.label}
-              </li>
+              </MenuItem>
             )}
             getOptionLabel={(params) => params.label}
             inputValue={inputValue}

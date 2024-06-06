@@ -26,7 +26,7 @@ type Story = StoryObj<typeof Typography>;
  * to learn how to use render functions.
  */
 export const Primary: Story = {
-  render: (args) => (<Typography {...args} />),
+  render: (args) => <Typography {...args} />,
 };
 
 Primary.args = {
@@ -36,7 +36,7 @@ Primary.args = {
   type: 'primary',
 };
 export const Secondary: Story = {
-  render: (args) => (<Typography {...args} />),
+  render: (args) => <Typography {...args} />,
 };
 
 Secondary.args = {

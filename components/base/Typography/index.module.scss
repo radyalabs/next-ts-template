@@ -68,4 +68,8 @@
       @apply text-[3rem];
     }
   }
+
+  &.link {
+    @apply text-primary-500 underline;
+  }
 }

@@ -1,20 +1,24 @@
 import type { ReactNode } from 'react';
 
+import type { ButtonVariant } from '@/components/base/Button/index.types';
 import type { SortParam, TableColumn } from '@/types/tables';
 
-export interface TableProps<T = Record<string, string | number>> {
+export interface TableProps<T> {
   appendHeader?: ReactNode;
+  appendHeaderPosition?: 'start' | 'end';
   arrayColumnKey?: string;
   arrayColumnUniqueKey?: string;
   data: T[];
-  columns: TableColumn[];
+  columns: Array<TableColumn<Extract<keyof T, string>>>;
   exportBtnLabel?: string;
   hasArrayColumn?: boolean;
+  hiddenColumns?: string[];
   label?: Partial<TableLabel>;
   loading?: boolean;
   page?: number;
   pageSize?: number;
   rowActions?: Array<ActionProps<T>>;
+  rowActionsColumnTitle?: string;
   searchPlaceholder?: string;
   searchValue?: string;
   showCountTotal?: boolean;
@@ -32,16 +36,23 @@ export interface TableProps<T = Record<string, string | number>> {
   onFilterChange?: (filter: Record<string, string>) => void;
   onSearchChange?: (query: string) => void;
   onSortChange?: (sortState: SortParam) => void;
-  uniqueRowKey: string;
+  uniqueRowKey: keyof T;
+  showCheckBox? : boolean;
+  selectedRows?: string[];
+  setSelectedRows?: (selectedId: string[]) => void;
+  selectAll?: boolean;
+  setSelectAll?: (select: boolean) => void;
 }
 
 export interface ActionProps<T = Record<string, unknown>> {
-  color?: 'default' | 'primary' | 'success' | 'danger';
+  color?: 'default' | 'primary' | 'success' | 'danger' | 'warning';
+  variant?: ButtonVariant;
   onClick: (row: T) => void;
   icon?: string | ReactNode;
   disabledFn?: (row: T) => boolean;
   showFn?: (row: T) => boolean;
   tooltip?: string;
+  size?: 'small' | 'normal';
 }
 
 export interface SortState {

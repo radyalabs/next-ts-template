@@ -22,7 +22,8 @@ const ActionButton = (props: ActionButtonProps) => {
   if (color === 'primary') styleButton.push(styles.colorPrimary);
   if (color === 'success') styleButton.push(styles.colorSuccess);
   if (color === 'danger') styleButton.push(styles.colorDanger);
-  if (disabled) styleButton.push(styles.disabled);
+  if (color === 'warning') styleButton.push(styles.colorWarning);
+  if (disabled) styleButton.push(styles.colorDisabled);
   return (
 
     <Button

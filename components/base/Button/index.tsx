@@ -1,20 +1,9 @@
-import { forwardRef } from 'react';
-
-import MUIButton from '@mui/material/Button';
-import type { ForwardedRef } from 'react';
+import { type ForwardedRef, forwardRef } from 'react';
 
 import type ButtonProps from '@/components/base/Button/index.types';
 import Spinner from '@/components/base/Spinner';
-import { noop } from '@/utils';
 
 import styles from './index.module.scss';
-
-declare module '@mui/material/Button' {
-  interface ButtonPropsColorOverrides {
-    default: true;
-    danger: true;
-  }
-}
 
 const Button = forwardRef((props: ButtonProps, forwardedRef: ForwardedRef<HTMLButtonElement>) => {
   const {
@@ -30,33 +19,24 @@ const Button = forwardRef((props: ButtonProps, forwardedRef: ForwardedRef<HTMLBu
     color = 'default',
     variant = 'default',
     onClick,
+    onMouseEnter,
+    onMouseLeave,
   } = props || {};
   const styleButton = [styles.button];
-  const iconStyle = [styles.iconDefault];
 
   if (className) styleButton.push(className);
 
   if (color === 'default') styleButton.push(styles.colorDefault);
   if (color === 'primary') styleButton.push(styles.colorPrimary);
-  if (color === 'secondary') {
-    styleButton.push(styles.colorSecondary);
-    iconStyle.push(styles.iconPrimary);
-  }
+  if (color === 'secondary') styleButton.push(styles.colorSecondary);
   if (color === 'danger') styleButton.push(styles.colorDanger);
+  if (color === 'warning') styleButton.push(styles.colorWarning);
+  if (color === 'success') styleButton.push(styles.colorSuccess);
 
   if (variant === 'default') styleButton.push(styles.variantDefault);
-  if (variant === 'outline') {
-    styleButton.push(styles.variantOutline);
-    iconStyle.push(styles.iconPrimary);
-    if (color === 'danger') iconStyle.push(styles.iconDanger);
-  }
+  if (variant !== 'default') styleButton.push(styles.variantOutline);
   if (variant === 'dashed') styleButton.push(styles.variantDashed);
-  if (variant === 'text') {
-    styleButton.push(styles.variantText);
-    if (color === 'default') iconStyle.push(styles.iconSlate);
-    if (color === 'primary') iconStyle.push(styles.iconPrimary);
-    if (color === 'danger') iconStyle.push(styles.iconDanger);
-  }
+  if (variant === 'text') styleButton.push(styles.variantText);
 
   if (size === 'small') styleButton.push(styles.sizeSmall);
   if (size === 'medium') styleButton.push(styles.sizeMedium);
@@ -65,26 +45,33 @@ const Button = forwardRef((props: ButtonProps, forwardedRef: ForwardedRef<HTMLBu
   if (rounded) styleButton.push(styles.rounded);
   if (disabled) {
     styleButton.push(styles.disabled);
-    iconStyle.push(styles.iconDisabled);
   }
 
   return (
-    <MUIButton
-      className={`items-center justify-center min-w-fit ${styleButton.join(' ')}`}
-      color={color}
-      variant="contained"
-      disableElevation
-      classes={{ startIcon: iconStyle.join(' ') }}
-      disabled={disabled}
-      onClick={!loading ? onClick : noop}
+    <button
+      className={`${styleButton.join(' ')} ${className} ${loading ? 'pointer-events-none' : ''}`}
       type={type}
-      endIcon={endIcon}
-      startIcon={!loading ? startIcon : <Spinner width="24px" height="24px" />}
-      disableRipple={variant === 'text'}
+      onClick={onClick}
       ref={forwardedRef}
+      disabled={disabled}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
+      {startIcon && (
+        <span className={styles.icon}>
+          {startIcon}
+        </span>
+      )}
       {children}
-    </MUIButton>
+      {endIcon && (
+        <span className={styles.icon}>
+          {endIcon}
+        </span>
+      )}
+      {loading && (
+        <Spinner width="16px" height="16px" />
+      )}
+    </button>
   );
 });
 

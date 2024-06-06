@@ -1,6 +1,6 @@
-import type { SvgProps } from '@/components/icons/index.types';
+import type { SVGProps } from 'react';
 
-const Spinner = (props: SvgProps) => {
+const Spinner = (props: SVGProps<SVGSVGElement>) => {
   const { width = '24', height = '24', color = 'fill-primary-500' } = props;
 
   return (

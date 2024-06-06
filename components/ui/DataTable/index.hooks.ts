@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 
 import type { ChangeEvent, KeyboardEvent } from 'react';
 
 import type { ModifiedSelectChangeEvent } from '@/components/base/Select/index.types';
+import { useModalContext } from '@/contexts/ModalContext';
 import type { SelectItem } from '@/types/inputs';
 import { noop } from '@/utils';
 
@@ -15,18 +16,27 @@ import type {
 const useDataTable = <T>(props: TableProps<T>) => {
   const {
     columns,
+    data,
+    loading,
     page = 1,
     pageSize,
     searchValue = '',
     onFilterChange,
+    uniqueRowKey,
+    selectedRows = [],
     onPageSizeChange = noop,
     onPageChange = noop,
     onSearchChange = noop,
     onSortChange = noop,
+    setSelectedRows = noop,
+    setSelectAll = noop,
   } = props || {};
   const query = useSearchParams();
+  const modal = useModalContext();
+
   const [displayPage, setDisplayPage] = useState(page);
   const [displayPageSize, setDisplayPageSize] = useState(pageSize);
+  const [pageBefore, setPageBefore] = useState(page);
   const [sortState, setSortState] = useState<DynamicSortState>(() => {
     const initState: DynamicSortState = {};
     columns.forEach((col) => {
@@ -98,10 +108,26 @@ const useDataTable = <T>(props: TableProps<T>) => {
     setDisplayPage(Number(e.target.value));
   };
 
-  const handleChangePage = (val: number) => {
+  const handleChangePage = useCallback((val: number) => {
+    setPageBefore(page);
     setDisplayPage(val);
     onPageChange(val);
-  };
+  }, [onPageChange, page]);
+
+  // useEffect to return to previous page when no data on current page
+  useEffect(() => {
+    if (page > 1 && !loading && data.length === 0) {
+      modal.confirm({
+        title: 'No Data',
+        content: 'There is no data on this page, click ok to return to previous page!',
+        showCancel: false,
+        onConfirm: () => {
+          modal.closeConfirm();
+          handleChangePage(pageBefore);
+        },
+      });
+    }
+  }, [data, handleChangePage, loading, modal, page, pageBefore]);
 
   const handleFilterChange = (value: string, i: number, key: string) => {
     setFilterValues((prevState) => {
@@ -173,6 +199,7 @@ const useDataTable = <T>(props: TableProps<T>) => {
 
   const onSubmitPage = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
+      setPageBefore(page);
       onPageChange(displayPage);
     }
   };
@@ -183,13 +210,39 @@ const useDataTable = <T>(props: TableProps<T>) => {
     }
   };
 
-  const handleOpenAuditTrail = (data: Record<string, unknown>) => {
+  const handleOpenAuditTrail = (auditTrailData: Record<string, unknown>) => {
     setOpenAuditTrail(true);
-    setAuditData(data);
+    setAuditData(auditTrailData);
   };
 
   const handleCloseAuditTrail = () => {
     setOpenAuditTrail(false);
+  };
+
+  const handleRowSelect = (row: T) => {
+    const newSelectedRows = [...selectedRows];
+    const rowId = String(row[uniqueRowKey]);
+    const index = newSelectedRows.indexOf(rowId);
+    if (index === -1) {
+      newSelectedRows.push(rowId);
+      if (newSelectedRows.length === data.length) {
+        setSelectAll(true);
+      }
+    } else {
+      newSelectedRows.splice(index, 1);
+      if (newSelectedRows.length < data.length) {
+        setSelectAll(false);
+      }
+    }
+    setSelectedRows(newSelectedRows);
+  };
+
+  const handleSelectAll = (e: ChangeEvent<HTMLInputElement>) => {
+    const newSelectedRows = e.target.checked
+      ? data.map((row) => String(row[uniqueRowKey]))
+      : [];
+    setSelectedRows(newSelectedRows);
+    setSelectAll(e.target.checked);
   };
 
   return {
@@ -215,6 +268,8 @@ const useDataTable = <T>(props: TableProps<T>) => {
     onQuickPageChange,
     onSubmitPage,
     submitSearch,
+    handleRowSelect,
+    handleSelectAll,
   };
 };
 

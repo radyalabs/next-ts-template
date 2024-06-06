@@ -22,7 +22,7 @@ export interface AutocompleteProps extends Omit<TextFieldProps, 'onChange' | 'va
   // Event handlers
   onChange?: (
     event: SyntheticEvent<Element, Event>,
-    value: SelectItem | null,
+    value: SelectItem | SelectItem[] | null,
     reason: AutocompleteChangeReason,
   ) => void;
 
@@ -32,6 +32,7 @@ export interface AutocompleteProps extends Omit<TextFieldProps, 'onChange' | 'va
     reason: AutocompleteInputChangeReason
   ) => void;
 
+  multiple?: boolean;
   setValue?: Dispatch<SetStateAction<string | number | undefined>>;
-  value?: string | SelectItem | null;
+  value?: string | SelectItem | SelectItem[] | null;
 }

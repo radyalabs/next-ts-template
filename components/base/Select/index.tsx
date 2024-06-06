@@ -3,15 +3,19 @@ import { forwardRef } from 'react';
 import Chip from '@mui/material/Chip';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
+import InputAdornment from '@mui/material/InputAdornment';
 import MenuItem from '@mui/material/MenuItem';
 import MUISelect from '@mui/material/Select';
+import { ClearIcon } from '@mui/x-date-pickers';
 import type { ForwardedRef } from 'react';
 
+import Button from '@/components/base/Button';
 import Label from '@/components/base/Label';
 import TextField from '@/components/base/Textfield';
+import { noop } from '@/utils';
 
 import useSelect from './index.hooks';
-import type { SelectProps } from './index.types';
+import type { ModifiedSelectChangeEvent, SelectProps } from './index.types';
 
 const Select = forwardRef(
   (props: SelectProps, forwardedRef: ForwardedRef<HTMLSelectElement>) => {
@@ -19,10 +23,13 @@ const Select = forwardRef(
       block = false,
       classes,
       className,
+      clearable = false,
       defaultValue,
       disabled = false,
+      filteredOptions: propFilteredOptions,
       error = false,
       id,
+      inputValue,
       label,
       labelLayout = 'vertical',
       message,
@@ -36,10 +43,10 @@ const Select = forwardRef(
       type = 'text',
       value = '',
       onBlur,
-      onChange,
-      onClick,
-      onFocus,
-      onKeyUp,
+      onChange = noop,
+      onClick = noop,
+      onFocus = noop,
+      onKeyUp = noop,
     } = props || {};
     const {
       label: labelClass = '',
@@ -55,7 +62,10 @@ const Select = forwardRef(
       handleChangeSearchValue,
       handleClose,
       handleValueChange,
+      onChangeSearchValue,
     } = useSelect(props);
+
+    const optionDisplay = (propFilteredOptions || filteredOptions);
 
     return (
       <div
@@ -82,11 +92,14 @@ const Select = forwardRef(
             error={error}
             required={required}
             SelectDisplayProps={{
-              className: `${selectStyle.join(' ')} ${inputClass}`,
+              className: `${selectStyle.join(' ')} ${inputClass} py-3`,
             }}
             onClose={handleClose}
             renderValue={(selected) => {
-              if (typeof selected === 'number' ? String(selected).length === 0 : selected.length === 0) {
+              const selectedOptions = options.find(
+                (el) => el.value === selected,
+              );
+              if ((typeof selected === 'number' ? String(selected).length === 0 : selected.length === 0) && !selectedOptions) {
                 return (
                   <span className="text-n-5">
                     {placeholder}
@@ -94,21 +107,24 @@ const Select = forwardRef(
                 );
               }
               if (!multiple) {
-                const selectedOptions = options.find(
-                  (el) => String(el.value) === selected,
-                );
-                return (selectedOptions && selectedOptions.label) || selected;
+                if (selectedOptions) {
+                  return selectedOptions.label;
+                }
+                if (!selectedOptions && inputValue) {
+                  return inputValue;
+                }
+                return selected;
               }
               return (
-                <div className="flex gap-1">
+                <div className="flex gap-1 flex-wrap">
                   {(selected as string[]).map((el, i) => {
-                    const selectedOptions = options.find(
+                    const selectedMultipleOptions = options.find(
                       (opt) => String(opt.value) === el,
                     );
                     return (
                       <Chip
-                        key={(selectedOptions && selectedOptions.value)}
-                        label={(selectedOptions && selectedOptions.label)}
+                        key={(selectedMultipleOptions && selectedMultipleOptions.value)}
+                        label={(selectedMultipleOptions && selectedMultipleOptions.label)}
                         onMouseDown={(event) => event.stopPropagation()}
                         onDelete={(e) => {
                           (selected as string[]).splice(i, 1);
@@ -127,6 +143,7 @@ const Select = forwardRef(
             multiple={multiple}
             size={size}
             onBlur={onBlur}
+            onOpen={() => onChangeSearchValue('')}
             onClick={onClick}
             onChange={handleValueChange}
             onFocus={onFocus}
@@ -135,6 +152,17 @@ const Select = forwardRef(
             name={name}
             onKeyUp={onKeyUp}
             MenuProps={{ classes: { paper: 'max-h-[240px]' } }}
+            endAdornment={(!!value && clearable) && (
+              <InputAdornment position="end" className="pr-4">
+                <Button
+                  className="p-1 bg-transparent hover:bg-n-4"
+                  rounded
+                  onClick={() => handleValueChange({ target: { value: '' }, name } as unknown as ModifiedSelectChangeEvent)}
+                >
+                  <ClearIcon className="[&>*]:fill-n-8 w-5 h-5" />
+                </Button>
+              </InputAdornment>
+            )}
           >
             {showSearch && (
               <TextField
@@ -147,15 +175,24 @@ const Select = forwardRef(
                 }}
               />
             )}
-            {filteredOptions.map((option) => (
+            {optionDisplay.length ? optionDisplay.map((option) => (
               <MenuItem
                 value={option.value}
                 classes={{ root: 'font-sans text-base' }}
                 key={option.value}
+                disabled={option.disabled}
               >
                 {option.label}
               </MenuItem>
-            ))}
+            )) : (
+              <MenuItem
+                value=""
+                classes={{ root: 'font-sans text-base' }}
+                disabled
+              >
+                No Data
+              </MenuItem>
+            )}
           </MUISelect>
           {message && <FormHelperText error={error}>{message}</FormHelperText>}
         </FormControl>

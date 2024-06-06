@@ -1,26 +1,24 @@
 import { forwardRef } from 'react';
 
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormHelperText from '@mui/material/FormHelperText';
 import type { ForwardedRef } from 'react';
+
+import { IcChecklist } from '@/components/icons';
 
 import type CheckboxProps from './index.types';
 
 import styles from './index.module.scss';
 
 const CheckboxLabel = forwardRef(
-  (props: CheckboxProps, forwardedRef: ForwardedRef<HTMLButtonElement>) => {
+  (props: CheckboxProps, forwardedRef: ForwardedRef<HTMLInputElement>) => {
     const {
       classes,
-      className,
+      className = '',
       checked,
       error,
-      id,
+      id = crypto.randomUUID(),
       label,
       message,
       name,
-      box = false,
       onChange,
       value,
     } = props || {};
@@ -29,32 +27,38 @@ const CheckboxLabel = forwardRef(
       label: labelClass = '',
     } = classes || {};
 
-    const styleCheckbox = [styles.button];
-
-    if (className) styleCheckbox.push(className);
-
-    if (box) {
-      styleCheckbox.push(styles.box);
-    }
-
     return (
-      <div className="font-bold w-fit">
-        <FormControlLabel
-          className={`p-0 m-0 ${styleCheckbox.join(' ')}`}
-          control={(
-            <Checkbox
-              id={id}
-              ref={forwardedRef}
-              className={`${checkBoxClass}`}
-              checked={checked}
-              onChange={onChange}
-              name={name}
-              value={value}
-            />
-          )}
-          label={<span className={`${labelClass} text-base`}>{label}</span>}
+      <div className={`relative flex flex-wrap items-center ${className}`}>
+        <input
+          className={`peer ${[styles.checkbox].join(' ')} ${checkBoxClass}`}
+          checked={checked}
+          id={id}
+          name={name}
+          onChange={onChange}
+          type="checkbox"
+          ref={forwardedRef}
+          value={value}
         />
-        {message && <FormHelperText error={error}>{message}</FormHelperText>}
+        <label
+          className={`${styles.label} ${labelClass}`}
+          htmlFor={id}
+        >
+          {label}
+        </label>
+        {message && (
+          <small
+            className={`w-full py-2 pl-6 text-xs ${!error ? 'text-slate-400' : 'text-danger-500'} 
+            transition peer-invalid:text-pink-500`}
+          >
+            <span>{message}</span>
+          </small>
+        )}
+        <IcChecklist
+          className="pointer-events-none absolute ml-1.5 mt-0.5 left-0 top-1
+            h-4 w-4 -rotate-90 fill-white stroke-white opacity-0 transition-all
+            duration-300 peer-checked:rotate-0 peer-checked:opacity-100
+            peer-disabled:cursor-not-allowed"
+        />
       </div>
     );
   },

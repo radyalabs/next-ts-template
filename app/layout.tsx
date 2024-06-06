@@ -8,7 +8,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import ContextProvider from '@/components/layout/ContextProvider';
 import theme from '@/lib/theme';
 
-import '@/styles/globals.css';
+import '@/styles/globals.scss';
 
 const rubik = Rubik({
   subsets: ['latin'],

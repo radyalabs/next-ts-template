@@ -9,14 +9,18 @@ import Typography from '../../base/Typography';
 import type { AccordionsProps } from './index.types';
 
 const Accordion = (props: AccordionsProps) => {
-  const { label, children } = props;
+  const {
+    children,
+    className = '',
+    defaultExpanded = false,
+    label,
+  } = props;
   return (
-    <MUIAccordion>
-      <AccordionSummary
-        expandIcon={<IcDropdown />}
-        aria-controls="panel1a-content"
-        id="panel1a-header"
-      >
+    <MUIAccordion
+      className={`border border-solid border-n-5 rounded-xl drop-shadow-none shadow-none ${className}`}
+      defaultExpanded={defaultExpanded}
+    >
+      <AccordionSummary expandIcon={<IcDropdown />}>
         <Typography variant="title">{label}</Typography>
       </AccordionSummary>
       <AccordionDetails>

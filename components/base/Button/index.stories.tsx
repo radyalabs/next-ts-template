@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import type ButtonProps from '@/components/base/Button/index.types';
+import { IcAdd, IcPlay } from '@/components/icons';
 
 import Button from './index';
 
@@ -16,7 +17,7 @@ const meta: Meta<typeof Button> = {
       control: 'text',
     },
     color: {
-      options: ['default', 'primary', 'secondary', 'danger'],
+      options: ['default', 'primary', 'secondary', 'danger', 'success', 'warning'],
       control: { type: 'radio' },
     },
     loading: {
@@ -47,7 +48,30 @@ export const Default: Story = {
 
 Default.args = {
   children: 'Button',
-  color: 'primary',
+  color: 'default',
+};
+
+export const StartIcon: Story = {
+  name: 'Button with Start Icon',
+  render: (args: ButtonProps) => <Button className="normal-case" {...args}>{args.children}</Button>,
+};
+
+StartIcon.args = {
+  children: 'Button',
+  color: 'success',
+  startIcon: <IcPlay />,
+};
+
+export const EndIcon: Story = {
+  name: 'Button with End Icon',
+  render: (args: ButtonProps) => <Button className="normal-case" {...args}>{args.children}</Button>,
+};
+
+EndIcon.args = {
+  children: 'Button',
+  color: 'danger',
+  variant: 'outline',
+  endIcon: <IcAdd />,
 };
 
 export const Outlined: Story = {

@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 import Divider from '@mui/material/Divider/';
 import IconButton from '@mui/material/IconButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import type { MouseEvent } from 'react';
@@ -58,7 +60,7 @@ const DropdownButton = (props: DropdownButtonProps) => {
         { keyedMenuIcon.map((item, i) => (
           <div key={item.key}>
             <MenuItem
-              classes={{ root: `font-sans text-base flex justify-start gap-2 ${item.danger && 'text-danger-500'}` }}
+              classes={{ root: 'font-sans text-base flex justify-start gap-2 py-4' }}
               onClick={() => {
                 if (item.onClick) {
                   item.onClick();
@@ -66,7 +68,14 @@ const DropdownButton = (props: DropdownButtonProps) => {
                 handleClose();
               }}
             >
-              {item.label}
+              {item.icon && (
+                <ListItemIcon>
+                  {item.icon}
+                </ListItemIcon>
+              )}
+              <ListItemText className={`[&>*]:text-base ${item.danger ? 'text-danger-500' : ''}`}>
+                {item.label}
+              </ListItemText>
             </MenuItem>
             {i < keyedMenuIcon.length - 1 && (
               <Divider className="m-0" />

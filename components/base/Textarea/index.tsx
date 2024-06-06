@@ -25,6 +25,7 @@ const Textarea = forwardRef(
       maxRows = 4,
       message,
       minRows = 4,
+      maxLength,
       name,
       placeholder = '',
       required = false,
@@ -83,6 +84,7 @@ const Textarea = forwardRef(
             onKeyUp={onKeyUp}
             minRows={minRows}
             maxRows={maxRows}
+            maxLength={maxLength}
 
           />
         </div>

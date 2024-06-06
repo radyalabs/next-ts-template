@@ -52,6 +52,7 @@ export interface DatePickerProps {
    * Optional change handler
    */
   block?: boolean;
+  disablePast?: boolean;
   label?: string;
   labelLayout?: 'vertical' | 'horizontal';
   onChange?: (value: Date | null) => void;

@@ -15,6 +15,7 @@ const DatePicker = forwardRef(
       classes,
       className,
       disabled = false,
+      disablePast = false,
       error = false,
       id,
       innerClassName,
@@ -75,6 +76,7 @@ const DatePicker = forwardRef(
             labelLayout === 'horizontal' && 'w-3/4'
           } my-0`}
           disabled={disabled}
+          disablePast={disablePast}
           maxDate={maxDate}
           minDate={minDate}
           onClose={onClose}
@@ -82,6 +84,9 @@ const DatePicker = forwardRef(
           onOpen={onOpen}
           ref={forwardedRef}
           slotProps={{
+            actionBar: {
+              actions: ['clear'],
+            },
             desktopPaper: { classes: { root: 'font-sans' } },
             textField: {
               error,
@@ -96,7 +101,7 @@ const DatePicker = forwardRef(
                   ' ',
                 )} ${inputClass} ${innerClassName} rounded-xl`,
               },
-              inputProps: { className: 'px-3.5 py-3 text-base' },
+              inputProps: { className: 'pl-3.5 py-3 text-base' },
             },
           }}
           value={value}

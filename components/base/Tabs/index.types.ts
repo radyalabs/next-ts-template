@@ -10,5 +10,7 @@ export interface TabsProps {
   children: ReactNode;
   value: number;
   labels: string[];
+  counters: number[];
   onChange: (tabIndex: number) => void;
+  hrefs?: string[];
 }

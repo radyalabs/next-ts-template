@@ -4,4 +4,5 @@ export interface DescriptionProps {
   layout?: 'horizontal' | 'vertical';
   className?: string;
   size?: 'medium' | 'large';
+  sameColorLabel?: boolean;
 }

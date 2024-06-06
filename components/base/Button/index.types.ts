@@ -12,7 +12,7 @@ interface ButtonProps {
   /**
    * Button colors
    */
-  color?: 'default' | 'primary' | 'secondary' | 'danger' | 'success';
+  color?: 'default' | 'primary' | 'secondary' | 'danger' | 'success' | 'warning';
   /**
    /**
    * Button Variants
@@ -38,11 +38,15 @@ interface ButtonProps {
    * Optional click handler
    */
   onClick?: MouseEventHandler;
-  type?: 'submit' | 'button';
+  onMouseEnter?: MouseEventHandler;
+  onMouseLeave?: MouseEventHandler;
+  type?: ButtonType;
   endIcon?: ReactNode;
   startIcon?: ReactNode;
 }
 
 export type ButtonVariant = 'default' | 'outline' | 'dashed' | 'text';
+
+type ButtonType = JSX.IntrinsicElements['button']['type'];
 
 export default ButtonProps;

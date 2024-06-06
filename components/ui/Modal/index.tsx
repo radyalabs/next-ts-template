@@ -28,10 +28,9 @@ const Modal = (props: ModalProps) => {
       onClose={onClose}
       classes={{
         root: 'font-secondary',
-        paper: 'font-secondary',
+        paper: 'font-secondary rounded-xl',
       }}
       PaperProps={{ sx: { width: parsedWidth, maxWidth: parsedWidth } }}
-      container={() => document.getElementById('__next')}
       fullWidth={fullWidth}
     >
       <DialogTitle className="font-secondary flex justify-between p-5">

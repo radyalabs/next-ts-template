@@ -18,7 +18,9 @@ interface CheckboxProps {
     checkBox?: string;
     label?: string;
   }
-  value?: boolean;
+  value?: InputValue;
 }
+
+type InputValue = JSX.IntrinsicElements['input']['value'];
 
 export default CheckboxProps;

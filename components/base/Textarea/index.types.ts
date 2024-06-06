@@ -46,6 +46,10 @@ interface TextareaProps {
   /**
    * Optional change handler
    */
+  maxLength?: number;
+  /**
+   * Optional change handler
+   */
   block?: boolean;
   label?: string;
   labelLayout?: 'vertical' | 'horizontal';

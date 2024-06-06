@@ -1,5 +1,7 @@
 import { type ChangeEvent, useEffect, useState } from 'react';
 
+import { noop } from '@/utils';
+
 import type { ModifiedSelectChangeEvent, SelectProps } from './index.types';
 
 import styles from './index.module.scss';
@@ -15,6 +17,7 @@ const useSelect = (props: SelectProps) => {
     success = false,
     rounded,
     onChange,
+    onChangeSearchValue = noop,
   } = props;
   const selectStyle = [styles.select];
   const containerStyle = [styles.container];
@@ -50,6 +53,7 @@ const useSelect = (props: SelectProps) => {
     setFilteredOptions(options.filter((el) => (
       el.label.toLowerCase().includes(searchString.toLowerCase())
     )));
+    onChangeSearchValue(searchString);
   };
 
   const handleClose = () => {
@@ -71,6 +75,7 @@ const useSelect = (props: SelectProps) => {
     handleChangeSearchValue,
     handleClose,
     handleValueChange,
+    onChangeSearchValue,
   };
 };
 

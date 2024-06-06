@@ -1,16 +1,14 @@
-import type { Decorator, Preview } from '@storybook/react';
+import type { Decorator, Preview, StoryFn } from '@storybook/react';
 import { withThemeByClassName, withThemeFromJSXProvider } from '@storybook/addon-themes';
 
-import '../src/styles/globals.css';
+import '@/styles/globals.scss';
 import { ThemeProvider } from '@mui/material';
 import { Quicksand, Rubik } from 'next/font/google';
 
-import { MUI_THEME } from '@/constants/config';
-import { createTheme } from '@mui/material/styles';
+import theme from '@/lib/theme';
 
 const preview: Preview = {
   parameters: {
-    actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -38,8 +36,8 @@ const quicksand = Quicksand({
 export const decorators: Decorator = [
   withThemeFromJSXProvider({
     themes: {
-      light: createTheme(MUI_THEME(null, rubik)),
-      dark: createTheme(MUI_THEME(null, rubik)),
+      light: theme,
+      dark: theme,
     },
     defaultTheme: 'light',
     Provider: ThemeProvider,
@@ -53,8 +51,8 @@ export const decorators: Decorator = [
     defaultTheme: 'light',
   }),
 // @ts-ignore
-  (Story) => (
-    <main className={`${rubik.variable} ${quicksand.variable} `}>
+  (Story: StoryFn) => (
+    <main className={`${rubik.variable} ${quicksand.variable} `} id="__next">
       <Story />
     </main>
   ),
