@@ -16,6 +16,7 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
+      "@/app/*": ["./app/*"],
       "@/assets/*": ["./assets/*"],
       "@/components/*": ["./components/*"],
       "@/constants/*": ["./constants/*"],
@@ -25,7 +26,6 @@
       "@/hooks/*": ["./hooks/*"],
       "@/lib/*": ["./lib/*"],
       "@/normalizers": ["./normalizers/index.ts"],
-      "@/pages/*": ["./pages/*"],
       "@/stores/*": ["./stores/*"],
       "@/styles/*": ["./styles/*"],
       "@/types/*": ["./types/*"],

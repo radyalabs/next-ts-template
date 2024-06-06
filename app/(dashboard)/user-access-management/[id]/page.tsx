@@ -1,8 +1,7 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 
-import Loading from 'src/app/(dashboard)/loading';
-
+import Loading from '@/app/(dashboard)/loading';
 import { APP_TITLE } from '@/constants/config';
 import UserManagementDetail from '@/views/UserManagement/UserManagementDetail';
 
