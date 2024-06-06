@@ -19,7 +19,7 @@ const createColumnData = (
   filterPlaceholder,
   filterOption,
   sortable,
-  sortKey,
+  sortKey: sortKey || '',
   width,
 });
 
