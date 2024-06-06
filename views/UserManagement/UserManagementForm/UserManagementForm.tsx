@@ -93,7 +93,7 @@ const UserManagementForm = ({ id = '' }: { id?: string }) => {
                       id={application.name}
                       name={application.name}
                       onChange={() => handleCheckAll(i)}
-                      value={checkAll[i]}
+                      checked={checkAll[i]}
                     />
                   </Table.TableCell>
                   <Table.TableCell
