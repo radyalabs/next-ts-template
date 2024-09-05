@@ -1,9 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
 
-import { defaultFetcherFn } from '@/helpers';
+import fetcher from '@/lib/fetcher';
 import type { MutateQueryExtras } from '@/types/queries';
 import type { BaseError } from '@/types/responses';
+import { noop } from '@/utils';
 
 export const useMutateData = <T = void>(
   key: string[],
@@ -11,34 +12,48 @@ export const useMutateData = <T = void>(
   method = 'post',
   extras?: MutateQueryExtras<T>,
 ) => {
-  const { normalizer, options } = extras || {};
-  const { onSuccess, onError, retry } = options || {};
-  const { mutate, data, isPending: isLoading } = useMutation<
-  T,
-  AxiosError<BaseError>,
-  unknown
-  >(
-    {
-      mutationKey: key,
-      mutationFn: (body) => defaultFetcherFn<T>({
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        data: body,
-        method,
-        normalizer,
-        url,
-      }),
-      onSuccess,
-      onError,
-      retry,
-    },
-  );
+  const { normalizer, params, options } = extras || {};
+  const {
+    headers,
+    retry,
+    onError,
+    onMutate,
+    onSettled = noop,
+    onSuccess,
+    onUploadProgress = noop,
+  } = options || {};
+
+  const {
+    mutate,
+    mutateAsync,
+    data,
+    isPending: isLoading,
+  } = useMutation<T, AxiosError<BaseError>, unknown>({
+    mutationKey: key,
+    mutationFn: (body) => fetcher<T>({
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        ...headers,
+      },
+      params,
+      data: body,
+      method,
+      normalizer,
+      onUploadProgress,
+      url,
+    }),
+    onSuccess,
+    onError,
+    onMutate,
+    onSettled,
+    retry,
+  });
 
   return {
     data,
     mutate,
+    mutateAsync,
     isLoading,
   };
 };

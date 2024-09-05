@@ -1,8 +1,10 @@
 export interface PaginationData<T> {
-  items: T[],
-  hasNextPage: boolean,
-  page: number
-  pageSize: number
+  items: T[];
+  hasNextPage: boolean;
+  page: number;
+  pageSize: number;
+  totalData?: number;
+  totalDataAfterFilter?: number
 }
 
 export interface BaseError {
@@ -18,7 +20,7 @@ export interface ErrorPayload {
   propertyName: string;
 }
 
-export interface BaseQueryParams {
+export interface BaseQueryParams extends Record<string, unknown> {
   [key: string]: unknown;
   s?: string;
   page: number;
@@ -32,13 +34,15 @@ export interface OptionItemResponse {
   value: string;
 }
 
-export interface AuditTrail {
-  createdBy: string;
-  createdByFullName: string;
-  createdAt: string;
-  lastUpdatedBy: string;
-  lastUpdatedByFullName: string;
-  lastUpdatedAt: string;
+export interface FileRepositoryResponse {
+  fileId: string;
+  fileUrl: string;
+  newFileName: string;
+  path: string;
 }
+
+type AuditTrailKey = `${'created' | 'lastUpdated'}${'By' | 'ByFullName' | 'At'}`;
+
+export type AuditTrail = Record<AuditTrailKey, string>;
 
 export type SearchOptions = OptionItemResponse[];

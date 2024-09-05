@@ -1,4 +1,3 @@
-import { cloneElement } from 'react';
 import Link from 'next/link';
 
 import Box from '@mui/material/Box';
@@ -10,6 +9,7 @@ import type { TabPanelProps, TabsProps } from './index.types';
 
 const Tabs = (props: Partial<TabsProps>) => {
   const {
+    className = '',
     children,
     labels,
     counters,
@@ -18,43 +18,35 @@ const Tabs = (props: Partial<TabsProps>) => {
   } = props;
   const { value = 0, handleChange } = useTabs(props);
   return (
-    <Box>
+    <Box className={className}>
       <MUITabs
         value={tabValue !== undefined ? tabValue : value}
         onChange={handleChange}
       >
-        {(labels || []).map((label, i) => {
-          const tabComponent = (
-            cloneElement(
-              (
-                <Tab
-                  classes={{
-                    root: 'normal-case min-w-[150px] p-1',
-                  }}
-                  sx={{ opacity: 1 }}
-                  label={(
-                    <p>
-                      <span>{label}</span>
-                      {counters && (
-                        <span
-                          className={`ml-2 ${value === i ? 'bg-primary-100' : 'bg-n-5'} 
+        {(labels || []).map((label, i) => (
+          <Tab
+            key={label}
+            component={hrefs.length ? Link : 'div'}
+            href={hrefs[i]}
+            classes={{
+              root: 'normal-case p-1 px-4',
+            }}
+            sx={{ opacity: 1 }}
+            label={(
+              <p>
+                <span>{label}</span>
+                {counters && (
+                  <span
+                    className={`ml-2 ${value === i ? 'bg-primary-100' : 'bg-n-5'} 
                       p-2 py-1 rounded-full`}
-                        >
-                          {counters[i] !== undefined ? counters[i] : ''}
-                        </span>
-                      )}
-                    </p>
-                  )}
-                />
-              ), { key: label },
-            )
-          );
-          return hrefs.length ? (
-            <Link href={hrefs[i]} className={tabValue === i ? 'text-primary-500' : 'text-n-8'}>
-              {tabComponent}
-            </Link>
-          ) : tabComponent;
-        })}
+                  >
+                    {counters[i] !== undefined ? counters[i] : ''}
+                  </span>
+                )}
+              </p>
+            )}
+          />
+        ))}
       </MUITabs>
       {children}
     </Box>

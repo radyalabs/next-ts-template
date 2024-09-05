@@ -5,8 +5,8 @@ import { getCookie } from 'cookies-next';
 import { BASE_API_URL, ENDPOINT } from '@/constants/apiURL';
 import { APP_REFRESH_KEY, APP_TOKEN_KEY } from '@/constants/config';
 import HTTP_CODE from '@/constants/httpCode';
-import { saveToken } from '@/views/Login/Login.helpers';
-import type { LoginResponse } from '@/views/Login/Login.types';
+import { saveToken } from '@/helpers';
+import type { LoginResponse } from '@/types/profile';
 
 const axiosInstance = <T> (): AxiosInstance => {
   const axiosClient = axios.create();

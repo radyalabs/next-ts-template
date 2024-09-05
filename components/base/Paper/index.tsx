@@ -7,7 +7,7 @@ import type { PaperProps } from './index.types';
 const Paper = (props: PaperProps) => {
   const { children, className = '', title = '' } = props;
   return (
-    <MUIPaper className={className} elevation={0}>
+    <MUIPaper className={`${className} p-6 rounded-xl`} elevation={0}>
       {!!title && (
         <div className="w-full">
           <Typography variant="title" size="large" className="font-secondary">{title}</Typography>

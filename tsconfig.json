@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -18,19 +22,22 @@
     "paths": {
       "@/app/*": ["./app/*"],
       "@/assets/*": ["./assets/*"],
-      "@/components/*": ["./components/*"],
+      "@/components/*": [ "./components/*"],
       "@/constants/*": ["./constants/*"],
       "@/contexts/*": ["./contexts/*"],
       "@/enums/*": ["./enums/*"],
+      "@/features/*": ["./features/*"],
       "@/helpers": ["./helpers/index.ts"],
       "@/hooks/*": ["./hooks/*"],
       "@/lib/*": ["./lib/*"],
       "@/normalizers": ["./normalizers/index.ts"],
+      "@/pages/*": ["./pages/*"],
+      "@/schemas/*": ["./schemas/*"],
       "@/stores/*": ["./stores/*"],
       "@/styles/*": ["./styles/*"],
       "@/types/*": ["./types/*"],
       "@/utils": ["./utils/index.ts"],
-      "@/views/*": ["./views/*"]
+      "#*": ["./features/*"]
     },
     "plugins": [
       {
@@ -40,13 +47,14 @@
   },
   "include": [
     "next-env.d.ts",
-    "**/*.js",
     "**/*.ts",
     "**/*.tsx",
     ".eslintrc.js",
-    "tailwind.config.ts",
+    "tailwind.config",
     "next.config.js",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

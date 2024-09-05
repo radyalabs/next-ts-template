@@ -17,10 +17,23 @@
   "overrides": [
     {
       "files": [
+        "*.js",
         "*.ts",
         "*.tsx"
       ],
       "rules": {
+        "import/extensions": [
+          "error",
+          "ignorePackages",
+          {
+            "pattern": {
+              "js": "never",
+              "ts": "never",
+              "jsx": "never",
+              "tsx": "never"
+            }
+          }
+        ],
         "simple-import-sort/imports": [
           "error",
           {
@@ -36,6 +49,8 @@
               ],
               // Internal packages.
               ["^@\/"],
+              // features
+              ["^#"],
               // Side effect imports.
               [
                 "^\\u0000"
@@ -82,23 +97,7 @@
     "eslint-plugin-simple-import-sort"
   ],
   "rules": {
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        "pattern": {
-          "js": "never",
-          "ts": "never",
-          "jsx": "never",
-          "tsx": "never"
-        }
-      }
-    ],
     "import/no-extraneous-dependencies": ["off"],
-    "indent": [
-      "warn",
-      2
-    ],
     "jsx-a11y/label-has-associated-control": ["error", {
       "required": {
         "some": ["nesting", "id"]

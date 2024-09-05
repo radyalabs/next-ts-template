@@ -1,10 +1,10 @@
 'use client';
 
-import { Rubik } from 'next/font/google';
-
 import { createTheme } from '@mui/material/styles';
 import tailwindConfig from 'tailwind.config';
 import resolveConfig from 'tailwindcss/resolveConfig';
+
+import { primary as primaryFont } from '@/lib/font';
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -18,13 +18,6 @@ declare module '@mui/material/styles' {
   }
 }
 
-const rubik = Rubik({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
-  display: 'swap',
-  variable: '--font-rubik',
-});
-
 const { theme: twTheme } = resolveConfig(tailwindConfig);
 const { colors, fontSize } = twTheme || {};
 const {
@@ -35,17 +28,17 @@ const theme = createTheme({
   components: {
     MuiPopover: {
       defaultProps: {
-        style: { fontFamily: rubik.style.fontFamily },
+        style: { fontFamily: primaryFont.style.fontFamily },
       },
     },
     MuiPopper: {
       defaultProps: {
-        style: { fontFamily: rubik.style.fontFamily },
+        style: { fontFamily: primaryFont.style.fontFamily },
       },
     },
     MuiModal: {
       defaultProps: {
-        style: { fontFamily: rubik.style.fontFamily },
+        style: { fontFamily: primaryFont.style.fontFamily },
       },
     },
     MuiAlert: {
@@ -64,7 +57,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: rubik.style.fontFamily,
+    fontFamily: primaryFont.style.fontFamily,
     button: {
       textTransform: 'none',
     },

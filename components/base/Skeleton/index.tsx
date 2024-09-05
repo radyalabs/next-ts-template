@@ -13,7 +13,7 @@ const Skeleton = (props: SkeletonProps) => {
 
   return (
     <MUISkeleton
-      className={`scale-90 ${variant !== 'circular' ? 'rounded-xl' : ''} ${variant === 'text' ? 'scale-y-75 scale-x-100' : ''}`}
+      className={`${variant !== 'circular' ? 'rounded-xl' : ''} ${variant === 'text' ? 'scale-y-75 scale-x-100' : ''}`}
       animation={animation}
       height={height}
       variant={variant}

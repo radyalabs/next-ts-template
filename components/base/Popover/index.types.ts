@@ -10,6 +10,7 @@ export interface PopoverProps {
   transformOrigin?: PopoverOrigin;
   children: ReactNode;
   disableRestoreFocus?: boolean;
+  noPadding?: boolean;
 }
 
 export interface PopoverOrigin {

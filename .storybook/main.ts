@@ -18,7 +18,9 @@ const config: StorybookConfig = {
     getAbsolutePath('@storybook/addon-essentials'),
     getAbsolutePath('@chromatic-com/storybook'),
     getAbsolutePath('@storybook/addon-interactions'),
-    '@chromatic-com/storybook'
+    getAbsolutePath("@chromatic-com/storybook"),
+    getAbsolutePath("@storybook/addon-mdx-gfm"),
+    getAbsolutePath("@chromatic-com/storybook")
   ],
 
   framework: {
@@ -29,5 +31,7 @@ const config: StorybookConfig = {
   docs: {},
 
   staticDirs: ['../public'],
+
+  typescript: {}
 };
 export default config;

@@ -1,10 +1,9 @@
 import type { Metadata } from 'next';
 
-import { APP_TITLE } from '@/constants/config';
-import Dashboard from '@/views/Dashboard';
+import Dashboard from '#dashboard/views/Dashboard';
 
 export const metadata: Metadata = {
-  title: `${APP_TITLE} - Dashboard`,
+  title: 'Dashboard',
 };
 
 const DashboardPage = () => <Dashboard />;

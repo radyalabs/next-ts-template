@@ -1,6 +1,5 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 
-import Chip from '@mui/material/Chip';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -12,6 +11,7 @@ import type { KeyboardEvent } from 'react';
 
 import Button from '@/components/base/Button';
 import Checkbox from '@/components/base/Checkbox';
+import Chip from '@/components/base/Chip';
 import DatePicker from '@/components/base/DatePicker';
 import Select from '@/components/base/Select';
 import Spinner from '@/components/base/Spinner';
@@ -60,6 +60,9 @@ const DataTable = <T extends Record<string, unknown>>(props: TableProps<T>) => {
     onClickExport = noop,
     selectedRows,
     selectAll,
+    hideNumbering = false,
+    minWidth = 800,
+    maxHeight = '52vh',
   } = props;
   const { emptyState } = label || {};
   const {
@@ -78,6 +81,7 @@ const DataTable = <T extends Record<string, unknown>>(props: TableProps<T>) => {
     pageSizeOptions,
     sortState,
     searchQuery,
+    colSpanValue,
     handleChangePage,
     handleCloseAuditTrail,
     handleFilterChange,
@@ -138,15 +142,15 @@ const DataTable = <T extends Record<string, unknown>>(props: TableProps<T>) => {
           appendHeader
         )}
       </div>
-      <TableContainer sx={{ maxHeight: '52vh', maxWidth: '100%' }} className="mx-auto">
+      <TableContainer sx={{ maxHeight, maxWidth: '100%' }} className="mx-auto">
         <Table
           stickyHeader
-          sx={{ minWidth: 800 }}
-          className="table-fixed border-solid border border-neutral-300
-            rounded-xl border-separate border-tools-table-outline py-4 mb-2"
+          sx={{ minWidth }}
+          className="table-fixed border-solid border border-n-5 shadow
+            rounded-lg border-separate border-tools-table-outline mb-2 py-1"
         >
           <TableHead>
-            <TableRow className="[&>th]:font-bold [&>th]:text-n-13">
+            <TableRow className="[&>th]:font-bold [&>th]:text-n-13 [&>th]:p-3">
               {showCheckBox && (
                 <TableCell
                   width={40}
@@ -161,20 +165,22 @@ const DataTable = <T extends Record<string, unknown>>(props: TableProps<T>) => {
                   </div>
                 </TableCell>
               )}
-              <TableCell
-                width={40}
-                classes={{ root: 'break-words border-2 border-primary-500 sticky left-0 z-20 bg-n-1 px-1' }}
-                align="center"
-              >
-                No.
-              </TableCell>
+              {!hideNumbering && (
+                <TableCell
+                  width={40}
+                  classes={{ root: 'break-words border-2 border-primary-500 sticky left-0 z-20 bg-n-1 px-1' }}
+                  align="center"
+                >
+                  No.
+                </TableCell>
+              )}
               {columns.map((column) => (
                 (!column.hideColumn && !hiddenColumns.includes(column.dataKey)) && (
                   <TableCell
                     sortDirection="asc"
                     key={column.dataKey}
                     classes={{
-                      root: `break-words border-2 border-primary-500 
+                      root: `break-words border-2 border-primary-500
                     ${column.sticky ? ' sticky z-20' : ''}`,
                     }}
                     sx={column.sticky ? { left: `${column.stickyPosition}px` } : {}}
@@ -309,13 +315,7 @@ const DataTable = <T extends Record<string, unknown>>(props: TableProps<T>) => {
             {loading && (
               <TableRow>
                 <TableCell
-                  colSpan={
-                    columns.length
-                    + (rowActions.length > 0 ? 1 : 0)
-                    + (showAuditTrail ? 1 : 0)
-                    + 1
-                    + (showCheckBox ? 1 : 0)
-                  }
+                  colSpan={colSpanValue}
                 >
                   <div className="flex justify-center items-center w-full min-h-[300px]">
                     <Spinner width={80} height={80} />
@@ -347,19 +347,21 @@ const DataTable = <T extends Record<string, unknown>>(props: TableProps<T>) => {
                       </div>
                     </TableCell>
                   )}
-                  <TableCell
-                    component="td"
-                    scope="row"
-                    className="break-words sticky left-0 z-10 bg-n-1 px-1"
-                    align="center"
-                    rowSpan={arrayColumnKey
-                      ? (row[arrayColumnKey] as Array<Record<string, unknown>> || []).length || 1
-                      : 1}
-                  >
-                    <Typography as="span">
-                      {page * pageSize - pageSize + i + 1}
-                    </Typography>
-                  </TableCell>
+                  {!hideNumbering && (
+                    <TableCell
+                      component="td"
+                      scope="row"
+                      className="break-words sticky left-0 z-10 bg-n-1 px-1"
+                      align="center"
+                      rowSpan={arrayColumnKey
+                        ? (row[arrayColumnKey] as Array<Record<string, unknown>> || []).length || 1
+                        : 1}
+                    >
+                      <Typography as="span">
+                        {page * pageSize - pageSize + i + 1}
+                      </Typography>
+                    </TableCell>
+                  )}
                   {columns.map((column) => (
                     (!column.hideColumn && !hiddenColumns.includes(column.dataKey)) && (
                       <TableCell
@@ -367,7 +369,7 @@ const DataTable = <T extends Record<string, unknown>>(props: TableProps<T>) => {
                         scope="row"
                         key={column.dataKey}
                         classes={{
-                          root: `break-words bg-n-1 
+                          root: `break-words bg-n-1
                       ${column.sticky ? ' sticky z-10' : ''}`,
                         }}
                         sx={column.sticky ? { left: `${column.stickyPosition}px` } : {}}
@@ -395,11 +397,6 @@ const DataTable = <T extends Record<string, unknown>>(props: TableProps<T>) => {
                               <Chip
                                 color={row[column.dataKey] ? 'success' : 'info'}
                                 label={row[column.dataKey] ? statusLabels[0] : statusLabels[1]}
-                                classes={{
-                                  root: 'rounded-xl text-sm font-semibold min-w-[6rem]',
-                                  colorSuccess: 'bg-success-500 text-n-1',
-                                  colorInfo: 'bg-[#a7a7a7] text-n-10',
-                                }}
                               />
                             )}
                             {(column.dataType === 'element') && (
@@ -443,13 +440,13 @@ const DataTable = <T extends Record<string, unknown>>(props: TableProps<T>) => {
                           color = 'default',
                           icon = null,
                           size = 'small',
-                          tooltip = '',
+                          tooltip,
                           variant = 'default',
                         }) => (
                           showFn(row) && (
                             <Tooltip
                               key={color + icon}
-                              title={tooltip}
+                              title={typeof tooltip === 'function' ? tooltip(row) : tooltip}
                             >
                               <div>
                                 {size === 'small' ? (
@@ -510,7 +507,7 @@ const DataTable = <T extends Record<string, unknown>>(props: TableProps<T>) => {
                             scope="row"
                             key={column.dataKey}
                             classes={{
-                              root: `break-words bg-n-1 
+                              root: `break-words bg-n-1
                       ${column.sticky ? ' sticky z-10' : ''}`,
                             }}
                             sx={column.sticky ? { left: `${column.stickyPosition}px` } : {}}
@@ -526,13 +523,7 @@ const DataTable = <T extends Record<string, unknown>>(props: TableProps<T>) => {
             )) : (
               <TableRow>
                 <TableCell
-                  colSpan={
-                    columns.length
-                    + (rowActions.length > 0 ? 1 : 0)
-                    + (showAuditTrail ? 1 : 0)
-                    + 1
-                    + (showCheckBox ? 1 : 0)
-                  }
+                  colSpan={colSpanValue}
                 >
                   <div className="text-center p-24">
                     <Typography variant="title">
@@ -552,7 +543,7 @@ const DataTable = <T extends Record<string, unknown>>(props: TableProps<T>) => {
       <div className="grid grid-cols-2 items-center [&>*]:p-4">
         {showCountTotal && (
           <Typography>
-            {`Showing ${page * pageSize - pageSize + 1} - ${
+            {`Showing ${data.length ? page * pageSize - pageSize + 1 : 0} - ${
               data.length < pageSize
                 ? page * pageSize - pageSize + data.length
                 : page * pageSize

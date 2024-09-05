@@ -22,6 +22,9 @@ export interface TableProps<T> {
   searchPlaceholder?: string;
   searchValue?: string;
   showCountTotal?: boolean;
+  /**
+   * @deprecated use appendHeader instead
+   */
   showExportButton?: boolean;
   showPagination?: boolean;
   showPageSizeChanger?: boolean;
@@ -29,6 +32,8 @@ export interface TableProps<T> {
   showAuditTrail?: boolean;
   statusLabels?: string[];
   totalData?: number;
+  minWidth?: number;
+  maxHeight?: string;
   onClickDetail?: (id: string) => void;
   onClickExport?: () => void;
   onPageChange?: (page: number) => void;
@@ -42,6 +47,7 @@ export interface TableProps<T> {
   setSelectedRows?: (selectedId: string[]) => void;
   selectAll?: boolean;
   setSelectAll?: (select: boolean) => void;
+  hideNumbering?: boolean;
 }
 
 export interface ActionProps<T = Record<string, unknown>> {
@@ -51,7 +57,7 @@ export interface ActionProps<T = Record<string, unknown>> {
   icon?: string | ReactNode;
   disabledFn?: (row: T) => boolean;
   showFn?: (row: T) => boolean;
-  tooltip?: string;
+  tooltip?: string | ((row: T) => string);
   size?: 'small' | 'normal';
 }
 

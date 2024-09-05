@@ -92,7 +92,8 @@ const Select = forwardRef(
             error={error}
             required={required}
             SelectDisplayProps={{
-              className: `${selectStyle.join(' ')} ${inputClass} py-3`,
+              className: `${selectStyle.join(' ')} \
+                ${inputClass} ${multiple && Array.isArray(value) && value.length > 0 ? 'py-1.5' : 'py-3'}`,
             }}
             onClose={handleClose}
             renderValue={(selected) => {
@@ -148,7 +149,7 @@ const Select = forwardRef(
             onChange={handleValueChange}
             onFocus={onFocus}
             disabled={disabled}
-            ref={forwardedRef}
+            inputRef={forwardedRef}
             name={name}
             onKeyUp={onKeyUp}
             MenuProps={{ classes: { paper: 'max-h-[240px]' } }}

@@ -24,6 +24,10 @@ const useDataTable = <T>(props: TableProps<T>) => {
     onFilterChange,
     uniqueRowKey,
     selectedRows = [],
+    rowActions = [],
+    showAuditTrail = true,
+    hideNumbering = false,
+    showCheckBox = false,
     onPageSizeChange = noop,
     onPageChange = noop,
     onSearchChange = noop,
@@ -245,6 +249,9 @@ const useDataTable = <T>(props: TableProps<T>) => {
     setSelectAll(e.target.checked);
   };
 
+  const colSpanValue = columns.length + (rowActions.length > 0 ? 1 : 0) + (showAuditTrail ? 1 : 0)
+    + (hideNumbering ? 0 : 1) + (showCheckBox ? 1 : 0);
+
   return {
     auditData,
     displayPage,
@@ -257,6 +264,7 @@ const useDataTable = <T>(props: TableProps<T>) => {
     pageSizeOptions,
     sortState,
     searchQuery,
+    colSpanValue,
     handleChangePage,
     handleCloseAuditTrail,
     handleFilterChange,

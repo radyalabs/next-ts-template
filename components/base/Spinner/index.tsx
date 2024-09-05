@@ -1,14 +1,19 @@
 import type { SVGProps } from 'react';
 
 const Spinner = (props: SVGProps<SVGSVGElement>) => {
-  const { width = '24', height = '24', color = 'fill-primary-500' } = props;
+  const {
+    width = '24',
+    height = '24',
+    color = 'fill-primary-500',
+    className,
+  } = props;
 
   return (
     <svg
       aria-hidden="true"
       width={width}
       height={height}
-      className={`text-gray-200 animate-spin ${color} inline-block`}
+      className={`text-gray-200 animate-spin ${color} inline-block ${className}`}
       viewBox="0 0 100 101"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

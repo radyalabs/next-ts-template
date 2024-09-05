@@ -23,7 +23,7 @@ const Sidebar = () => {
   } = useSidebar();
   return (
     <aside
-      className={`${!isCollapsed ? 'w-64' : 'w-24'} font-sans fixed h-full drop-shadow-xl z-50 transition-width transition-slowest ease`}
+      className={`${!isCollapsed ? 'w-72' : 'w-24'} font-sans fixed h-full drop-shadow-xl z-50 transition-width transition-slowest ease border-r-8`}
       aria-label="Sidebar"
     >
       <div className="overflow-y-auto bg-n-1 h-full px-2">
@@ -34,7 +34,12 @@ const Sidebar = () => {
             className="min-h-11 h-11 w-auto object-contain"
             priority
           />
-          <Button variant="text" onClick={toggleCollapsed} type="button" className="p-0 [&>*]:fill-neutral-500">
+          <Button
+            variant="text"
+            onClick={toggleCollapsed}
+            type="button"
+            className="p-0 [&>*]:fill-neutral-500"
+          >
             {
               !isCollapsed
                 ? <IcHide width={15} height={15} />

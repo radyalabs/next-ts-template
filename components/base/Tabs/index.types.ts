@@ -7,6 +7,7 @@ export interface TabPanelProps {
 }
 
 export interface TabsProps {
+  className?: string;
   children: ReactNode;
   value: number;
   labels: string[];

@@ -35,3 +35,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+#local icons
+/components/icons/
+/storybook-static/
+
+#tinymce
+/public/tinymce/

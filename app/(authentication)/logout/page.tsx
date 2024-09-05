@@ -1,11 +1,10 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 
-import { APP_TITLE } from '@/constants/config';
-import Logout from '@/views/Logout';
+import Logout from '#authentication/views/Logout';
 
 export const metadata: Metadata = {
-  title: `${APP_TITLE} - Logout`,
+  title: 'Logout',
 };
 
 const LogoutPage = () => (

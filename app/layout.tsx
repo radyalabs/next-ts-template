@@ -1,30 +1,21 @@
 import { type ReactNode } from 'react';
 import type { Metadata, Viewport } from 'next';
-import { Quicksand, Rubik } from 'next/font/google';
 
 import { ThemeProvider } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 
 import ContextProvider from '@/components/layout/ContextProvider';
+import { APP_TITLE, APP_TITLE_TEMPLATE } from '@/constants/config';
+import { primary, secondary } from '@/lib/font';
 import theme from '@/lib/theme';
 
 import '@/styles/globals.scss';
 
-const rubik = Rubik({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
-  display: 'swap',
-  variable: '--font-rubik',
-});
-
-const quicksand = Quicksand({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  display: 'swap',
-  variable: '--font-quicksand',
-});
-
 export const metadata: Metadata = {
+  title: {
+    default: APP_TITLE,
+    template: APP_TITLE_TEMPLATE,
+  },
   icons: {
     icon: '/favicon.ico',
   },
@@ -39,7 +30,7 @@ export const viewport: Viewport = {
 
 const RootLayout = ({ children }: { children: ReactNode }) => (
   <html lang="en">
-    <body id="__next" className={`${rubik.variable} ${quicksand.variable}`}>
+    <body id="__next" className={`${primary.variable} ${secondary.variable}`}>
       <AppRouterCacheProvider>
         <ThemeProvider theme={theme}>
           <ContextProvider>{children}</ContextProvider>

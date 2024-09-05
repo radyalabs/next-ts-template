@@ -1,11 +1,10 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 
-import { APP_TITLE } from '@/constants/config';
-import Login from '@/views/Login';
+import Login from '#authentication/views/Login';
 
 export const metadata: Metadata = {
-  title: `${APP_TITLE} - Login`,
+  title: 'Login',
 };
 
 const LoginPage = () => (

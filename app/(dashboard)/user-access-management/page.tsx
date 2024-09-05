@@ -1,13 +1,12 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 
-import { APP_TITLE } from '@/constants/config';
-import UserManagementList from '@/views/UserManagement/UserManagementList';
+import UserManagementList from '#user-management/views/UserManagementList';
 
 import Loading from '../loading';
 
 export const metadata: Metadata = {
-  title: `${APP_TITLE} - User Access Management`,
+  title: 'User Access Management',
 };
 
 const UserManagementListPage = () => (

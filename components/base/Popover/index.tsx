@@ -17,6 +17,7 @@ const Popover = (props: PopoverProps) => {
     className = '',
     closable = false,
     disableRestoreFocus = false,
+    noPadding,
     open,
     transformOrigin = {
       vertical: 'top',
@@ -31,8 +32,7 @@ const Popover = (props: PopoverProps) => {
       onClose={onClose}
       anchorOrigin={anchorOrigin}
       transformOrigin={transformOrigin}
-      className={className}
-      classes={{ paper: 'rounded-2xl px-6 py-4' }}
+      classes={{ paper: `rounded-lg ${!noPadding && 'px-6 py-4'} ${className}` }}
       disableRestoreFocus={disableRestoreFocus}
       sx={disableRestoreFocus ? {
         pointerEvents: 'none',

@@ -1,0 +1,46 @@
+import { Meta } from '@storybook/blocks';
+import Typography from 'components/base/Typography';
+import { primary, secondary } from '@/lib/font';
+
+export const variants = [
+  'display',
+  'headline',
+  'title',
+  'label',
+  'body',
+  'link',
+];
+
+export const sizes = ['large', 'medium', 'small']
+
+<Meta title="Token/Typography" />
+
+# Typography 📝
+
+Typography token are used to set the look and feel of the text on your application components or pages.
+Currently, this project use 2 font style, Ubuntu and Roboto for primary and secondary font.
+
+Below is the props example with format \{variant} - \{size}
+
+<div style={{ display: 'flex', justifyContent: 'space-between' }} className={`${primary.variable} ${secondary.variable}`}>
+  <div>
+    <Typography variant="headline">Ubuntu</Typography>
+    {variants.map((v) => (
+      sizes.map((s) => (
+        <Typography variant={v} size={s} className="!font-sans">
+          {`${v} - ${s}`}
+        </Typography>
+      ))
+    ))}
+  </div>
+  <div>
+    <Typography variant="headline" type="secondary">Roboto</Typography>
+    {variants.map((v) => (
+      sizes.map((s) => (
+        <Typography variant={v} size={s} type="secondary" className="!font-secondary">
+          {`${v} - ${s}`}
+        </Typography>
+      ))
+    ))}
+  </div>
+</div>

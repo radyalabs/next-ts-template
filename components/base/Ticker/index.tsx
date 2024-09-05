@@ -4,7 +4,9 @@ import { IcInformation, IcWarning } from '@/components/icons';
 import type { TickerProps } from './index.types';
 
 const Ticker = (props: TickerProps) => {
-  const { className = '', text = '', type = 'info' } = props;
+  const {
+    className = '', text = '', type = 'info', textSize = 'small',
+  } = props;
   const typeClass = {
     info: 'bg-secondary-50 border-secondary-500',
     error: 'bg-danger-50 border-danger-500',
@@ -30,7 +32,7 @@ const Ticker = (props: TickerProps) => {
           <IcWarning />
         )}
       </div>
-      <Typography variant="label" size="small" className={`${textClass[type]} my-auto`}>
+      <Typography variant="label" size={textSize} className={`${textClass[type]} my-auto`}>
         {/* eslint-disable-next-line react/no-danger */}
         <span dangerouslySetInnerHTML={{ __html: text }} />
       </Typography>

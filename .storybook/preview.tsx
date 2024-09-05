@@ -1,9 +1,9 @@
-import type { Decorator, Preview, StoryFn } from '@storybook/react';
+import { ThemeProvider } from '@mui/material';
+import type { Decorator, Preview } from '@storybook/react';
 import { withThemeByClassName, withThemeFromJSXProvider } from '@storybook/addon-themes';
 
 import '@/styles/globals.scss';
-import { ThemeProvider } from '@mui/material';
-import { Quicksand, Rubik } from 'next/font/google';
+import { primary, secondary } from '@/lib/font';
 
 import theme from '@/lib/theme';
 
@@ -16,21 +16,9 @@ const preview: Preview = {
       },
     },
   },
+
+  tags: ['autodocs']
 };
-
-const rubik = Rubik({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
-  display: 'swap',
-  variable: '--font-rubik',
-});
-
-const quicksand = Quicksand({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  display: 'swap',
-  variable: '--font-quicksand',
-});
 
 // @ts-ignore
 export const decorators: Decorator = [
@@ -51,8 +39,8 @@ export const decorators: Decorator = [
     defaultTheme: 'light',
   }),
 // @ts-ignore
-  (Story: StoryFn) => (
-    <main className={`${rubik.variable} ${quicksand.variable} `} id="__next">
+  (Story) => (
+    <main className={`${primary.variable} ${secondary.variable} `} id="__next">
       <Story />
     </main>
   ),
