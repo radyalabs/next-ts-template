@@ -22,9 +22,9 @@ export const TABLE_COLUMNS: TableColumn[] = [
   },
   {
     name: 'Full Name',
-    dataKey: 'fullName',
+    dataKey: 'name',
     sortable: true,
-    sortKey: 'FullName',
+    sortKey: 'name',
     width: 200,
   },
   {

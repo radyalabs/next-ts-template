@@ -1,7 +1,6 @@
 import type { AxiosError } from 'axios';
 import { getCookie } from 'cookies-next';
 
-import { BASE_API_URL } from '@/constants/apiURL';
 import { APP_TOKEN_KEY } from '@/constants/config';
 import axiosInstance from '@/lib/axiosInstance';
 import type { FetcherProps } from '@/types/fetcherProps';
@@ -19,7 +18,7 @@ const defaultFetcherFn = async <T, TParam = T>(options: FetcherProps<T, TParam>)
   } = options || {};
   const instance = axiosInstance();
   return instance<T>({
-    baseURL: BASE_API_URL,
+    baseURL: '',
     data,
     headers,
     method,

@@ -33,6 +33,7 @@ export interface TableProps<T = Record<string, string | number>> {
   onSearchChange?: (query: string) => void;
   onSortChange?: (sortState: SortParam) => void;
   uniqueRowKey: string;
+  hasNextPage: boolean;
 }
 
 export interface ActionProps<T = Record<string, unknown>> {

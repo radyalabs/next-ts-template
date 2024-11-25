@@ -53,6 +53,7 @@ const DataTable = <T extends Record<string, unknown>>(props: TableProps<T>) => {
     uniqueRowKey,
     onClickDetail = noop,
     onClickExport = noop,
+    hasNextPage = false,
   } = props;
   const { emptyState } = label || {};
   const {
@@ -490,7 +491,7 @@ const DataTable = <T extends Record<string, unknown>>(props: TableProps<T>) => {
               className="min-w-0 w-8 px-3.5"
               size="small"
               onClick={() => handleChangePage(Number(page) + 1)}
-              disabled={data.length < pageSize}
+              disabled={!hasNextPage}
               color="primary"
             >
               Next &gt;

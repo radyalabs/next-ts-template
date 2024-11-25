@@ -8,9 +8,9 @@ const userListNormalizer = (data: UserListResponse): UserListResponse => {
 
   const listData = (items || []).map(
     (el): UserList => ({
-      userId: el.userId || '-',
+      userId: el.id || '-',
       username: el.username || '-',
-      fullName: el.fullName || '-',
+      name: el.name || '-',
       email: el.email || '-',
       lastPasswordChangeAt: el.lastPasswordChangeAt || '-',
       statusRecord: el.statusRecord || '-',

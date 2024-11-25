@@ -12,15 +12,13 @@ import {
 } from '@/components/icons';
 import Table from '@/components/ui/DataTable';
 import PageHeader from '@/components/ui/PageHeader';
-import type { User, UserList } from '@/types/user';
+import type { User } from '@/types/user';
 import { TABLE_COLUMNS } from '@/views/UserManagement/UserManagementList/UserManagementList.constants';
 
 import useUserManagementList from './UserManagementList.hooks';
 
 const UserManagementList = () => {
   const {
-    data,
-    isLoading,
     queryParams,
     handleDelete,
     handleDetail,
@@ -29,6 +27,8 @@ const UserManagementList = () => {
     onPageSizeChange,
     onSearchChange,
     onSortChange,
+    isLoading,
+    dataUser,
   } = useUserManagementList();
 
   return (
@@ -49,9 +49,9 @@ const UserManagementList = () => {
         </Link>
       </PageHeader>
       <Paper className="p-4">
-        <Table<UserList>
+        <Table
           columns={TABLE_COLUMNS}
-          data={(data && data.items) || []}
+          data={(dataUser && dataUser.items) || []}
           loading={isLoading}
           onPageChange={onPageChange}
           onPageSizeChange={onPageSizeChange}
@@ -60,6 +60,7 @@ const UserManagementList = () => {
           page={queryParams.page}
           pageSize={queryParams.size}
           searchValue={queryParams.s}
+          hasNextPage={(dataUser && dataUser.hasNextPage) || true}
           rowActions={[
             {
               color: 'primary',

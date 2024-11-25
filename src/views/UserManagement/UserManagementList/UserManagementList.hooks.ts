@@ -33,12 +33,12 @@ const useUserManagementList = () => {
   };
 
   const {
-    data,
+    data: dataUser,
     isLoading,
     refetch,
   } = useGetData<UserListResponse>(
     ['userList', createQueryParams(queryParams || {})],
-    USER_MGMT.USERS,
+    '/api/users',
     {
       params: queryParams,
       normalizer: userListNormalizer,
@@ -95,7 +95,7 @@ const useUserManagementList = () => {
   };
 
   return {
-    data,
+    dataUser,
     isLoading,
     queryParams,
     handleDelete,
